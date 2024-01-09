@@ -1,37 +1,41 @@
 {
-  "name": "clientfacing-dashboard",
-  "version": "0.1.0",
-  "type": "module",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@t3-oss/env-nextjs": "^0.7.1",
-    "next": "^14.0.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "@types/eslint": "^8.44.7",
-    "@types/node": "^18.17.0",
-    "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.15",
-    "@typescript-eslint/eslint-plugin": "^6.11.0",
-    "@typescript-eslint/parser": "^6.11.0",
-    "eslint": "^8.54.0",
-    "eslint-config-next": "^14.0.4",
-    "typescript": "^5.1.6"
-  },
-  "ct3aMetadata": {
-    "initVersion": "7.25.1"
-  },
-  "packageManager": "npm@9.6.3",
-  "engines": {
-    "node": "^20"
-  }
+    "name": "clientfacing-dashboard",
+    "version": "0.1.0",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "format": "npx prettier --write ."
+    },
+    "dependencies": {
+        "@netlify/functions": "^2.4.1",
+        "@netlify/next": "^1.4.9",
+        "@t3-oss/env-nextjs": "^0.7.1",
+        "next": "^14.0.4",
+        "prettier": "^3.1.1",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "@types/eslint": "^8.44.7",
+        "@types/node": "^18.17.0",
+        "@types/react": "^18.2.37",
+        "@types/react-dom": "^18.2.15",
+        "@typescript-eslint/eslint-plugin": "^6.11.0",
+        "@typescript-eslint/parser": "^6.11.0",
+        "eslint": "^8.54.0",
+        "eslint-config-next": "^14.0.4",
+        "typescript": "^5.1.6"
+    },
+    "ct3aMetadata": {
+        "initVersion": "7.25.1"
+    },
+    "packageManager": "npm@9.6.3",
+    "engines": {
+        "node": "^20"
+    }
 }
