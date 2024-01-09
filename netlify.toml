@@ -1,13 +1,3 @@
-
-[dev]
-    command = "npm start"
-    autoLaunch = true
-
-[build]
-    command= "npm run build"
-    publish = ".next"
-
-
 [[headers]]
     for = "/*"
     [headers.values]
