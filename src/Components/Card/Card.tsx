@@ -3,22 +3,13 @@ import styles from "./card.module.css";
 
 type CardProps = {
   children: React.ReactNode;
-  height?: string;
-  width?: string;
   borderRadius?: string;
 };
 
-const Card: React.FC<CardProps> = ({
-  children,
-  height,
-  width,
-  borderRadius,
-}) => {
+export default function Card({ children, borderRadius }: CardProps) {
   return (
-    <div className={styles.card} style={{ height, width, borderRadius }}>
+    <div className={styles.card} style={{ borderRadius }}>
       {children}
     </div>
   );
-};
-
-export default Card;
+}

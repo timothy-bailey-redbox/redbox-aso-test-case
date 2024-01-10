@@ -10,7 +10,7 @@
   position: relative;
   font-size: 16px;
   font-weight: 800;
-  color: #4b3758;
+  color: var(--normal-text-color);
   cursor: pointer;
   margin: 10px;
 }

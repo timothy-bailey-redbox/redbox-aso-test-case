@@ -8,7 +8,7 @@ type ButtonProps = {
   icon?: string;
 };
 
-const Button: React.FC<ButtonProps> = ({ inverted, onClick, text, icon }) => {
+export default function Button({ inverted, onClick, text, icon }: ButtonProps) {
   return (
     <button
       className={!inverted ? styles.button : styles.buttonInverted}
@@ -17,6 +17,4 @@ const Button: React.FC<ButtonProps> = ({ inverted, onClick, text, icon }) => {
       {icon ?? text}
     </button>
   );
-};
-
-export default Button;
+}

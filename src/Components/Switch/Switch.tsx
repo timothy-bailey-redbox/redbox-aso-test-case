@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import styles from "./switch.module.css";
+import clsx from "clsx";
 
 interface SwitchProps {
   isOn: boolean;
   onToggle: () => void;
 }
 
-const Switch: React.FC<SwitchProps> = ({ isOn, onToggle }) => {
+export default function Switch({ isOn, onToggle }: SwitchProps) {
   const [active, setActive] = useState(isOn);
+  const styleOn = styles.on ?? "";
 
   return (
     <div
@@ -17,9 +19,7 @@ const Switch: React.FC<SwitchProps> = ({ isOn, onToggle }) => {
         onToggle();
       }}
     >
-      <div className={`${styles.handle} ${active ? styles.on : ""}`}></div>
+      <div className={clsx(styles.handle, { [styleOn]: active })}></div>
     </div>
   );
-};
-
-export default Switch;
+}
