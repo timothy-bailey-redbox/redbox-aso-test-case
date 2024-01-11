@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { IdSchema, StatusSchema, TimestampSchema } from "./generic";
+import { AppTypeSchema, IdSchema, StatusSchema, TimestampSchema } from "./generic";
 
 const MAX_GRID_SIZE = 12;
 
@@ -38,6 +38,9 @@ export const DashboardSchema = z.object({
     name: z.string().min(1),
     description: z.string().nullish(),
     teamId: IdSchema,
+    appId: z.string().min(1),
+    comparisonAppIds: z.array(z.string().min(1)),
+    appType: AppTypeSchema,
     widgets: z.array(WidgetSchema).nonempty(),
     createdAt: TimestampSchema,
     updatedAt: TimestampSchema,

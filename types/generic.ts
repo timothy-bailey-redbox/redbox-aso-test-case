@@ -14,3 +14,6 @@ export const TimestampSchema = z
         message: "Timestamps must be greater than 1st Jan 2000",
     });
 export type Timestamp = z.infer<typeof TimestampSchema>;
+
+export const AppTypeSchema = z.enum(["ANDROID", "IOS"]);
+export type AppType = z.infer<typeof AppTypeSchema>;
