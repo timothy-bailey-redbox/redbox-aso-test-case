@@ -7,8 +7,8 @@ export default function TestPage() {
     return (
         <div className={styles.test}>
             <Card>
-                <Button text="Button" />
-                <Button text="Button" inverted />
+                <Button>Button</Button>
+                <Button inverted>Button</Button>
                 <Switch
                     isOn={false}
                     onToggle={() => {

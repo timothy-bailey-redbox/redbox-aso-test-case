@@ -1,16 +1,14 @@
+import clsx from "clsx";
 import styles from "./button.module.css";
 
-type ButtonProps = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     inverted?: boolean;
-    onClick?: () => void;
-    text?: string;
-    icon?: string;
 };
 
-export default function Button({ inverted, onClick, text, icon }: ButtonProps) {
+export default function Button({ inverted, children, className, ...props }: ButtonProps) {
     return (
-        <button className={!inverted ? styles.button : styles.buttonInverted} onClick={onClick}>
-            {icon ?? text}
+        <button className={clsx(className, !inverted ? styles.button : styles.buttonInverted)} {...props}>
+            {children}
         </button>
     );
 }
