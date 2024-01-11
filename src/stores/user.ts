@@ -48,12 +48,13 @@ export default useUserStore;
 
 netlifyIdentity.on("init", (user) => {
     console.info("Identity init", user);
-    useUserStore.setState({
-        currentUser: user,
-        isLoggedIn: true,
-        isAdmin: user?.role === "admin",
-    });
-    netlifyIdentity.close();
+    if (user) {
+        useUserStore.setState({
+            currentUser: user,
+            isLoggedIn: true,
+            isAdmin: user?.role === "admin",
+        });
+    }
 });
 
 netlifyIdentity.on("login", (user) => {
