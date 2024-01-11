@@ -4,7 +4,14 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 import "~/styles/globals.css";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+            refetchOnMount: false,
+        },
+    },
+});
 
 const MyApp: AppType = ({ Component, pageProps }) => {
     return (
