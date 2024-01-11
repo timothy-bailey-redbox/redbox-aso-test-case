@@ -19,7 +19,7 @@ export const WidgetSchema = z.object({
     type: WidgetTypeSchema,
     data: z.object({
         dataSource: DataSourceSchema,
-        DataType: DataTypeSchema,
+        dataType: DataTypeSchema,
         axis1: z.string(),
         axis2: z.string().optional(),
         axis3: z.string().optional(),
