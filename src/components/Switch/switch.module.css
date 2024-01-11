@@ -1,0 +1,36 @@
+.switch {
+    width: 85px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 5px;
+    transition: background-color 0.3s;
+    box-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.4),
+        -4px -4px 8px rgba(255, 255, 255, 0.6),
+        inset 2px 2px 6px rgba(0, 0, 0, 0.4);
+    opacity: 85%;
+
+    &::before {
+        box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.7);
+    }
+}
+
+.handle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: transform 0.3s;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    background-color: rgba(255, 255, 255, 0.6);
+
+    &::before {
+        box-shadow:
+            inset 2px 2px 5px rgba(0, 0, 0, 0.3),
+            inset -4px -4px 6px rgba(255, 255, 255, 0.3);
+    }
+}
+
+.on {
+    transform: translateX(45px);
+}
