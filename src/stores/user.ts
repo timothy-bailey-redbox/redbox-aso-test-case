@@ -1,12 +1,6 @@
 import netlifyIdentity, { type User } from "netlify-identity-widget";
 import { create } from "zustand";
-
-declare global {
-    interface Window {
-        netlifyIdentity: typeof netlifyIdentity;
-    }
-}
-window.netlifyIdentity = netlifyIdentity;
+import { isClientSide } from "~/lib/context";
 
 type UserState = {
     currentUser: User | null;
@@ -22,59 +16,20 @@ type UserState = {
 };
 
 const useUserStore = create<UserState>()((set, get) => {
-    netlifyIdentity.on("init", (user) => {
-        console.info("Identity init", user);
-        set({
-            currentUser: user,
-            isLoggedIn: true,
-            isAdmin: user?.role === "admin",
-        });
-        netlifyIdentity.close();
-    });
-
-    netlifyIdentity.on("login", (user) => {
-        console.info("Identity login", user);
-        set({
-            currentUser: user,
-            isLoggedIn: true,
-            isAdmin: user?.role === "admin",
-        });
-        netlifyIdentity.close();
-    });
-
-    netlifyIdentity.on("logout", () => {
-        console.info("Identity  logged out");
-        set({
-            currentUser: null,
-            isLoggedIn: false,
-            isAdmin: false,
-        });
-        // router.push("/");
-    });
-
-    netlifyIdentity.on("error", (err) => {
-        console.error("Identity error", err);
-        set({
-            error: err,
-        });
-    });
-
     async function getBearer() {
         const currentUser = get().currentUser;
         let token = currentUser?.token?.access_token;
         if (currentUser?.token?.expires_at ?? 0 < Date.now() + 10_000) {
             token = await netlifyIdentity.refresh();
+            const user = netlifyIdentity.currentUser();
             set({
-                currentUser: netlifyIdentity.currentUser(),
+                currentUser: user,
+                isLoggedIn: true,
+                isAdmin: user?.role === "admin",
             });
         }
         return `Bearer ${token}`;
     }
-
-    netlifyIdentity.init({
-        container: "#identity",
-        locale: "en",
-    });
 
     return {
         currentUser: null,
@@ -89,5 +44,47 @@ const useUserStore = create<UserState>()((set, get) => {
         getBearer,
     };
 });
-
 export default useUserStore;
+
+netlifyIdentity.on("init", (user) => {
+    console.info("Identity init", user);
+    useUserStore.setState({
+        currentUser: user,
+        isLoggedIn: true,
+        isAdmin: user?.role === "admin",
+    });
+    netlifyIdentity.close();
+});
+
+netlifyIdentity.on("login", (user) => {
+    console.info("Identity login", user);
+    useUserStore.setState({
+        currentUser: user,
+        isLoggedIn: true,
+        isAdmin: user?.role === "admin",
+    });
+    netlifyIdentity.close();
+});
+
+netlifyIdentity.on("logout", () => {
+    console.info("Identity  logged out");
+    useUserStore.setState({
+        currentUser: null,
+        isLoggedIn: false,
+        isAdmin: false,
+    });
+});
+
+netlifyIdentity.on("error", (error) => {
+    console.error("Identity error", error);
+    useUserStore.setState({
+        error,
+    });
+});
+
+if (isClientSide()) {
+    netlifyIdentity.init({
+        container: "#identity",
+        locale: "en",
+    });
+}
