@@ -19,7 +19,7 @@ export default function Dashboards() {
                     <LogoutButton />
                     <br />
                     <div>
-                        <textarea cols={800}>{JSON.stringify(dashboards, null, 4)}</textarea>
+                        <textarea cols={80} value={JSON.stringify(dashboards, null, 4)}></textarea>
                     </div>
                 </div>
             </main>

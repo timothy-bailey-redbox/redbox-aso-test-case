@@ -6,7 +6,7 @@ const handler = functionHandler({
         get: async (event, user) => {
             return {
                 body: JSON.stringify({
-                    data: [],
+                    dashboards: [],
                 }),
             };
         },

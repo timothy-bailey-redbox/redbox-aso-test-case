@@ -21,8 +21,11 @@ const useUserStore = create<UserState>()((set, get) => {
         let token = currentUser?.token?.access_token;
         if (currentUser?.token?.expires_at ?? 0 < Date.now() + 10_000) {
             token = await netlifyIdentity.refresh();
+            const user = netlifyIdentity.currentUser();
             set({
-                currentUser: netlifyIdentity.currentUser(),
+                currentUser: user,
+                isLoggedIn: true,
+                isAdmin: user?.role === "admin",
             });
         }
         return `Bearer ${token}`;
