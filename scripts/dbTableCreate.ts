@@ -1,24 +1,16 @@
 import "dotenv/config";
-import DBConnector from "../netlify/lib/dbConnector";
+import { uiDb } from "netlify/lib/db";
 console.log("DB table creation");
 
-const db = new DBConnector({
-    user: process.env.UI_DB_USERNAME,
-    host: process.env.UI_DB_HOST,
-    database: process.env.UI_DB_NAME,
-    password: process.env.UI_DB_PASSWORD,
-    port: parseInt(process.env.UI_DB_PORT ?? "5432", 10),
-});
-
 try {
-    await db.select("BEGIN", []);
+    await uiDb.select("BEGIN", []);
 
     console.log("Enums");
-    await db.select(`CREATE TYPE "StatusType" AS ENUM ('ACTIVE', 'DELETED');`, []);
-    await db.select(`CREATE TYPE "AppType" AS ENUM ('IOS', 'ANDROID');`, []);
+    await uiDb.select(`CREATE TYPE "StatusType" AS ENUM ('ACTIVE', 'DELETED');`, []);
+    await uiDb.select(`CREATE TYPE "AppType" AS ENUM ('IOS', 'ANDROID');`, []);
 
     console.log("Teams");
-    await db.select(
+    await uiDb.select(
         `CREATE TABLE "teams"(
             "id"                    UUID            NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
             "name"                  TEXT            NOT NULL,
@@ -31,7 +23,7 @@ try {
     );
 
     console.log("Dashboards");
-    await db.select(
+    await uiDb.select(
         `CREATE TABLE "dashboards"(
             "id"                    UUID            NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
             "name"                  TEXT            NOT NULL,
@@ -50,7 +42,7 @@ try {
     );
 
     console.log("Widgets");
-    await db.select(
+    await uiDb.select(
         `CREATE TABLE "widgets"(
             "id"                    UUID            NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
             "dashboardId"           UUID            NOT NULL,
@@ -72,10 +64,10 @@ try {
         [],
     );
 
-    await db.select("COMMIT", []);
+    await uiDb.select("COMMIT", []);
 } catch (err) {
     console.error(err);
-    await db.select("ROLLBACK", []);
+    await uiDb.select("ROLLBACK", []);
 }
 
 console.log("Tables created");
