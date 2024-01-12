@@ -15,13 +15,13 @@ type Handlers<TUser> = {
 };
 
 export default function functionHandler(config: { secure: true; handlers: Handlers<UserAuth> }): Handler;
-export default function functionHandler(config: { secure: false; handlers: Handlers<null> }): Handler;
+export default function functionHandler(config: { secure: false; handlers: Handlers<UserAuth | null> }): Handler;
 export default function functionHandler({
     secure,
     handlers,
 }: {
     secure: boolean;
-    handlers: Handlers<UserAuth | null>;
+    handlers: Handlers<UserAuth> | Handlers<UserAuth | null>;
 }): Handler {
     return async (event: HandlerEvent, context: HandlerContext): Promise<HandlerResponse> => {
         if (event.httpMethod === "OPTIONS") {
