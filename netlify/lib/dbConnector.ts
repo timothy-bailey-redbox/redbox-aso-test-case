@@ -16,12 +16,12 @@ export default class DBConnector {
         });
     }
 
-    async select<TRow extends pg.QueryResultRow>(query: string, parameters: string[]): Promise<TRow[]> {
+    async select<TRow extends pg.QueryResultRow>(query: string, parameters: unknown[]): Promise<TRow[]> {
         const request = await this.client.query<TRow>(query, parameters);
         return request.rows;
     }
 
-    async mutate<TRow extends pg.QueryResultRow>(query: string, parameters: string[]): Promise<TRow[]> {
+    async mutate<TRow extends pg.QueryResultRow>(query: string, parameters: unknown[]): Promise<TRow[]> {
         try {
             await this.client.query("BEGIN");
             const response = await this.client.query<TRow>(query, parameters);
