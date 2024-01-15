@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { DashboardSchema } from "types/dashboard";
+import { DashboardAPISchema } from "types/dashboard";
 import { z } from "zod";
 import { doFetch } from "~/lib/doFetch";
 import useUserStore from "~/stores/user";
@@ -18,7 +18,7 @@ export default function useDashboardQuery() {
                 bearer: await user.getBearer(),
                 returnType: "json",
                 schema: z.object({
-                    dashboards: z.array(DashboardSchema),
+                    dashboards: z.array(DashboardAPISchema),
                 }),
             });
         },

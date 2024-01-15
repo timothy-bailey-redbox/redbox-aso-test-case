@@ -6,6 +6,14 @@ type ProxyHandlerResponse = Omit<HandlerResponse, "statusCode"> & {
     statusCode?: number;
 };
 
+export class HTTPResponseError extends Error {
+    statusCode: number;
+    constructor(statusCode: number, message: string, options?: ErrorOptions) {
+        super(message, options);
+        this.statusCode = statusCode;
+    }
+}
+
 type Handlers<TUser> = {
     get?: (event: HandlerEvent, user: TUser) => Promise<ProxyHandlerResponse>;
     put?: (event: HandlerEvent, user: TUser) => Promise<ProxyHandlerResponse>;
@@ -61,6 +69,7 @@ export default function functionHandler({
             }
         } catch (err) {
             let message = err;
+            let statusCode = 500;
             if (!!err && err instanceof Error) {
                 message = {
                     name: err.name,
@@ -72,9 +81,15 @@ export default function functionHandler({
                     // @ts-expect-error I know this object structure is fine, literally just set it
                     message.errors = err.errors;
                 }
+                if (err instanceof HTTPResponseError) {
+                    statusCode = err.statusCode;
+                    // Remove the stack as this was very likely and handled error
+                    // @ts-expect-error As above
+                    delete message.stack;
+                }
             }
             return {
-                statusCode: 500,
+                statusCode,
                 body: JSON.stringify(message),
                 headers: {
                     ...apiHeaders,
