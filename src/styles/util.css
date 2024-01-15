@@ -1,0 +1,30 @@
+.convex {
+    box-shadow:
+        2px 2px 4px var(--shadow-dark-bright),
+        -2px -2px 4px var(--shadow-light-bright),
+        inset -2px -2px 4px var(--shadow-dark-dim),
+        inset 2px 2px 4px var(--shadow-light-dim);
+}
+
+.convex-light {
+    box-shadow:
+        2px 2px 2px var(--shadow-dark-dim),
+        -2px -2px 2px var(--shadow-light-dim),
+        inset 1px 1px 2px var(--shadow-dark-dim);
+}
+
+.convex-outlined {
+    box-shadow:
+        4px 4px 8px var(--shadow-dark-dim),
+        -4px -4px 8px var(--shadow-light-bright),
+        inset 2px 2px 4px var(--shadow-dark-dim),
+        inset 2px 2px 4px var(--shadow-light-dim);
+}
+
+.concave {
+    box-shadow:
+        2px 2px 4px var(--shadow-dark-dim),
+        -2px -2px 4px var(--shadow-light-dim),
+        inset 4px 4px 8px var(--shadow-dark-dim),
+        inset -2px -2px 4px var(--shadow-light-dim);
+}

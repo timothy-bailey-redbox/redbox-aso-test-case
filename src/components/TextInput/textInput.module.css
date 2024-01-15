@@ -1,0 +1,30 @@
+.textInput {
+    margin: 12px;
+}
+
+.textInputField {
+    border: 0;
+    border-width: 0;
+    border-radius: 45px;
+    padding: 10px;
+    font-weight: 700;
+    padding-left: 20px;
+}
+
+.error {
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--error-color);
+    color: var(--error-color);
+}
+
+.disabled {
+    color: white;
+}
+
+.errorText {
+    color: var(--error-color);
+    font-size: 13.33px;
+    margin-left: 16px;
+    margin-top: 2px;
+}

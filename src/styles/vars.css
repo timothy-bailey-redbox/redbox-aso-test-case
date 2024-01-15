@@ -1,3 +1,8 @@
 :root {
     --normal-text-color: #4b3758;
+    --error-color: #b41e00;
+    --shadow-light-bright: rgba(255, 255, 255, 0.5);
+    --shadow-dark-bright: rgba(0, 0, 0, 0.5);
+    --shadow-light-dim: rgba(255, 255, 255, 0.3);
+    --shadow-dark-dim: rgba(0, 0, 0, 0.3);
 }

@@ -9,3 +9,8 @@
     align-items: center;
     color: #4b3758;
 }
+
+.dashboard {
+    width: 1600px;
+    height: 1000px;
+}

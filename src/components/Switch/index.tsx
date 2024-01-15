@@ -12,13 +12,13 @@ export default function Switch({ isOn, onToggle }: SwitchProps) {
 
     return (
         <div
-            className={styles.switch}
+            className={clsx(styles.switch, "convex-outlined")}
             onClick={() => {
                 setActive(!active);
                 onToggle();
             }}
         >
-            <div className={clsx(styles.handle, { [styles.on!]: active })}></div>
+            <div className={clsx(styles.handle, "convex-light", { [styles.on!]: active })}></div>
         </div>
     );
 }
