@@ -16,6 +16,7 @@ export const DataTypeSchema = z.enum([
 export type DataType = z.infer<typeof DataTypeSchema>;
 
 export const WidgetSchema = z.object({
+    id: IdSchema,
     type: WidgetTypeSchema,
     dataSource: DataSourceSchema,
     dataType: DataTypeSchema,
