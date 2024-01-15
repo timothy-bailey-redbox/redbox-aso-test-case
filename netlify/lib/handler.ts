@@ -1,23 +1,27 @@
-import { type HandlerEvent, type HandlerContext, type HandlerResponse, type Handler } from "@netlify/functions";
-import { corsHeaders, apiHeaders } from "./consts";
-import { type UserAuth, getUser, isLoggedIn } from "./auth";
+import { type Handler, type HandlerContext, type HandlerEvent, type HandlerResponse } from "@netlify/functions";
+import { getUser, isLoggedIn, type UserAuth } from "./auth";
+import { apiHeaders, corsHeaders } from "./consts";
 
 type ProxyHandlerResponse = Omit<HandlerResponse, "statusCode"> & {
     statusCode?: number;
 };
 
+type Handlers<TUser> = {
+    get?: (event: HandlerEvent, user: TUser) => Promise<ProxyHandlerResponse>;
+    put?: (event: HandlerEvent, user: TUser) => Promise<ProxyHandlerResponse>;
+    post?: (event: HandlerEvent, user: TUser) => Promise<ProxyHandlerResponse>;
+    patch?: (event: HandlerEvent, user: TUser) => Promise<ProxyHandlerResponse>;
+    delete?: (event: HandlerEvent, user: TUser) => Promise<ProxyHandlerResponse>;
+};
+
+export default function functionHandler(config: { secure: true; handlers: Handlers<UserAuth> }): Handler;
+export default function functionHandler(config: { secure: false; handlers: Handlers<UserAuth | null> }): Handler;
 export default function functionHandler({
     secure,
     handlers,
 }: {
     secure: boolean;
-    handlers: {
-        get?: (event: HandlerEvent, user: UserAuth | null) => Promise<ProxyHandlerResponse>;
-        put?: (event: HandlerEvent, user: UserAuth | null) => Promise<ProxyHandlerResponse>;
-        post?: (event: HandlerEvent, user: UserAuth | null) => Promise<ProxyHandlerResponse>;
-        patch?: (event: HandlerEvent, user: UserAuth | null) => Promise<ProxyHandlerResponse>;
-        delete?: (event: HandlerEvent, user: UserAuth | null) => Promise<ProxyHandlerResponse>;
-    };
+    handlers: Handlers<UserAuth> | Handlers<UserAuth | null>;
 }): Handler {
     return async (event: HandlerEvent, context: HandlerContext): Promise<HandlerResponse> => {
         if (event.httpMethod === "OPTIONS") {
@@ -56,9 +60,22 @@ export default function functionHandler({
                 response = await handlers.delete(event, user);
             }
         } catch (err) {
+            let message = err;
+            if (!!err && err instanceof Error) {
+                message = {
+                    name: err.name,
+                    message: err.message,
+                    stack: err.stack,
+                    errors: [],
+                };
+                if (err instanceof AggregateError) {
+                    // @ts-expect-error I know this object structure is fine, literally just set it
+                    message.errors = err.errors;
+                }
+            }
             return {
                 statusCode: 500,
-                body: JSON.stringify(err),
+                body: JSON.stringify(message),
                 headers: {
                     ...apiHeaders,
                 },

@@ -17,13 +17,11 @@ export type DataType = z.infer<typeof DataTypeSchema>;
 
 export const WidgetSchema = z.object({
     type: WidgetTypeSchema,
-    data: z.object({
-        dataSource: DataSourceSchema,
-        dataType: DataTypeSchema,
-        axis1: z.string(),
-        axis2: z.string().optional(),
-        axis3: z.string().optional(),
-    }),
+    dataSource: DataSourceSchema,
+    dataType: DataTypeSchema,
+    axis1: z.string(),
+    axis2: z.string().optional(),
+    axis3: z.string().optional(),
     title: z.string().min(1),
     description: z.string().nullish(),
     width: z.number().gte(1).lte(MAX_GRID_SIZE),

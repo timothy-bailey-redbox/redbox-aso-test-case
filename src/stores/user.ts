@@ -28,7 +28,7 @@ const useUserStore = create<UserState>()((set, get) => {
                 isAdmin: user?.role === "admin",
             });
         }
-        return `Bearer ${token}`;
+        return token!;
     }
 
     return {
