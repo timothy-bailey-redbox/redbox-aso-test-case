@@ -38,6 +38,7 @@ export const DashboardSchema = z.object({
     teamId: IdSchema,
     appId: z.string().min(1),
     comparisonAppIds: z.array(z.string().min(1)),
+    keywords: z.array(z.string().min(1).toLowerCase()),
     appType: AppTypeSchema,
     widgets: z.array(WidgetSchema).nonempty(),
     createdAt: TimestampSchema,
