@@ -15,7 +15,6 @@ export default function useDashboardQuery() {
             return await doFetch({
                 url: "/api/dashboard",
                 method: "GET",
-                bearer: await user.getBearer(),
                 returnType: "json",
                 schema: z.object({
                     dashboards: z.array(DashboardAPISchema),
