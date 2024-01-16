@@ -13,7 +13,7 @@ export default function useDashboardQuery() {
         queryKey: DASHBOARD_KEY,
         queryFn: async () => {
             return await doFetch({
-                url: "/api/dashboard",
+                url: "/api/dashboards",
                 method: "GET",
                 returnType: "json",
                 schema: z.object({

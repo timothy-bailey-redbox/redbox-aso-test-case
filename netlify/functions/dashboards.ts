@@ -6,6 +6,11 @@ import { WidgetAPISchema, type WidgetDB } from "types/widget";
 import { z } from "zod";
 import functionHandler from "../lib/handler";
 import { dashboardDBToAPI } from "netlify/lib/dto/dashboard";
+import { type Config } from "@netlify/functions";
+
+export const config: Config = {
+    path: "/api/dashboards",
+};
 
 export default functionHandler({
     secure: true,
