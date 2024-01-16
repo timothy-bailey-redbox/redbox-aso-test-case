@@ -1,9 +1,9 @@
-import { type Handler, type HandlerContext, type HandlerEvent, type HandlerResponse } from "@netlify/functions";
+import { type Context, type Config } from "@netlify/functions";
 import { uiDb } from "netlify/lib/db";
 import { StatusSchema } from "types/generic";
 import { doFetch } from "~/lib/doFetch";
 
-const handler: Handler = async (_event: HandlerEvent, _context: HandlerContext): Promise<HandlerResponse> => {
+export default async function Sync(_req: Request, _context: Context): Promise<Response> {
     const appDataToSync = await uiDb.select<{
         appId: string;
         keywords: string[];
@@ -36,15 +36,11 @@ const handler: Handler = async (_event: HandlerEvent, _context: HandlerContext):
     });
 
     console.log("Background sync triggered with data: \n", appDataToSync);
-    return {
-        statusCode: 200,
-        body: JSON.stringify(appDataToSync),
-    };
+
+    return new Response(JSON.stringify(appDataToSync));
+}
+
+export const config: Config = {
+    // TODO: Uncomment this when the service is tested and ready to run on schedule
+    //schedule: "@daily",
 };
-
-export { handler };
-
-// TODO: Uncomment this when the service is tested and ready to run on schedule
-// export const config: Config = {
-//     schedule: "@daily",
-// };

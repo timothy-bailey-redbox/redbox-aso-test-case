@@ -1,12 +1,4 @@
-import { type HandlerContext } from "@netlify/functions";
-
-export function isLoggedIn(context: HandlerContext): boolean {
-    return !!getUser(context)?.sub;
-}
-
-export function getUser(context: HandlerContext): UserAuth {
-    return (context.clientContext?.user as UserAuth) ?? null;
-}
+import { type Context } from "@netlify/functions";
 
 export type UserAuth = {
     app_metadata: {
@@ -17,3 +9,16 @@ export type UserAuth = {
     sub: string;
     user_metadata: Record<string, unknown>;
 };
+
+export function getUser(context: Context): UserAuth | null {
+    const token = context.cookies.get("nf_jwt");
+    return !!token ? parseJwt(token) : null;
+}
+
+export function isLoggedIn(context: Context): boolean {
+    return !!getUser(context)?.sub;
+}
+
+function parseJwt(token: string): UserAuth {
+    return JSON.parse(Buffer.from(token?.split(".")?.[1] ?? "{}", "base64").toString()) as UserAuth;
+}
