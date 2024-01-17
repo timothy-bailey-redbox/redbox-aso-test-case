@@ -1,5 +1,12 @@
 .navbar {
-    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
     height: 100%;
-    background-color: grey;
+    box-shadow: var(--u-convex-simple-shadow);
+    border-bottom-left-radius: 45px;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 45px;
+    border-top-right-radius: 0;
+    background: rgba(255, 255, 255, 0.4);
 }

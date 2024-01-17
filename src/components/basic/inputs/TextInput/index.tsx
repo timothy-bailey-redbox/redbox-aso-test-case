@@ -2,18 +2,21 @@ import React from "react";
 import styles from "./textInput.module.css";
 import clsx from "clsx";
 
-type TextInput = {
-    placeHolder: string;
+type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+    placeHolder?: string;
+    label?: string;
     disabled?: boolean;
     error?: string;
     value?: string;
 };
 
-export default function Card({ placeHolder, disabled, error, value }: TextInput) {
+export default function TextInput({ placeHolder, disabled, error, value, label, ...props }: TextInputProps) {
     return (
-        <div className={styles.textInput}>
+        <div>
+            {label && <div className={styles.labelText}>{label}</div>}
             <input
-                className={clsx(styles.textInputField, "concave", {
+                {...props}
+                className={clsx(styles.textInputField, "u-concave", {
                     [styles.disabled!]: disabled,
                     [styles.error!]: error,
                 })}

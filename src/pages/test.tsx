@@ -1,47 +1,78 @@
-import Button from "~/components/Button";
-import Card from "~/components/Card";
-import Switch from "~/components/Switch";
+import Button from "~/components/basic/inputs/Button";
+import Card from "~/components/basic/Card";
+import Switch from "~/components/basic/inputs/Switch";
+import TextInput from "~/components/basic/inputs/TextInput";
+import Grid from "~/components/basic/Grid";
+import Background from "~/components/wrappers/Background";
+import StatWidget from "~/components/assemblies/Widgets/StatWidget";
+import GraphWidget from "~/components/assemblies/Widgets/LineGraphWidget";
+import Scroller from "~/components/wrappers/Scroller";
+import NavBar from "~/components/assemblies/NavBar";
 import styles from "./test.module.css";
-import TextInput from "~/components/TextInput";
-import Grid from "~/components/Grid";
+import { mockGraphData } from "~/util/mockData";
 
 export default function TestPage() {
     return (
-        <div className={styles.test}>
-            <Card className={styles.dashboard}>
+        <Background fullSize>
+            <NavBar />
+            <Scroller>
+                <p className={styles.dashboardTitle}>Dashboard bet 322</p>
                 <Grid>
                     {[
-                        { width: 6, height: 4, element: <Card borderRadius="35px">6x4</Card> },
+                        { width: 7, height: 4, x: 1, y: 1, element: <Card> </Card> },
                         {
-                            width: 6,
+                            width: 5,
                             height: 6,
-                            element: <Card borderRadius="35px">6x6</Card>,
+                            element: <GraphWidget title="Line graph" data={mockGraphData} />,
                         },
                         {
                             width: 4,
                             height: 4,
                             element: (
-                                <Card borderRadius="35px">
-                                    <p>4x4</p>
-                                    <Button>Button</Button>
+                                <Card title="Widget">
                                     <Switch
                                         isOn={false}
+                                        label="Switch"
                                         onToggle={() => {
                                             console.log("");
                                         }}
                                     />
-                                    <TextInput placeHolder="Input..." />
+                                    <TextInput placeHolder="Input..." label="Input field" />
                                     <TextInput placeHolder="Input..." disabled />
                                     <TextInput placeHolder="Input..." error="Something is wrong" value="Wrong input" />
+                                    <Button>Button</Button>
                                 </Card>
                             ),
                         },
-                        { width: 2, height: 2, element: <Card borderRadius="35px">2x2</Card> },
-                        { width: 8, height: 4, element: <Card borderRadius="35px">8x4</Card> },
-                        { width: 4, height: 2, element: <Card borderRadius="35px">4x2</Card> },
+                        {
+                            width: 3,
+                            height: 1,
+                            element: (
+                                <StatWidget
+                                    title={"Click stat"}
+                                    stat={"341,2"}
+                                    description={"random stat % explanation"}
+                                    icon="Click"
+                                />
+                            ),
+                        },
+                        {
+                            width: 3,
+                            height: 1,
+                            element: (
+                                <StatWidget
+                                    title={"Download stat"}
+                                    stat={"143,2"}
+                                    description={"random stat % explanation"}
+                                    icon="Download"
+                                />
+                            ),
+                        },
+                        { width: 8, height: 8, element: <Card> </Card> },
+                        { width: 4, height: 6, element: <Card> </Card> },
                     ]}
                 </Grid>
-            </Card>
-        </div>
+            </Scroller>
+        </Background>
     );
 }

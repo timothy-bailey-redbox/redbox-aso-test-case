@@ -1,0 +1,77 @@
+.background {
+    background: var(--bg-gradient);
+    min-height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: max(16px, 10vh) max(16px, 10vw) max(16px, 10vh) max(16px, 10vw);
+}
+
+.ribbonContainer {
+    position: absolute;
+    inset: 0;
+    overflow: clip;
+}
+
+.ribbon {
+    position: absolute;
+    opacity: 70%;
+}
+
+.vertical {
+    width: 20px;
+}
+
+.horizontal {
+    height: 20px;
+}
+
+.orange {
+    background-color: var(--bg-orange);
+}
+
+.purple {
+    background-color: var(--bg-purple);
+}
+
+.ribbonContainer .orange:nth-child(1) {
+    top: 0;
+    bottom: 22%;
+    left: 20%;
+    border-bottom-left-radius: 50px;
+}
+
+.ribbonContainer .purple:nth-child(2) {
+    bottom: 22%;
+    left: 20%;
+    right: 50%;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    transform: translate(20px, 20px);
+}
+
+.ribbonContainer .orange:nth-child(3) {
+    bottom: 22%;
+    top: 33%;
+    left: 50%;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    transform: translate(20px, 0);
+}
+
+.ribbonContainer .purple:nth-child(4) {
+    top: 33%;
+    left: 50%;
+    right: 0;
+    border-top-left-radius: 50px;
+    transform: translate(40px, -20px);
+}
+
+.fullSize {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    height: 80svh;
+    width: 100%;
+    border-radius: 45px;
+}

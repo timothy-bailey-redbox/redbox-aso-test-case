@@ -1,14 +1,13 @@
-import TextInput from "../../TextInput";
+import Card from "~/components/basic/Card";
+import TextInput from "../../basic/inputs/TextInput";
 import styles from "./navbar.module.css";
+import Icons from "~/components/basic/Icons";
 
-type NavBarProps = {
-    mode: "view" | "create";
-};
-
-export default function LoadingScreen({}: NavBarProps) {
+export default function NavBar() {
     return (
-        <div className={styles.navbar}>
+        <Card className={styles.navbar}>
+            <Icons.Redbox height={100} width={132} />
             <TextInput placeHolder="Search..."></TextInput>
-        </div>
+        </Card>
     );
 }

@@ -1,16 +1,5 @@
-.test {
-    background-image: url("/light.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    min-height: 100svh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #4b3758;
-}
-
-.dashboard {
-    width: 1600px;
-    height: 1000px;
+.dashboardTitle {
+    font-size: var(--title-text-size);
+    color: var(--purple-text-color);
+    margin-bottom: 12px;
 }

@@ -1,7 +1,3 @@
-.textInput {
-    margin: 12px;
-}
-
 .textInputField {
     border: 0;
     border-width: 0;
@@ -18,13 +14,16 @@
     color: var(--error-color);
 }
 
-.disabled {
-    color: white;
+.labelText {
+    color: var(--normal-text-color);
+    margin-left: 12px;
+    margin-bottom: 6px;
+    font-weight: 600;
 }
 
 .errorText {
     color: var(--error-color);
-    font-size: 13.33px;
+    font-size: var(--helper-text-size);
     margin-left: 16px;
     margin-top: 2px;
 }

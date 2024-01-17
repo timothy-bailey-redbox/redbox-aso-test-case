@@ -1,11 +1,11 @@
 .gridContainer {
     display: grid;
-    height: 100%;
-    width: 100%;
     grid-template-columns: repeat(12, 1fr);
     gap: 24px;
 }
 
-/* .gridItem {
-    aspect-ratio: 1 / 1;
-} */
+.gridItem {
+    & > * {
+        height: 100%;
+    }
+}

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import useUserStore from "~/stores/user";
-import LoadingScreen from "../LoadingScreen";
+import LoadingScreen from "../basic/LoadingScreen";
 import { LOGIN_REDIRECT_STORAGE_KEY } from "./consts";
 
 type InsecurePageProps = React.PropsWithChildren;

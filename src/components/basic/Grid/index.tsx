@@ -6,25 +6,31 @@ type GridProps = {
 };
 
 type GridItemProps = {
+    id?: number;
+    x?: number;
+    y?: number;
     width: number;
     height: number;
     element: React.ReactNode;
 };
 
-const Grid: React.FC<GridProps> = ({ children }) => {
+export default function Grid({ children }: GridProps) {
     return (
         <div className={styles.gridContainer}>
             {children.map((child, index) => (
                 <div
-                    key={index}
+                    key={child.id ?? index}
                     className={styles.gridItem}
-                    style={{ gridColumnEnd: `span ${child.width}`, gridRowEnd: `span ${child.height}` }}
+                    style={{
+                        gridColumnStart: child.x,
+                        gridRowStart: child.y,
+                        gridColumnEnd: `span ${child.width}`,
+                        gridRowEnd: `span ${child.height}`,
+                    }}
                 >
                     {child.element}
                 </div>
             ))}
         </div>
     );
-};
-
-export default Grid;
+}

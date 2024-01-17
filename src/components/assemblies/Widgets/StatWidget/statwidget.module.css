@@ -1,0 +1,31 @@
+.statWidget {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.stat {
+    font-size: var(--big-text-size);
+    color: var(--normal-text-color);
+    font-weight: 900;
+    margin: auto;
+}
+
+.description {
+    font-size: var(--helper-text-size);
+    color: var(--helper-text-color);
+}
+
+.iconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 75px;
+    height: 75px;
+    border-radius: 50px;
+}
+
+.icon {
+    color: var(--purple-text-color);
+}

@@ -1,6 +1,26 @@
 :root {
-    --normal-text-color: #4b3758;
+    /* text and system colors */
+    --purple-text-color: #4b3758;
+    --normal-text-color: rgba(80, 80, 80, 0.9);
+    --helper-text-color: #838383;
     --error-color: #b41e00;
+
+    /* text sizes */
+    --title-text-size: 39.81px;
+    --big-text-size: 27.65px;
+    --subtitle-text-size: 19.2px;
+    --normal-text-size: 16px;
+    --helper-text-size: 13.33px;
+
+    /* bg colors */
+    --bg-gradient: linear-gradient(160deg, rgba(255, 255, 255, 1) 0%, rgba(91, 89, 114, 1) 100%);
+    --bg-purple: #9747ff;
+    --bg-orange: #ff8d25;
+
+    /* graph colors */
+    --graph-color: linear-gradient(0deg, rgba(121, 35, 210, 1) 0%, rgba(255, 121, 0, 1) 100%);
+
+    /* shadows */
     --shadow-light-bright: rgba(255, 255, 255, 0.5);
     --shadow-dark-bright: rgba(0, 0, 0, 0.5);
     --shadow-light-dim: rgba(255, 255, 255, 0.3);
