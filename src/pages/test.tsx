@@ -70,6 +70,11 @@ export default function TestPage() {
                         },
                         { width: 8, height: 8, element: <Card> </Card> },
                         { width: 4, height: 6, element: <Card> </Card> },
+                        { width: 4, height: 4, element: <Card> </Card> },
+                        { width: 4, height: 4, element: <Card> </Card> },
+                        { width: 4, height: 4, element: <Card> </Card> },
+                        { width: 6, height: 4, element: <Card> </Card> },
+                        { width: 6, height: 4, element: <Card> </Card> },
                     ]}
                 </Grid>
             </Scroller>
