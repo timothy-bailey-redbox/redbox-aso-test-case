@@ -2,8 +2,9 @@ import { type Context, type HandlerResponse } from "@netlify/functions";
 import { getUser, isLoggedIn, type UserAuth } from "./auth";
 import { apiHeaders, corsHeaders } from "./consts";
 
-type ProxyHandlerResponse = Omit<HandlerResponse, "statusCode"> & {
+type ProxyHandlerResponse = Omit<HandlerResponse, "statusCode" | "body"> & {
     statusCode?: number;
+    body?: string | object;
 };
 
 export class HTTPResponseError extends Error {
@@ -92,6 +93,17 @@ export default function functionHandler({
             return new Response(JSON.stringify(message), {
                 status,
                 headers: apiHeaders,
+            });
+        }
+
+        if (typeof response.body === "object") {
+            return new Response(JSON.stringify(response.body), {
+                status: response.statusCode,
+                headers: {
+                    ...apiHeaders,
+                    "Content-Type": "application/json",
+                    ...response.headers,
+                },
             });
         }
 

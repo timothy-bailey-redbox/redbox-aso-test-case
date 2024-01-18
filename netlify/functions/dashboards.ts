@@ -1,12 +1,12 @@
+import { type Config } from "@netlify/functions";
 import { uiDb } from "netlify/lib/db";
-import { parseJSONWithSchema } from "netlify/lib/parser";
-import { DashboardAPISchema, type DashboardDB } from "types/dashboard";
+import { dashboardDBToAPI } from "netlify/lib/dto/dashboard";
+import { parseWithSchema } from "netlify/lib/parser";
+import { DashboardAPISchema, type DashboardAPI, type DashboardDB } from "types/dashboard";
 import { StatusSchema } from "types/generic";
 import { WidgetAPISchema, type WidgetDB } from "types/widget";
 import { z } from "zod";
 import functionHandler from "../lib/handler";
-import { dashboardDBToAPI } from "netlify/lib/dto/dashboard";
-import { type Config } from "@netlify/functions";
 
 export const config: Config = {
     path: "/api/dashboards",
@@ -16,7 +16,9 @@ export default functionHandler({
     secure: true,
     handlers: {
         get: async (req, context, user) => {
-            const dashboards = await uiDb.select(
+            const dashboards: DashboardAPI[] = [];
+
+            const dashboardsData = await uiDb.select<DashboardDB>(
                 `SELECT d.*
                 FROM dashboards d
                 INNER JOIN teams t ON t.id = d."teamId"
@@ -26,19 +28,19 @@ export default functionHandler({
                 [user.email, StatusSchema.Values.ACTIVE],
             );
 
-            for (const dashboard of dashboards) {
-                dashboard.widgets = await uiDb.select(
+            for (const dashboard of dashboardsData) {
+                const widgets = await uiDb.select<WidgetDB>(
                     `SELECT *
                     FROM widgets
                     WHERE "dashboardId" = $1`,
                     [dashboard.id],
                 );
+
+                dashboards.push(dashboardDBToAPI(dashboard, widgets));
             }
 
             return {
-                body: JSON.stringify({
-                    dashboards,
-                }),
+                body: { dashboards },
             };
         },
 
@@ -57,7 +59,7 @@ export default functionHandler({
                 ),
             });
 
-            const props = parseJSONWithSchema(await req.text(), schema);
+            const props = parseWithSchema(await req.json(), schema);
 
             const dashboard = await uiDb.transaction(async (query) => {
                 const [dash] = await query<DashboardDB>(
@@ -128,7 +130,7 @@ export default functionHandler({
 
             return {
                 statusCode: 201,
-                body: JSON.stringify(dashboard),
+                body: dashboard,
             };
         },
     },
