@@ -1,5 +1,9 @@
 import pg from "pg";
 
+const parseDate = (val: string | null) => (val !== null ? new Date(val).getTime() : val);
+pg.types.setTypeParser(pg.types.builtins.TIMESTAMP, parseDate);
+pg.types.setTypeParser(pg.types.builtins.TIMESTAMPTZ, parseDate);
+
 type Parameters = Record<string, unknown>;
 
 export default class DBConnector {
