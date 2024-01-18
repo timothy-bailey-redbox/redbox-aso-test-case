@@ -17,3 +17,5 @@ export type Timestamp = z.infer<typeof TimestampSchema>;
 
 export const AppTypeSchema = z.enum(["ANDROID", "IOS"]);
 export type AppType = z.infer<typeof AppTypeSchema>;
+
+export const USER_ADMIN_ROLE = "admin";

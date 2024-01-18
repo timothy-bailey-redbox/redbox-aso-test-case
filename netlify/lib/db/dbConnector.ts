@@ -1,5 +1,7 @@
 import pg from "pg";
 
+type Parameters = Record<string, unknown>;
+
 export default class DBConnector {
     private client: pg.Pool;
 
@@ -16,12 +18,13 @@ export default class DBConnector {
         });
     }
 
-    async select<TRow extends pg.QueryResultRow>(query: string, parameters: unknown[]): Promise<TRow[]> {
-        const request = await this.client.query<TRow>(query, parameters);
+    async select<TRow extends pg.QueryResultRow>(query: string, parameters: Parameters): Promise<TRow[]> {
+        const [q, params] = this.parametrizeQuery(query, parameters);
+        const request = await this.client.query<TRow>(q, params);
         return request.rows;
     }
 
-    async mutate<TRow extends pg.QueryResultRow>(query: string, parameters: unknown[]): Promise<TRow[]> {
+    async mutate<TRow extends pg.QueryResultRow>(query: string, parameters: Parameters): Promise<TRow[]> {
         return await this.transaction<TRow[]>(async (queryFn) => {
             return await queryFn(query, parameters);
         });
@@ -38,5 +41,18 @@ export default class DBConnector {
             throw e;
         }
         return result;
+    }
+
+    private parametrizeQuery(rawQuery: string, parameterSet: Parameters): [string, unknown[]] {
+        let paramQuery = rawQuery;
+        const params: unknown[] = [];
+        for (const [key, value] of Object.entries(parameterSet)) {
+            if (paramQuery.includes(`:${key}`)) {
+                params.push(value);
+                paramQuery = paramQuery.replaceAll(`:${key}`, `$${params.length}`);
+            }
+        }
+
+        return [paramQuery, params];
     }
 }
