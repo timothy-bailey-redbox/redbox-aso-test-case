@@ -1,9 +1,11 @@
 import LogoutButton from "~/components/auth/LogoutButton";
 import SecurePage from "~/components/auth/SecurePage";
-import useDashboardQuery from "~/queries/dashboards";
+import { useDashboardsQuery } from "~/queries/dashboards";
+import { useTeamsQuery } from "~/queries/teams";
 
 export default function Dashboards() {
-    const dashboards = useDashboardQuery();
+    const teams = useTeamsQuery();
+    const dashboards = useDashboardsQuery();
 
     return (
         <SecurePage>
@@ -20,6 +22,9 @@ export default function Dashboards() {
                     <br />
                     <div>
                         <textarea cols={80} value={JSON.stringify(dashboards, null, 4)}></textarea>
+                    </div>
+                    <div>
+                        <textarea cols={80} value={JSON.stringify(teams, null, 4)}></textarea>
                     </div>
                 </div>
             </main>

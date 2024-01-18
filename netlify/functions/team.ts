@@ -4,7 +4,7 @@ import uiDb, { getTeam } from "netlify/lib/db/uiDb";
 import functionHandler from "netlify/lib/handler";
 import { parseWithSchema } from "netlify/lib/parser";
 import { StatusSchema } from "types/generic";
-import { TeamSchema, type Team } from "types/team";
+import { TeamUpdateSchema, type Team } from "types/team";
 import { z } from "zod";
 
 export const config: Config = {
@@ -26,8 +26,7 @@ export default functionHandler({
             assertIsAdmin(user);
             const teamId = parseWithSchema(context.params.teamId, z.string().uuid());
 
-            const schema = TeamSchema.partial();
-            const props = parseWithSchema(await req.json(), schema);
+            const props = parseWithSchema(await req.json(), TeamUpdateSchema);
 
             const team = await getTeam(teamId, user);
 

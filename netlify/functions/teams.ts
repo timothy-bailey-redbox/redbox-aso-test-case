@@ -5,7 +5,7 @@ import uiDb, { getTeams } from "netlify/lib/db/uiDb";
 import functionHandler from "netlify/lib/handler";
 import { parseWithSchema } from "netlify/lib/parser";
 import { StatusSchema } from "types/generic";
-import { TeamSchema, type Team } from "types/team";
+import { TeamCreationSchema, TeamSchema, type Team } from "types/team";
 
 export const config: Config = {
     path: "/api/teams",
@@ -27,13 +27,7 @@ export default functionHandler({
         post: async (req, context, user) => {
             assertIsAdmin(user);
 
-            const schema = TeamSchema.omit({
-                id: true,
-                updatedAt: true,
-                createdAt: true,
-                status: true,
-            });
-            const props = parseWithSchema(await req.json(), schema);
+            const props = parseWithSchema(await req.json(), TeamCreationSchema);
 
             const [team] = await uiDb.mutate<Team>(
                 writeInsertQuery(TeamSchema, "teams", ["id", "createdAt", "updatedAt"]),

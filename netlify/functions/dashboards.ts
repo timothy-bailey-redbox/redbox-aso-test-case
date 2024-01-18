@@ -4,10 +4,9 @@ import { writeInsertQuery } from "netlify/lib/db";
 import uiDb, { getDashboards } from "netlify/lib/db/uiDb";
 import { dashboardDBToAPI } from "netlify/lib/dto/dashboard";
 import { parseWithSchema } from "netlify/lib/parser";
-import { DashboardAPISchema, DashboardDBSchema, type DashboardDB } from "types/dashboard";
+import { DashboardAPICreationSchema, DashboardDBSchema, type DashboardDB } from "types/dashboard";
 import { StatusSchema } from "types/generic";
-import { WidgetAPISchema, WidgetDBSchema, type WidgetDB } from "types/widget";
-import { z } from "zod";
+import { WidgetDBSchema, type WidgetDB } from "types/widget";
 import functionHandler from "../lib/handler";
 
 export const config: Config = {
@@ -28,21 +27,7 @@ export default functionHandler({
         post: async (req, context, user) => {
             assertIsAdmin(user);
 
-            const schema = DashboardAPISchema.omit({
-                id: true,
-                updatedAt: true,
-                createdAt: true,
-                status: true,
-                widgets: true,
-            }).extend({
-                widgets: z.array(
-                    WidgetAPISchema.omit({
-                        id: true,
-                    }),
-                ),
-            });
-
-            const props = parseWithSchema(await req.json(), schema);
+            const props = parseWithSchema(await req.json(), DashboardAPICreationSchema);
 
             const dashboard = await uiDb.transaction(async (query) => {
                 const [dash] = await query<DashboardDB>(

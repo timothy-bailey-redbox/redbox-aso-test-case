@@ -5,9 +5,9 @@ import uiDb, { getDashboard } from "netlify/lib/db/uiDb";
 import { dashboardDBToAPI } from "netlify/lib/dto/dashboard";
 import functionHandler from "netlify/lib/handler";
 import { parseWithSchema } from "netlify/lib/parser";
-import { DashboardAPISchema } from "types/dashboard";
+import { DashboardAPIUpdateSchema } from "types/dashboard";
 import { StatusSchema } from "types/generic";
-import { WidgetAPISchema, WidgetDBSchema } from "types/widget";
+import { WidgetDBSchema } from "types/widget";
 import { z } from "zod";
 
 export const config: Config = {
@@ -32,24 +32,7 @@ export default functionHandler({
             const dashboardId = parseWithSchema(context.params.dashboardId, z.string().uuid());
             const [dashboard, widgets] = await getDashboard(dashboardId, user);
 
-            const schema = DashboardAPISchema.partial()
-                .omit({ widgets: true })
-                .extend({
-                    widgets: z
-                        .array(
-                            WidgetAPISchema.partial()
-                                .required({ id: true })
-                                .or(
-                                    WidgetAPISchema.omit({
-                                        id: true,
-                                    }).extend({
-                                        id: z.undefined().optional(),
-                                    }),
-                                ),
-                        )
-                        .optional(),
-                });
-            const changes = parseWithSchema(await req.json(), schema);
+            const changes = parseWithSchema(await req.json(), DashboardAPIUpdateSchema);
 
             await uiDb.transaction(async (queryFn) => {
                 await queryFn(
