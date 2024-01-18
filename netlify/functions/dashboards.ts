@@ -1,5 +1,5 @@
 import { type Config } from "@netlify/functions";
-import { isAdmin } from "netlify/lib/auth";
+import { assertIsAdmin } from "netlify/lib/auth";
 import { writeInsertQuery } from "netlify/lib/db";
 import uiDb, { getDashboards } from "netlify/lib/db/uiDb";
 import { dashboardDBToAPI } from "netlify/lib/dto/dashboard";
@@ -8,7 +8,7 @@ import { DashboardAPISchema, DashboardDBSchema, type DashboardDB } from "types/d
 import { StatusSchema } from "types/generic";
 import { WidgetAPISchema, WidgetDBSchema, type WidgetDB } from "types/widget";
 import { z } from "zod";
-import functionHandler, { HTTPResponseError } from "../lib/handler";
+import functionHandler from "../lib/handler";
 
 export const config: Config = {
     path: "/api/dashboards",
@@ -26,9 +26,7 @@ export default functionHandler({
         },
 
         post: async (req, context, user) => {
-            if (!isAdmin(user)) {
-                throw new HTTPResponseError(403, "");
-            }
+            assertIsAdmin(user);
 
             const schema = DashboardAPISchema.omit({
                 id: true,

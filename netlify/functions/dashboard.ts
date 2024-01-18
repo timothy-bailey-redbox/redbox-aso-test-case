@@ -1,9 +1,9 @@
 import { type Config } from "@netlify/functions";
-import { isAdmin } from "netlify/lib/auth";
+import { assertIsAdmin } from "netlify/lib/auth";
 import { writeInsertQuery } from "netlify/lib/db";
 import uiDb, { getDashboard } from "netlify/lib/db/uiDb";
 import { dashboardDBToAPI } from "netlify/lib/dto/dashboard";
-import functionHandler, { HTTPResponseError } from "netlify/lib/handler";
+import functionHandler from "netlify/lib/handler";
 import { parseWithSchema } from "netlify/lib/parser";
 import { DashboardAPISchema } from "types/dashboard";
 import { StatusSchema } from "types/generic";
@@ -27,9 +27,7 @@ export default functionHandler({
         },
 
         patch: async (req, context, user) => {
-            if (!isAdmin(user)) {
-                throw new HTTPResponseError(403, "");
-            }
+            assertIsAdmin(user);
 
             const dashboardId = parseWithSchema(context.params.dashboardId, z.string().uuid());
             const [dashboard, widgets] = await getDashboard(dashboardId, user);
@@ -147,9 +145,7 @@ export default functionHandler({
         },
 
         delete: async (req, context, user) => {
-            if (!isAdmin(user)) {
-                throw new HTTPResponseError(403, "");
-            }
+            assertIsAdmin(user);
             const dashboardId = parseWithSchema(context.params.dashboardId, z.string().uuid());
 
             await uiDb.mutate(

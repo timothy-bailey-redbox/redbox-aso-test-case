@@ -1,8 +1,8 @@
 import { type Config } from "@netlify/functions";
-import { isAdmin } from "netlify/lib/auth";
+import { assertIsAdmin } from "netlify/lib/auth";
 import { writeInsertQuery } from "netlify/lib/db";
 import uiDb, { getTeams } from "netlify/lib/db/uiDb";
-import functionHandler, { HTTPResponseError } from "netlify/lib/handler";
+import functionHandler from "netlify/lib/handler";
 import { parseWithSchema } from "netlify/lib/parser";
 import { StatusSchema } from "types/generic";
 import { TeamSchema, type Team } from "types/team";
@@ -25,9 +25,7 @@ export default functionHandler({
         },
 
         post: async (req, context, user) => {
-            if (!isAdmin(user)) {
-                throw new HTTPResponseError(403, "");
-            }
+            assertIsAdmin(user);
 
             const schema = TeamSchema.omit({
                 id: true,
