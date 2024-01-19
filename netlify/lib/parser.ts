@@ -12,3 +12,8 @@ export function parseWithSchema<T>(str: unknown, schema: z.ZodType<T>, statusCod
 export function parseJSONWithSchema<T>(json: string | null | undefined, schema: z.ZodType<T>, statusCode?: number): T {
     return parseWithSchema(JSON.parse(json ?? "{}"), schema, statusCode);
 }
+
+export function parseQueryString(request: Request) {
+    const url = new URL(request.url);
+    return Object.fromEntries(url.searchParams.entries());
+}
