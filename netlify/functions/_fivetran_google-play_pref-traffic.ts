@@ -6,7 +6,7 @@ import { TimestampSchema } from "types/generic";
 import { z } from "zod";
 
 export const StatsStorePerformanceTrafficSourceSchema = z.object({
-    date: z.date(),
+    date: TimestampSchema,
     package_name: z.string(),
     traffic_source: z.string(),
     search_term: z.string(),

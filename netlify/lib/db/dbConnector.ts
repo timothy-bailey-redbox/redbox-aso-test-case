@@ -3,6 +3,7 @@ import pg from "pg";
 const parseDate = (val: string | null) => (val !== null ? new Date(val).getTime() : val);
 pg.types.setTypeParser(pg.types.builtins.TIMESTAMP, parseDate);
 pg.types.setTypeParser(pg.types.builtins.TIMESTAMPTZ, parseDate);
+pg.types.setTypeParser(pg.types.builtins.DATE, parseDate);
 
 // This is technically not correct, INT8 is 64bit and JS only supports 52bit ints.
 // I am accepting that loss of precision for simplicity of implementation, and I doubt
