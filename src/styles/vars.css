@@ -6,11 +6,11 @@
     --error-color: #b41e00;
 
     /* text sizes */
-    --title-text-size: 39.81px;
-    --big-text-size: 27.65px;
-    --subtitle-text-size: 19.2px;
-    --normal-text-size: 16px;
-    --helper-text-size: 13.33px;
+    --title-text-size: 2.488rem; /* 39.81px */
+    --big-text-size: 1.728rem; /* 27.65px */
+    --subtitle-text-size: 1.2rem; /* 19.2px */
+    --normal-text-size: 1rem; /* 16px */
+    --helper-text-size: 0.833rem; /* 13.33px */
 
     /* bg colors */
     --bg-gradient: linear-gradient(160deg, rgba(255, 255, 255, 1) 0%, rgba(91, 89, 114, 1) 100%);

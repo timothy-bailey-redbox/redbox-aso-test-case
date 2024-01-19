@@ -9,6 +9,7 @@
     font-weight: 800;
     color: var(--purple-text-color);
     cursor: pointer;
+    max-width: 85px;
 }
 
 .button:active {

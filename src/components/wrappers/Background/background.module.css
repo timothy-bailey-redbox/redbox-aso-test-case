@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: max(16px, 10vh) max(16px, 10vw) max(16px, 10vh) max(16px, 10vw);
+    padding: max(16px, 10vh) max(16px, 10vw);
 }
 
 .ribbonContainer {
@@ -34,14 +34,14 @@
     background-color: var(--bg-purple);
 }
 
-.ribbonContainer .orange:nth-child(1) {
+.orange:nth-child(1) {
     top: 0;
     bottom: 22%;
     left: 20%;
     border-bottom-left-radius: 50px;
 }
 
-.ribbonContainer .purple:nth-child(2) {
+.purple:nth-child(2) {
     bottom: 22%;
     left: 20%;
     right: 50%;
@@ -50,7 +50,7 @@
     transform: translate(20px, 20px);
 }
 
-.ribbonContainer .orange:nth-child(3) {
+.orange:nth-child(3) {
     bottom: 22%;
     top: 33%;
     left: 50%;
@@ -59,7 +59,7 @@
     transform: translate(20px, 0);
 }
 
-.ribbonContainer .purple:nth-child(4) {
+.purple:nth-child(4) {
     top: 33%;
     left: 50%;
     right: 0;

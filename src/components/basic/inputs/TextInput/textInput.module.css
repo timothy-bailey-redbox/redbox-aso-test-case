@@ -5,6 +5,7 @@
     padding: 10px;
     font-weight: 700;
     padding-left: 20px;
+    max-width: 264px;
 }
 
 .error {

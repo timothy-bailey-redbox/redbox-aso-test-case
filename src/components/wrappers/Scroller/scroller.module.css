@@ -3,6 +3,8 @@
     padding-right: 14px;
     margin: 28px;
     overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 100, 100, 0.3) transparent;
 }
 
 .scroller::-webkit-scrollbar {

@@ -15,7 +15,7 @@
     background-color: rgba(255, 255, 255, 1);
 }
 
-.on {
+input:checked + .switch .handle {
     transform: translateX(45px);
 }
 

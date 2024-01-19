@@ -22,8 +22,8 @@ export default function Switch({ isOn, onToggle, label }: SwitchProps) {
 
     return (
         <div>
-            {label && <span className={styles.labelText}>{label}</span>}
             <label>
+                {label && <span className={styles.labelText}>{label}</span>}
                 <input
                     type="checkbox"
                     checked={active}

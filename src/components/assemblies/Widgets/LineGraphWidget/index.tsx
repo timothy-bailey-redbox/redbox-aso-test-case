@@ -1,28 +1,30 @@
 import React from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import Card from "~/components/basic/Card";
 
-interface GraphWidgetProps {
-    data: { name: string; uv: number; pv: number; amt: number }[];
-    title: string;
-}
+type DataType = {
+    name: string;
+    value: number;
+};
 
-const GraphWidget = ({ data, title }: GraphWidgetProps) => {
+type LineGraphWidgetProps = {
+    data: DataType[];
+    title: string;
+    height?: number;
+};
+
+export default function GraphWidget({ data, title, height }: LineGraphWidgetProps) {
     return (
         <Card title={title}>
-            <ResponsiveContainer width="100%" height="100%">
-                <LineChart width={500} height={300} data={data}>
+            <ResponsiveContainer height={height ?? 350} width="100%">
+                <LineChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
                 </LineChart>
             </ResponsiveContainer>
         </Card>
     );
-};
-
-export default GraphWidget;
+}
