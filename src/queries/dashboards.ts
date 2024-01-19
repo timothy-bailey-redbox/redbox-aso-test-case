@@ -75,17 +75,17 @@ export function useDashboardCreate() {
     });
 }
 
-export function useDashboardUpdate(dashboardId: Id) {
+export function useDashboardUpdate() {
     const client = useQueryClient();
 
     return useMutation({
-        mutationFn: async (payload: DashboardAPIUpdate) => {
+        mutationFn: async (payload: { id: Id; update: DashboardAPIUpdate }) => {
             return await doFetch({
-                url: `/api/dashboards/${dashboardId}`,
+                url: `/api/dashboards/${payload.id}`,
                 method: "PATCH",
                 returnType: "json",
                 schema: DashboardAPISchema,
-                body: payload,
+                body: payload.update,
             });
         },
         onSuccess: (data) => {
@@ -93,25 +93,25 @@ export function useDashboardUpdate(dashboardId: Id) {
                 if (!dashboards) {
                     return [data];
                 }
-                dashboards = dashboards.filter((d) => d.id !== dashboardId);
+                dashboards = dashboards.filter((d) => d.id !== data.id);
                 return [...dashboards, data];
             });
-            client.setQueryData([DASHBOARD_KEY, dashboardId], data);
+            client.setQueryData([DASHBOARD_KEY, data.id], data);
         },
     });
 }
 
-export function useDashboardDelete(dashboardId: Id) {
+export function useDashboardDelete() {
     const client = useQueryClient();
 
     return useMutation({
-        mutationFn: async () => {
+        mutationFn: async (dashboardId: Id) => {
             return await doFetch({
                 url: `/api/dashboards/${dashboardId}`,
                 method: "DELETE",
             });
         },
-        onSuccess: () => {
+        onSuccess: (data, dashboardId) => {
             client.setQueryData<DashboardAPI[]>(DASHBOARDS_KEY, (dashboards) => {
                 if (!dashboards) {
                     return [];

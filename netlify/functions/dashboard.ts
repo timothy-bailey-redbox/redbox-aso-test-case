@@ -112,6 +112,9 @@ export default functionHandler({
                     const addedWidgets = widgetChanges.filter((w1) => !w1.id || !widgets.some((w2) => w1.id === w2.id));
                     for (const widget of addedWidgets) {
                         await queryFn(writeInsertQuery(WidgetDBSchema, "widgets", ["id"]), {
+                            axis2: null,
+                            axis3: null,
+                            description: null,
                             dashboardId: dashboard.id,
                             ...widget,
                         });

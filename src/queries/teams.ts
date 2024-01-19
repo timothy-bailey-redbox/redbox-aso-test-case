@@ -70,17 +70,17 @@ export function useTeamCreate() {
     });
 }
 
-export function useTeamUpdate(teamId: Id) {
+export function useTeamUpdate() {
     const client = useQueryClient();
 
     return useMutation({
-        mutationFn: async (payload: TeamUpdate) => {
+        mutationFn: async (payload: { id: Id; update: TeamUpdate }) => {
             return await doFetch({
-                url: `/api/teams/${teamId}`,
+                url: `/api/teams/${payload.id}`,
                 method: "PATCH",
                 returnType: "json",
                 schema: TeamSchema,
-                body: payload,
+                body: payload.update,
             });
         },
         onSuccess: (data) => {
@@ -88,7 +88,7 @@ export function useTeamUpdate(teamId: Id) {
                 if (!teams) {
                     return [data];
                 }
-                teams = teams.filter((d) => d.id !== teamId);
+                teams = teams.filter((d) => d.id !== data.id);
                 return [...teams, data];
             });
             client.setQueryData([TEAM_KEY, data.id], data);
@@ -96,17 +96,17 @@ export function useTeamUpdate(teamId: Id) {
     });
 }
 
-export function useTeamDelete(teamId: Id) {
+export function useTeamDelete() {
     const client = useQueryClient();
 
     return useMutation({
-        mutationFn: async () => {
+        mutationFn: async (teamId: Id) => {
             return await doFetch({
                 url: `/api/teams/${teamId}`,
                 method: "DELETE",
             });
         },
-        onSuccess: () => {
+        onSuccess: (data, teamId) => {
             client.setQueryData<Team[]>(TEAMS_KEY, (teams) => {
                 if (!teams) {
                     return [];

@@ -30,8 +30,15 @@ export default class DBConnector {
 
     async select<TRow extends pg.QueryResultRow>(query: string, parameters: Parameters): Promise<TRow[]> {
         const [q, params] = this.parametrizeQuery(query, parameters);
-        const request = await this.client.query<TRow>(q, params);
-        return request.rows;
+        try {
+            const request = await this.client.query<TRow>(q, params);
+            return request.rows;
+        } catch (err) {
+            if (err instanceof Error) {
+                err.message += ` --- \`\`\`${q}\`\`\` --- ${JSON.stringify(params)}`;
+            }
+            throw err;
+        }
     }
 
     async mutate<TRow extends pg.QueryResultRow>(query: string, parameters: Parameters): Promise<TRow[]> {

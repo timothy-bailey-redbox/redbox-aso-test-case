@@ -33,6 +33,7 @@ export default functionHandler({
                 const [dash] = await query<DashboardDB>(
                     writeInsertQuery(DashboardDBSchema, "dashboards", ["id", "createdAt", "updatedAt"]),
                     {
+                        description: null,
                         ...props,
                         status: StatusSchema.Values.ACTIVE,
                     },
@@ -42,6 +43,9 @@ export default functionHandler({
                 for (const widgetProps of props.widgets) {
                     widgets.push(
                         ...(await query<WidgetDB>(writeInsertQuery(WidgetDBSchema, "widgets", ["id"]), {
+                            axis2: null,
+                            axis3: null,
+                            description: null,
                             dashboardId: dash?.id,
                             ...widgetProps,
                         })),
