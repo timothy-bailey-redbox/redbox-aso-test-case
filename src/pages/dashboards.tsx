@@ -19,7 +19,6 @@ export default function Dashboards() {
                 <div>
                     <h1>Dashboards</h1>
                     <LogoutButton />
-                    <br />
                     <div>
                         <textarea cols={80} value={JSON.stringify(dashboards, null, 4)}></textarea>
                     </div>
