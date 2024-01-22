@@ -8,7 +8,7 @@ import {
     StatsStorePerformanceTrafficSourceSchema,
     type StatsStorePerformanceTrafficSourceQuery,
 } from "types/fivetran/google-play/statsStorePerformanceTrafficSource";
-import { DataSourceSchema, type DataSource, type WidgetAPI } from "types/widget";
+import { DataSourceSchema, type WidgetAPI } from "types/widget";
 import { z } from "zod";
 import { doFetch } from "~/lib/doFetch";
 import useFilterStore, { type FilterState } from "~/stores/filter";
@@ -20,67 +20,57 @@ export function useWidgetDataQuery(dashboardDef: DashboardAPI, widgetDef: Widget
     const user = useUserStore();
     const filters = useFilterStore();
 
-    const params = getQueryParams(dashboardDef, widgetDef, filters);
+    const params = getQueryDataParameters(dashboardDef, widgetDef, filters);
 
     return useQuery({
-        queryKey: [WIDGET_DATA_KEY, widgetDef.dataSource, widgetDef.dataSource, ...Object.values(params)],
+        queryKey: [WIDGET_DATA_KEY, widgetDef.dataSource, ...Object.values(params.searchParams)],
         queryFn: () =>
             doFetch({
-                url: `${getAPIPath(widgetDef.dataSource)}?${new URLSearchParams(
-                    params as Record<string, string>,
-                ).toString()}`,
+                url: `${params.url}?${new URLSearchParams(params.searchParams as Record<string, string>).toString()}`,
                 method: "GET",
                 returnType: "json",
-                schema: z.array(getSchema(widgetDef.dataSource)),
+                schema: z.array(params.schema),
             }),
         enabled: user.isLoggedIn,
     });
 }
 
-function getAPIPath(dataSource: DataSource): string {
-    switch (dataSource) {
-        case DataSourceSchema.Values.GOOGLE_PERFORMANCE_TRAFFIC:
-            return "/api/fivetran/google-play/stats-store-performance-traffic-source";
-        case DataSourceSchema.Values.GOOGLE_PERFORMANCE_COUNTRY:
-            return "/api/fivetran/google-play/stats-store-performance-country";
-        default:
-            dataSource satisfies never;
-            throw new Error("Unknown data type for widget data");
-    }
-}
+type BaseQueryDataParameters<T = z.AnyZodObject> = {
+    url: string;
+    schema: T;
+    searchParams: Record<string, unknown>;
+};
 
-function getSchema(dataSource: DataSource): z.AnyZodObject {
-    switch (dataSource) {
-        case DataSourceSchema.Values.GOOGLE_PERFORMANCE_TRAFFIC:
-            return StatsStorePerformanceTrafficSourceSchema;
-        case DataSourceSchema.Values.GOOGLE_PERFORMANCE_COUNTRY:
-            return StatsStorePerformanceCountrySchema;
-        default:
-            dataSource satisfies never;
-            throw new Error("Unknown data type for widget data");
-    }
-}
-
-function getQueryParams(
+function getQueryDataParameters(
     dashboardDef: DashboardAPI,
     widgetDef: WidgetAPI,
     filters: FilterState,
-): Record<string, unknown> {
+): BaseQueryDataParameters {
     switch (widgetDef.dataSource) {
         case DataSourceSchema.Values.GOOGLE_PERFORMANCE_TRAFFIC:
             return {
-                appId: dashboardDef.appId,
-                keywords: dashboardDef.keywords,
-                from: filters.from,
-                to: filters.to,
-            } satisfies StatsStorePerformanceTrafficSourceQuery;
+                url: "/api/fivetran/google-play/stats-store-performance-traffic-source",
+                schema: StatsStorePerformanceTrafficSourceSchema,
+                searchParams: {
+                    appId: dashboardDef.appId,
+                    keywords: dashboardDef.keywords,
+                    from: filters.from,
+                    to: filters.to,
+                } satisfies StatsStorePerformanceTrafficSourceQuery,
+            };
         case DataSourceSchema.Values.GOOGLE_PERFORMANCE_COUNTRY:
             return {
-                appId: dashboardDef.appId,
-                country: widgetDef.dataFilter,
-                from: filters.from,
-                to: filters.to,
-            } satisfies StatsStorePerformanceCountryQuery;
+                url: "/api/fivetran/google-play/stats-store-performance-country",
+                schema: StatsStorePerformanceCountrySchema,
+                searchParams: {
+                    appId: dashboardDef.appId,
+                    country: widgetDef.dataFilter,
+                    from: filters.from,
+                    to: filters.to,
+                } satisfies StatsStorePerformanceCountryQuery,
+            };
+        default:
+            widgetDef.dataSource satisfies never;
+            throw new Error(`Unknown data type for widget data`);
     }
-    return {};
 }
