@@ -1,12 +1,12 @@
 import "dotenv/config";
-import { uiDb } from "netlify/lib/db";
+import uiDb from "netlify/lib/db/uiDb";
 
 console.log("DB table creation");
 
 await uiDb.transaction(async (queryFn) => {
     console.log("Enums");
-    await queryFn(`CREATE TYPE "StatusType" AS ENUM ('ACTIVE', 'DELETED');`, []);
-    await queryFn(`CREATE TYPE "AppType" AS ENUM ('IOS', 'ANDROID');`, []);
+    await queryFn(`CREATE TYPE "StatusType" AS ENUM ('ACTIVE', 'DELETED');`, {});
+    await queryFn(`CREATE TYPE "AppType" AS ENUM ('IOS', 'ANDROID');`, {});
 
     console.log("Teams");
     await queryFn(
@@ -18,7 +18,7 @@ await uiDb.transaction(async (queryFn) => {
                 "createdAt"             TIMESTAMP(3)    NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 "updatedAt"             TIMESTAMP(3)    NOT NULL
             );`,
-        [],
+        {},
     );
 
     console.log("Dashboards");
@@ -37,7 +37,7 @@ await uiDb.transaction(async (queryFn) => {
     
                 CONSTRAINT "fk_teamId" FOREIGN KEY("teamId") REFERENCES "teams"("id")
             );`,
-        [],
+        {},
     );
 
     console.log("Widgets");
@@ -60,7 +60,7 @@ await uiDb.transaction(async (queryFn) => {
                 
                 CONSTRAINT "fk_dashboardId" FOREIGN KEY("dashboardId") REFERENCES "dashboards"("id")
             )`,
-        [],
+        {},
     );
 });
 

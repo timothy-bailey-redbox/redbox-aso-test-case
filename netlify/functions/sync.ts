@@ -1,5 +1,5 @@
-import { type Context, type Config } from "@netlify/functions";
-import { uiDb } from "netlify/lib/db";
+import { type Config, type Context } from "@netlify/functions";
+import uiDb from "netlify/lib/db/uiDb";
 import { StatusSchema } from "types/generic";
 import { doFetch } from "~/lib/doFetch";
 
@@ -19,19 +19,19 @@ export default async function Sync(_req: Request, _context: Context): Promise<Re
             SELECT DISTINCT d."appId", unnest(d."keywords") as "keywords"
             FROM "dashboards" d
             INNER JOIN "teams" t ON t."id" = d."teamId"
-            WHERE d."status" = $1
-            AND t."status" = $1
+            WHERE d."status" = :active
+            AND t."status" = :active
 
             UNION DISTINCT
 
             SELECT DISTINCT unnest(d."comparisonAppIds") as "appId", unnest(d."keywords") as "keywords"
             FROM "dashboards" d
             INNER JOIN "teams" t ON t."id" = d."teamId"
-            WHERE d."status" = $1
-            AND t."status" = $1
+            WHERE d."status" = :active
+            AND t."status" = :active
         )
         GROUP BY "appId"`,
-        [StatusSchema.Values.ACTIVE],
+        { active: StatusSchema.Values.ACTIVE },
     );
 
     await doFetch({

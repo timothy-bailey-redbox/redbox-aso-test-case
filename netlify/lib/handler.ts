@@ -45,13 +45,13 @@ export default function functionHandler({
             });
         }
 
-        if (secure && !isLoggedIn(context)) {
+        if (secure && !isLoggedIn(req, context)) {
             return new Response(undefined, {
                 status: 401,
                 headers: corsHeaders,
             });
         }
-        const user = getUser(context);
+        const user = getUser(req, context);
 
         let response: ProxyHandlerResponse = {
             statusCode: 405,
