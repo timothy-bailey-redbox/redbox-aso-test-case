@@ -4,16 +4,17 @@ import Card from "~/components/basic/Card";
 
 type DataType = {
     name: string;
-    value: number;
+    [key: string]: number | string | undefined;
 };
 
 type LineGraphWidgetProps = {
     data: DataType[];
     title: string;
     height?: number;
+    dataKeys: string[];
 };
 
-export default function GraphWidget({ data, title, height }: LineGraphWidgetProps) {
+export default function GraphWidget({ data, title, height, dataKeys }: LineGraphWidgetProps) {
     return (
         <Card title={title}>
             <ResponsiveContainer height={height ?? 350} width="100%">
@@ -22,7 +23,9 @@ export default function GraphWidget({ data, title, height }: LineGraphWidgetProp
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
-                    <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    {dataKeys?.map((dataKey) => (
+                        <Line type="monotone" key={dataKey} dataKey={dataKey} stroke="black" activeDot={{ r: 8 }} />
+                    ))}
                 </LineChart>
             </ResponsiveContainer>
         </Card>

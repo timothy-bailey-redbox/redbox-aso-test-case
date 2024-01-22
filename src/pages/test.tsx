@@ -23,7 +23,9 @@ export default function TestPage() {
                         {
                             width: 5,
                             height: 6,
-                            element: <GraphWidget title="Line graph" data={mockGraphData} />,
+                            element: (
+                                <GraphWidget title="Line graph" data={mockGraphData} dataKeys={["value", "val"]} />
+                            ),
                         },
                         {
                             width: 4,
