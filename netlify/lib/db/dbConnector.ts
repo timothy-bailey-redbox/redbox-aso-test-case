@@ -1,5 +1,15 @@
 import pg from "pg";
 
+const parseDate = (val: string | null) => (val !== null ? new Date(val).getTime() : val);
+pg.types.setTypeParser(pg.types.builtins.TIMESTAMP, parseDate);
+pg.types.setTypeParser(pg.types.builtins.TIMESTAMPTZ, parseDate);
+
+// This is technically not correct, INT8 is 64bit and JS only supports 52bit ints.
+// I am accepting that loss of precision for simplicity of implementation, and I doubt
+// the DB will ever actually give me something >2^52. We should use BigInt but they don't
+// serialise to JSON for sending via API.
+pg.types.setTypeParser(pg.types.builtins.INT8, (int: string) => parseInt(int, 10));
+
 type Parameters = Record<string, unknown>;
 
 export default class DBConnector {
@@ -20,8 +30,15 @@ export default class DBConnector {
 
     async select<TRow extends pg.QueryResultRow>(query: string, parameters: Parameters): Promise<TRow[]> {
         const [q, params] = this.parametrizeQuery(query, parameters);
-        const request = await this.client.query<TRow>(q, params);
-        return request.rows;
+        try {
+            const request = await this.client.query<TRow>(q, params);
+            return request.rows;
+        } catch (err) {
+            if (err instanceof Error) {
+                err.message += ` --- \`\`\`${q}\`\`\` --- ${JSON.stringify(params)}`;
+            }
+            throw err;
+        }
     }
 
     async mutate<TRow extends pg.QueryResultRow>(query: string, parameters: Parameters): Promise<TRow[]> {

@@ -1,5 +1,6 @@
 import { type Context } from "@netlify/functions";
 import { USER_ADMIN_ROLE } from "types/generic";
+import { HTTPResponseError } from "./handler";
 
 export type UserAuth = {
     app_metadata: {
@@ -30,4 +31,13 @@ function parseJwt(token: string): UserAuth {
 
 export function isAdmin(user: UserAuth) {
     return user.app_metadata?.roles?.includes(USER_ADMIN_ROLE);
+}
+
+export function assertIsAdmin(user: UserAuth) {
+    if (!user.sub) {
+        throw new HTTPResponseError(401, "User not logged in");
+    }
+    if (!isAdmin(user)) {
+        throw new HTTPResponseError(403, "Higher user access level required");
+    }
 }

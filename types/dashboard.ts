@@ -23,3 +23,37 @@ export const DashboardAPISchema = DashboardSchema.extend({
 
 export type DashboardDB = z.infer<typeof DashboardDBSchema>;
 export type DashboardAPI = z.infer<typeof DashboardAPISchema>;
+
+export const DashboardAPICreationSchema = DashboardAPISchema.omit({
+    id: true,
+    updatedAt: true,
+    createdAt: true,
+    status: true,
+    widgets: true,
+}).extend({
+    widgets: z.array(
+        WidgetAPISchema.omit({
+            id: true,
+        }),
+    ),
+});
+export type DashboardAPICreation = z.infer<typeof DashboardAPICreationSchema>;
+
+export const DashboardAPIUpdateSchema = DashboardAPISchema.partial()
+    .omit({ widgets: true })
+    .extend({
+        widgets: z
+            .array(
+                WidgetAPISchema.partial()
+                    .required({ id: true })
+                    .or(
+                        WidgetAPISchema.omit({
+                            id: true,
+                        }).extend({
+                            id: z.undefined().optional(),
+                        }),
+                    ),
+            )
+            .optional(),
+    });
+export type DashboardAPIUpdate = z.infer<typeof DashboardAPIUpdateSchema>;

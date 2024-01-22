@@ -1,13 +1,13 @@
 import { type Config } from "@netlify/functions";
-import { isAdmin } from "netlify/lib/auth";
+import { assertIsAdmin } from "netlify/lib/auth";
 import { writeInsertQuery } from "netlify/lib/db";
 import uiDb, { getDashboard } from "netlify/lib/db/uiDb";
 import { dashboardDBToAPI } from "netlify/lib/dto/dashboard";
-import functionHandler, { HTTPResponseError } from "netlify/lib/handler";
+import functionHandler from "netlify/lib/handler";
 import { parseWithSchema } from "netlify/lib/parser";
-import { DashboardAPISchema } from "types/dashboard";
+import { DashboardAPIUpdateSchema } from "types/dashboard";
 import { StatusSchema } from "types/generic";
-import { WidgetAPISchema, WidgetDBSchema } from "types/widget";
+import { WidgetDBSchema } from "types/widget";
 import { z } from "zod";
 
 export const config: Config = {
@@ -27,31 +27,12 @@ export default functionHandler({
         },
 
         patch: async (req, context, user) => {
-            if (!isAdmin(user)) {
-                throw new HTTPResponseError(403, "");
-            }
+            assertIsAdmin(user);
 
             const dashboardId = parseWithSchema(context.params.dashboardId, z.string().uuid());
             const [dashboard, widgets] = await getDashboard(dashboardId, user);
 
-            const schema = DashboardAPISchema.partial()
-                .omit({ widgets: true })
-                .extend({
-                    widgets: z
-                        .array(
-                            WidgetAPISchema.partial()
-                                .required({ id: true })
-                                .or(
-                                    WidgetAPISchema.omit({
-                                        id: true,
-                                    }).extend({
-                                        id: z.undefined().optional(),
-                                    }),
-                                ),
-                        )
-                        .optional(),
-                });
-            const changes = parseWithSchema(await req.json(), schema);
+            const changes = parseWithSchema(await req.json(), DashboardAPIUpdateSchema);
 
             await uiDb.transaction(async (queryFn) => {
                 await queryFn(
@@ -131,6 +112,9 @@ export default functionHandler({
                     const addedWidgets = widgetChanges.filter((w1) => !w1.id || !widgets.some((w2) => w1.id === w2.id));
                     for (const widget of addedWidgets) {
                         await queryFn(writeInsertQuery(WidgetDBSchema, "widgets", ["id"]), {
+                            axis2: null,
+                            axis3: null,
+                            description: null,
                             dashboardId: dashboard.id,
                             ...widget,
                         });
@@ -147,9 +131,7 @@ export default functionHandler({
         },
 
         delete: async (req, context, user) => {
-            if (!isAdmin(user)) {
-                throw new HTTPResponseError(403, "");
-            }
+            assertIsAdmin(user);
             const dashboardId = parseWithSchema(context.params.dashboardId, z.string().uuid());
 
             await uiDb.mutate(
