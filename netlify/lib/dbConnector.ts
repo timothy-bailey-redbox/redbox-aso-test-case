@@ -22,14 +22,21 @@ export default class DBConnector {
     }
 
     async mutate<TRow extends pg.QueryResultRow>(query: string, parameters: unknown[]): Promise<TRow[]> {
+        return await this.transaction<TRow[]>(async (queryFn) => {
+            return await queryFn(query, parameters);
+        });
+    }
+
+    async transaction<TReturn>(operation: (queryFn: typeof this.select) => Promise<TReturn>): Promise<TReturn> {
+        let result: TReturn;
         try {
             await this.client.query("BEGIN");
-            const response = await this.client.query<TRow>(query, parameters);
+            result = await operation(this.select.bind(this));
             await this.client.query("COMMIT");
-            return response.rows;
         } catch (e) {
             await this.client.query("ROLLBACK");
             throw e;
         }
+        return result;
     }
 }

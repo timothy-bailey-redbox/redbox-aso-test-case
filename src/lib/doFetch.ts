@@ -8,25 +8,30 @@ type DoFetchConfigBase = {
     returnType?: "text" | "json";
 };
 
-type DoFetchConfigJSON<T> = DoFetchConfigBase & {
+type DoFetchConfigJSON<TSchema extends z.ZodSchema<TReturn>, TReturn> = DoFetchConfigBase & {
     returnType: "json";
-    schema: z.ZodType<T>;
+    schema: TSchema;
 };
 type DoFetchConfigText = DoFetchConfigBase & {
     returnType: "text";
-    schema: never;
 };
 type DoFetchConfigNull = DoFetchConfigBase & {
-    returnType: undefined;
-    schema: never;
+    returnType?: undefined;
 };
 
-export type doFetchConfig<T> = DoFetchConfigJSON<T> | DoFetchConfigText | DoFetchConfigNull;
+export type doFetchConfig<TSchema extends z.ZodSchema, TReturn> =
+    | DoFetchConfigJSON<TSchema, TReturn>
+    | DoFetchConfigText
+    | DoFetchConfigNull;
 
-export async function doFetch<T>(opts: DoFetchConfigJSON<T>): Promise<z.infer<typeof opts.schema>>;
+export async function doFetch<TSchema extends z.ZodSchema<TReturn>, TReturn>(
+    opts: DoFetchConfigJSON<TSchema, TReturn>,
+): Promise<z.infer<TSchema>>;
 export async function doFetch(opts: DoFetchConfigText): Promise<string>;
 export async function doFetch(opts: DoFetchConfigNull): Promise<void>;
-export async function doFetch<T>(opts: doFetchConfig<T>): Promise<z.infer<typeof opts.schema> | string | void> {
+export async function doFetch<TSchema extends z.ZodSchema<TReturn>, TReturn>(
+    opts: doFetchConfig<TSchema, TReturn>,
+): Promise<z.infer<TSchema> | string | void> {
     let contentType = null;
     let body = null;
     if (typeof opts.body === "string") {
@@ -59,12 +64,12 @@ export async function doFetch<T>(opts: doFetchConfig<T>): Promise<z.infer<typeof
         try {
             message = JSON.parse(rawBody) as object;
         } catch (err) {
-            // void
+            // Don't care, we attempted to parse as json
         }
         throw message;
     }
 
-    let parsedBody: z.infer<typeof opts.schema> | string | void = undefined;
+    let parsedBody: z.infer<TSchema> | string | void = undefined;
     if (rawBody && opts.returnType) {
         if (opts.returnType === "text") {
             parsedBody = rawBody;
