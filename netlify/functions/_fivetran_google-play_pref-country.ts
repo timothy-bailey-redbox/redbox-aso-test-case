@@ -17,7 +17,7 @@ export type StatsStorePerformanceCountry = z.infer<typeof StatsStorePerformanceC
 
 export const StatsStorePerformanceCountryQuerySchema = z.object({
     appId: z.string(),
-    country: z.array(z.string().min(1)),
+    country: z.array(z.string().min(1)).nonempty(),
     from: TimestampSchema,
     to: TimestampSchema,
 });
@@ -35,7 +35,7 @@ export default functionHandler({
             const params = parseWithSchema(
                 {
                     appId: query.appId,
-                    country: query.country?.split(",") ?? [],
+                    country: query.country?.split(","),
                     from: parseInt(query.from ?? "", 10),
                     to: parseInt(query.to ?? "", 10),
                 },

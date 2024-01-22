@@ -20,7 +20,7 @@ export type StatsStorePerformanceTrafficSource = z.infer<typeof StatsStorePerfor
 
 export const StatsStorePerformanceTrafficSourceQuerySchema = z.object({
     appId: z.string(),
-    keywords: z.array(z.string().min(1)),
+    keywords: z.array(z.string().min(1)).nonempty(),
     from: TimestampSchema,
     to: TimestampSchema,
 });
@@ -38,7 +38,7 @@ export default functionHandler({
             const params = parseWithSchema(
                 {
                     appId: query.appId,
-                    keywords: query.keywords?.split(",") ?? [],
+                    keywords: query.keywords?.split(","),
                     from: parseInt(query.from ?? "", 10),
                     to: parseInt(query.to ?? "", 10),
                 },
