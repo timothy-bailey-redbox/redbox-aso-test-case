@@ -1,8 +1,11 @@
+import { AppTypeSchema, StatusSchema } from "types/generic";
+import { DataSourceSchema, WidgetTypeSchema } from "types/widget";
 import Button from "~/components/Button";
 import LogoutButton from "~/components/auth/LogoutButton";
 import SecurePage from "~/components/auth/SecurePage";
 import { useDashboardCreate, useDashboardDelete, useDashboardsQuery } from "~/queries/dashboards";
 import { useTeamsQuery } from "~/queries/teams";
+import { useWidgetDataQuery } from "~/queries/widgetData";
 
 export default function Dashboards() {
     const teams = useTeamsQuery();
@@ -55,8 +58,46 @@ export default function Dashboards() {
                             Delete Dashboard
                         </Button>
                     </div>
+                    <TestWidget />
                 </div>
             </main>
         </SecurePage>
+    );
+}
+
+function TestWidget() {
+    const data = useWidgetDataQuery(
+        {
+            appId: "com.livescore",
+            appType: AppTypeSchema.Values.ANDROID,
+            comparisonAppIds: [],
+            id: "1",
+            name: "test",
+            keywords: ["football"],
+            status: StatusSchema.Values.ACTIVE,
+            teamId: "1",
+            widgets: [],
+            createdAt: 0,
+            updatedAt: 0,
+        },
+        {
+            id: "1",
+            title: "test",
+            dataSource: DataSourceSchema.Values.GOOGLE_PERFORMANCE_TRAFFIC,
+            dataFilter: [],
+            type: WidgetTypeSchema.Values.LINE_GRAPH,
+            axis1: "store_listing_visitors",
+            axis2: "date",
+            height: 1,
+            width: 1,
+            x: 1,
+            y: 1,
+        },
+    );
+
+    return (
+        <div>
+            <textarea value={JSON.stringify(data, null, 4)}></textarea>
+        </div>
     );
 }
