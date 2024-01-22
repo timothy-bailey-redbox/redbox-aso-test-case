@@ -35,7 +35,7 @@ export function dashboardDBToAPI(dashboard?: DashboardDB, widgets: WidgetDB[] = 
                     x: widget.x,
                     y: widget.y,
                     dataSource: widget.dataSource,
-                    dataType: widget.dataType,
+                    dataFilter: widget.dataFilter,
                     axis1: widget.axis1,
                     axis2: widget.axis2,
                     axis3: widget.axis3,

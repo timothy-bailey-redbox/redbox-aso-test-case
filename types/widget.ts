@@ -3,23 +3,21 @@ import { IdSchema } from "./generic";
 
 const MAX_GRID_SIZE = 12;
 
-export const WidgetTypeSchema = z.enum(["TABLE", "LINE_GRAPH", "PIE_CHART", "BAR_CHART", "Stat", "Dials"]);
+export const WidgetTypeSchema = z.enum(["TABLE", "LINE_GRAPH", "PIE_CHART", "BAR_CHART", "STAT", "DIALS"]);
 export type WidgetType = z.infer<typeof WidgetTypeSchema>;
 
-export const DataSourceSchema = z.enum(["APPTWEAK", "APP_STORE_CONNECT", "GOOGLE_PLAY"]);
-export type DataSource = z.infer<typeof DataSourceSchema>;
-
-export const DataTypeSchema = z.enum([
-    //TODO
-    "METRICS",
+export const DataSourceSchema = z.enum([
+    // These match up with APIs
+    "GOOGLE_PERFORMANCE_COUNTRY",
+    "GOOGLE_PERFORMANCE_TRAFFIC",
 ]);
-export type DataType = z.infer<typeof DataTypeSchema>;
+export type DataSource = z.infer<typeof DataSourceSchema>;
 
 const WidgetSchema = z.object({
     id: IdSchema,
     type: WidgetTypeSchema,
     dataSource: DataSourceSchema,
-    dataType: DataTypeSchema,
+    dataFilter: z.array(z.string()),
     axis1: z.string(),
     axis2: z.string().optional(),
     axis3: z.string().optional(),

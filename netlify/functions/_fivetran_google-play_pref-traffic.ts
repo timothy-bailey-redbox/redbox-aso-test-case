@@ -2,29 +2,10 @@ import { type Config } from "@netlify/functions";
 import fivetranDb from "netlify/lib/db/fivetranDb";
 import functionHandler from "netlify/lib/handler";
 import { parseQueryString, parseWithSchema } from "netlify/lib/parser";
-import { TimestampSchema } from "types/generic";
-import { z } from "zod";
-
-export const StatsStorePerformanceTrafficSourceSchema = z.object({
-    date: TimestampSchema,
-    package_name: z.string(),
-    traffic_source: z.string(),
-    search_term: z.string(),
-    utm_source: z.string(),
-    utm_campaign: z.string(),
-    store_listing_acquisitions: z.number(),
-    store_listing_visitors: z.number(),
-    store_listing_conversion_rate: z.number(),
-});
-export type StatsStorePerformanceTrafficSource = z.infer<typeof StatsStorePerformanceTrafficSourceSchema>;
-
-export const StatsStorePerformanceTrafficSourceQuerySchema = z.object({
-    appId: z.string(),
-    keywords: z.array(z.string().min(1)).nonempty(),
-    from: TimestampSchema,
-    to: TimestampSchema,
-});
-export type StatsStorePerformanceTrafficSourceQuery = z.infer<typeof StatsStorePerformanceTrafficSourceQuerySchema>;
+import {
+    StatsStorePerformanceTrafficSourceQuerySchema,
+    type StatsStorePerformanceTrafficSource,
+} from "types/fivetran/google-play/statsStorePerformanceTrafficSource";
 
 export const config: Config = {
     path: "/api/fivetran/google-play/stats-store-performance-traffic-source",
@@ -38,7 +19,7 @@ export default functionHandler({
             const params = parseWithSchema(
                 {
                     appId: query.appId,
-                    keywords: query.keywords?.split(","),
+                    keywords: query.keywords?.split(",") ?? [],
                     from: parseInt(query.from ?? "", 10),
                     to: parseInt(query.to ?? "", 10),
                 },
