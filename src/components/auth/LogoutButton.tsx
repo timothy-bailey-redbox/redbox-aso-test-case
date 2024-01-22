@@ -1,5 +1,5 @@
 import useUserStore from "~/stores/user";
-import Button from "../Button";
+import Button from "../basic/inputs/Button";
 
 export default function LogoutButton() {
     const user = useUserStore();

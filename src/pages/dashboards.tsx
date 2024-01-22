@@ -1,8 +1,8 @@
 import { AppTypeSchema, StatusSchema } from "types/generic";
 import { DataSourceSchema, WidgetTypeSchema } from "types/widget";
-import Button from "~/components/Button";
 import LogoutButton from "~/components/auth/LogoutButton";
 import SecurePage from "~/components/auth/SecurePage";
+import Button from "~/components/basic/inputs/Button";
 import { useDashboardCreate, useDashboardDelete, useDashboardsQuery } from "~/queries/dashboards";
 import { useTeamsQuery } from "~/queries/teams";
 import { useWidgetDataQuery } from "~/queries/widgetData";
