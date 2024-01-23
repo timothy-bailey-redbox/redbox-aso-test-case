@@ -8,7 +8,7 @@ import {
 } from "types/fivetran/google-play/statsStorePerformanceTrafficSource";
 
 export const config: Config = {
-    path: "/api/fivetran/google-play/stats-store-performance-traffic-source",
+    //path: "/api/fivetran/google-play/stats-store-performance-traffic-source",
 };
 
 export default functionHandler({

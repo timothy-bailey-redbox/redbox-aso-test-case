@@ -49,7 +49,7 @@ function getQueryDataParameters(
     switch (widgetDef.dataSource) {
         case DataSourceSchema.Values.GOOGLE_PERFORMANCE_TRAFFIC:
             return {
-                url: "/api/fivetran/google-play/stats-store-performance-traffic-source",
+                url: "/.netlify/functions/_fivetran_google-play_pref-traffic",
                 schema: StatsStorePerformanceTrafficSourceSchema,
                 searchParams: {
                     appId: dashboardDef.appId,
