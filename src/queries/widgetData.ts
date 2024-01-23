@@ -60,7 +60,7 @@ function getQueryDataParameters(
             };
         case DataSourceSchema.Values.GOOGLE_PERFORMANCE_COUNTRY:
             return {
-                url: "/api/fivetran/google-play/stats-store-performance-country",
+                url: "/.netlify/functions/_fivetran_google-play_pref-country",
                 schema: StatsStorePerformanceCountrySchema,
                 searchParams: {
                     appId: dashboardDef.appId,
