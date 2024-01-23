@@ -49,7 +49,7 @@ function getQueryDataParameters(
     switch (widgetDef.dataSource) {
         case DataSourceSchema.Values.GOOGLE_PERFORMANCE_TRAFFIC:
             return {
-                url: "/api/fivetran/google-play/stats-store-performance-traffic-source",
+                url: "/.netlify/functions/_fivetran_google-play_pref-traffic",
                 schema: StatsStorePerformanceTrafficSourceSchema,
                 searchParams: {
                     appId: dashboardDef.appId,
@@ -60,7 +60,7 @@ function getQueryDataParameters(
             };
         case DataSourceSchema.Values.GOOGLE_PERFORMANCE_COUNTRY:
             return {
-                url: "/api/fivetran/google-play/stats-store-performance-country",
+                url: "/.netlify/functions/_fivetran_google-play_pref-country",
                 schema: StatsStorePerformanceCountrySchema,
                 searchParams: {
                     appId: dashboardDef.appId,

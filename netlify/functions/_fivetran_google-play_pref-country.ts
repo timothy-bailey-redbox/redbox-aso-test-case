@@ -1,4 +1,3 @@
-import { type Config } from "@netlify/functions";
 import fivetranDb from "netlify/lib/db/fivetranDb";
 import functionHandler from "netlify/lib/handler";
 import { parseQueryString, parseWithSchema } from "netlify/lib/parser";
@@ -6,10 +5,6 @@ import {
     StatsStorePerformanceCountryQuerySchema,
     type StatsStorePerformanceCountry,
 } from "types/fivetran/google-play/statsStorePerformanceCountry";
-
-export const config: Config = {
-    path: "/api/fivetran/google-play/stats-store-performance-country",
-};
 
 export default functionHandler({
     secure: true,

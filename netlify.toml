@@ -1,5 +1,6 @@
 [dev]
-    command = "next dev"
+    command = "next dev -p 7007"
+    targetPort = 7007
 
 
 [[headers]]
