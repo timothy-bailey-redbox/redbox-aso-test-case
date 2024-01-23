@@ -14,6 +14,7 @@ export function parseJSONWithSchema<T>(json: string | null | undefined, schema: 
 }
 
 export function parseQueryString(request: Request) {
+    console.log(request, request.url);
     const url = new URL(request.url);
     return Object.fromEntries(url.searchParams.entries());
 }
