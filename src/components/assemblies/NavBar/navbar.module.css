@@ -1,7 +1,7 @@
 .navbar {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     height: 100%;
     box-shadow: var(--u-convex-simple-shadow);
     border-bottom-left-radius: 45px;

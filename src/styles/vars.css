@@ -19,6 +19,7 @@
 
     /* graph colors */
     --graph-color: linear-gradient(0deg, rgba(121, 35, 210, 1) 0%, rgba(255, 121, 0, 1) 100%);
+    --dial-color: linear-gradient(160deg, rgba(255, 255, 255, 1) 0%, rgba(195, 195, 195, 1) 100%);
 
     /* shadows */
     --shadow-light-bright: rgba(255, 255, 255, 0.5);

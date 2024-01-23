@@ -7,12 +7,11 @@ type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     label?: string;
     disabled?: boolean;
     error?: string;
-    value?: string;
 };
 
-export default function TextInput({ placeHolder, disabled, error, value, label, ...props }: TextInputProps) {
+export default function TextInput({ placeHolder, disabled, error, label, ...props }: TextInputProps) {
     return (
-        <>
+        <div>
             {label && <div className={styles.labelText}>{label}</div>}
             <input
                 {...props}
@@ -23,9 +22,8 @@ export default function TextInput({ placeHolder, disabled, error, value, label, 
                 placeholder={placeHolder}
                 type="text"
                 disabled={disabled}
-                value={value}
             />
             {error && <div className={styles.errorText}>{error}</div>}
-        </>
+        </div>
     );
 }
