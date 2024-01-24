@@ -1,4 +1,5 @@
 import netlifyIdentity, { type User } from "netlify-identity-widget";
+import { USER_ADMIN_ROLE } from "types/generic";
 import { create } from "zustand";
 import { isClientSide } from "~/lib/context";
 
@@ -25,10 +26,10 @@ const useUserStore = create<UserState>()((set, get) => {
             set({
                 currentUser: user,
                 isLoggedIn: true,
-                isAdmin: user?.role === "admin",
+                isAdmin: user?.role === USER_ADMIN_ROLE,
             });
         }
-        return `Bearer ${token}`;
+        return token!;
     }
 
     return {
@@ -48,12 +49,13 @@ export default useUserStore;
 
 netlifyIdentity.on("init", (user) => {
     console.info("Identity init", user);
-    useUserStore.setState({
-        currentUser: user,
-        isLoggedIn: true,
-        isAdmin: user?.role === "admin",
-    });
-    netlifyIdentity.close();
+    if (user) {
+        useUserStore.setState({
+            currentUser: user,
+            isLoggedIn: true,
+            isAdmin: user?.role === USER_ADMIN_ROLE,
+        });
+    }
 });
 
 netlifyIdentity.on("login", (user) => {
@@ -61,7 +63,7 @@ netlifyIdentity.on("login", (user) => {
     useUserStore.setState({
         currentUser: user,
         isLoggedIn: true,
-        isAdmin: user?.role === "admin",
+        isAdmin: user?.role === USER_ADMIN_ROLE,
     });
     netlifyIdentity.close();
 });
