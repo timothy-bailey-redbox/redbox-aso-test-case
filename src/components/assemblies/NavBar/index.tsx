@@ -7,7 +7,7 @@ export default function NavBar() {
         <div className={styles.navbar}>
             <div className={styles.wrapper}>
                 <Icons.Redbox height={100} width={132} />
-                <TextInput placeHolder="Search..."></TextInput>
+                <TextInput placeholder="Search..."></TextInput>
             </div>
         </div>
     );
