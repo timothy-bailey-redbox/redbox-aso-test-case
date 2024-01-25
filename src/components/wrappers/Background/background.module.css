@@ -1,16 +1,16 @@
 .background {
-    background: var(--bg-gradient);
     min-height: 100svh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: max(16px, 10vh) max(16px, 10vw);
+    padding: max(16px, 5vh) max(16px, 5vw);
 }
 
 .ribbonContainer {
-    position: absolute;
+    position: fixed;
     inset: 0;
     overflow: clip;
+    pointer-events: none;
 }
 
 .ribbon {
@@ -67,11 +67,15 @@
     transform: translate(40px, -20px);
 }
 
-.fullSize {
-    display: flex;
-    flex-direction: row;
-    padding: 0;
-    height: 80svh;
-    width: 100%;
+.card {
+    background: rgba(235, 235, 235, 0.4);
+    backdrop-filter: blur(10px);
     border-radius: 45px;
+    overflow: clip;
+    box-shadow: var(--u-convex-outlined-shadow);
+}
+
+.fullSize {
+    min-height: 80svh;
+    width: 100%;
 }
