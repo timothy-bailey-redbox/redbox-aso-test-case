@@ -1,7 +1,5 @@
 .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
     gap: 24px;
     background: rgba(235, 235, 235, 0.4);
     backdrop-filter: blur(10px);
