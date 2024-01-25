@@ -1,6 +1,5 @@
-import React from "react";
-import styles from "./dialwidget.module.css";
 import Card from "~/components/basic/Card";
+import styles from "./dialwidget.module.css";
 
 type DialData = {
     label: string;
@@ -19,10 +18,7 @@ export default function DialWidget({ data, title }: DialWidgetProps) {
                 {data.map((dial, index) => (
                     <div key={index} className={styles.dial}>
                         <div className={styles.dialPercentageWrapper}>
-                            <div
-                                className={styles.dialPercentage}
-                                style={{ "--percentage": `${dial.percentage}%` } as React.CSSProperties}
-                            />
+                            <div className={styles.dialPercentage} style={{ "--percentage": `${dial.percentage}%` }} />
                             <div className={styles.dialText}>{dial.percentage}%</div>
                         </div>
                         <div className={styles.dialLabel}>{dial.label}</div>
