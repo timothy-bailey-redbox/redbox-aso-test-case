@@ -1,5 +1,6 @@
 import Card from "~/components/basic/Card";
 import styles from "./dialwidget.module.css";
+import { calculatePercentage } from "~/util/functions";
 
 type DialData = {
     label: string;
@@ -12,10 +13,6 @@ type DialWidgetProps = {
     data: DialData[];
     title: string;
 };
-
-function calculatePercentage(value: number, min: number, max: number): number {
-    return Math.round(((value - min) / (max - min)) * 100);
-}
 
 export default function DialWidget({ data, title }: DialWidgetProps) {
     return (

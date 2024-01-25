@@ -10,7 +10,6 @@ type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 
 export default function TextInput({ disabled, error, id, label, ...props }: TextInputProps) {
     if (label && !id) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         id = uuid();
     }
     return (
