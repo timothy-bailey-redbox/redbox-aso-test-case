@@ -86,7 +86,12 @@ export default function TestPage() {
                     {
                         width: 4,
                         height: 6,
-                        element: <DialWidget title={"Dial"} data={[{ label: "Blah", percentage: 23 }]} />,
+                        element: (
+                            <DialWidget
+                                title={"Dial"}
+                                data={[mockDialsData[0] ?? { label: "", value: 0, min: 0, max: 0 }]}
+                            />
+                        ),
                     },
                     {
                         width: 4,
