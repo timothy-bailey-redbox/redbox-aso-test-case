@@ -14,13 +14,13 @@ export const mockGraphData = [
 ];
 
 export const mockBarData = [
-    { label: "M", percentage: 34 },
-    { label: "T", percentage: 44 },
-    { label: "W", percentage: 12 },
-    { label: "T", percentage: 60 },
-    { label: "F", percentage: 34 },
-    { label: "S", percentage: 55 },
-    { label: "S", percentage: 64 },
+    { label: "M", value: 34, min: 0, max: 100 },
+    { label: "T", value: 44, min: 0, max: 100 },
+    { label: "W", value: 12, min: 0, max: 100 },
+    { label: "T", value: 60, min: 0, max: 100 },
+    { label: "F", value: 34, min: 0, max: 100 },
+    { label: "S", value: 55, min: 0, max: 100 },
+    { label: "S", value: 64, min: 0, max: 100 },
 ];
 
 export const mockPiechartData = [
@@ -29,7 +29,7 @@ export const mockPiechartData = [
 ];
 
 export const mockDialsData = [
-    { label: "Blah", percentage: 23 },
-    { label: "What", percentage: 44 },
-    { label: "Nice", percentage: 69 },
+    { label: "Blah", value: 23, min: 0, max: 100 },
+    { label: "What", value: 44, min: 0, max: 100 },
+    { label: "Nice", value: 69, min: 0, max: 100 },
 ];

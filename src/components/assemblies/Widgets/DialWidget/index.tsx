@@ -3,7 +3,9 @@ import styles from "./dialwidget.module.css";
 
 type DialData = {
     label: string;
-    percentage: number;
+    value: number;
+    min: number;
+    max: number;
 };
 
 type DialWidgetProps = {
@@ -11,19 +13,26 @@ type DialWidgetProps = {
     title: string;
 };
 
+function calculatePercentage(value: number, min: number, max: number): number {
+    return Math.round(((value - min) / (max - min)) * 100);
+}
+
 export default function DialWidget({ data, title }: DialWidgetProps) {
     return (
         <Card title={title}>
             <div className={styles.dialContainer}>
-                {data.map((dial, index) => (
-                    <div key={index} className={styles.dial}>
-                        <div className={styles.dialPercentageWrapper}>
-                            <div className={styles.dialPercentage} style={{ "--percentage": `${dial.percentage}%` }} />
-                            <div className={styles.dialText}>{dial.percentage}%</div>
+                {data.map((dial, index) => {
+                    const percentage = calculatePercentage(dial.value, dial.min, dial.max);
+                    return (
+                        <div key={index} className={styles.dial}>
+                            <div className={styles.dialPercentageWrapper}>
+                                <div className={styles.dialPercentage} style={{ "--percentage": `${percentage}%` }} />
+                                <div className={styles.dialText}>{percentage}%</div>
+                            </div>
+                            <div className={styles.dialLabel}>{dial.label}</div>
                         </div>
-                        <div className={styles.dialLabel}>{dial.label}</div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </Card>
     );
