@@ -5,18 +5,6 @@
     }
 }
 
-.piechartWidgetTooltip {
-    border-radius: 25px;
-    box-shadow: var(--u-convex-light-shadow);
-    padding: 12px;
-    opacity: 85%;
-}
-
-.piechartWidgetTooltipLabel {
-    color: hotpink;
-    font-weight: 700;
-}
-
 .piechartWidgetLegend {
     color: var(--normal-text-color);
 }

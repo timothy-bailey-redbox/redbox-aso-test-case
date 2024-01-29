@@ -5,7 +5,7 @@ type GridProps = {
     children: GridItemProps[];
 };
 
-type GridItemProps = {
+export type GridItemProps = {
     id?: number;
     x?: number;
     y?: number;

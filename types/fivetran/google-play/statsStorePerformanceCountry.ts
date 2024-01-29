@@ -1,4 +1,5 @@
 import { TimestampSchema } from "types/generic";
+import { type WidgetDataAxes } from "types/widgetData";
 import { z } from "zod";
 
 export const StatsStorePerformanceCountrySchema = z.object({
@@ -18,3 +19,12 @@ export const StatsStorePerformanceCountryQuerySchema = z.object({
     to: TimestampSchema,
 });
 export type StatsStorePerformanceCountryQuery = z.infer<typeof StatsStorePerformanceCountryQuerySchema>;
+
+export const StatsStorePerformanceCountryDetails: Record<keyof StatsStorePerformanceCountry, WidgetDataAxes> = {
+    date: { name: "Date", aggregate: "min", format: "date" },
+    country_region: { name: "Country", aggregate: "count", format: "countryCode" },
+    package_name: { name: "App", aggregate: "none", format: "appId" },
+    store_listing_acquisitions: { name: "Acquisitions", aggregate: "sum", format: "number" },
+    store_listing_conversion_rate: { name: "Conversion rate", aggregate: "avg", format: "percent" },
+    store_listing_visitors: { name: "Visitors", aggregate: "sum", format: "number" },
+};

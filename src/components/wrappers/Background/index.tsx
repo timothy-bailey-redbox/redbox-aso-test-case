@@ -10,7 +10,7 @@ type BackgroundProps = {
 
 export default function Background({ children, className, fullSize }: BackgroundProps) {
     return (
-        <div className={clsx(styles.background)}>
+        <div className={clsx(styles.background, { [styles.fullBackground!]: fullSize })}>
             <div className={styles.ribbonContainer}>
                 <div className={clsx(styles.ribbon, styles.vertical, styles.orange)}></div>
                 <div className={clsx(styles.ribbon, styles.horizontal, styles.purple)}></div>

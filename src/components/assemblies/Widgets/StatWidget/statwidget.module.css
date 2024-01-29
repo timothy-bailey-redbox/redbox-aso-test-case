@@ -3,6 +3,9 @@
     justify-content: center;
     flex-direction: row;
     gap: 8px;
+    & > :first-child {
+        flex: 1;
+    }
 }
 
 .stat {

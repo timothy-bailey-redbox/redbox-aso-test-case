@@ -1,4 +1,5 @@
 import { TimestampSchema } from "types/generic";
+import { type WidgetDataAxes } from "types/widgetData";
 import { z } from "zod";
 
 export const StatsStorePerformanceTrafficSourceSchema = z.object({
@@ -21,3 +22,18 @@ export const StatsStorePerformanceTrafficSourceQuerySchema = z.object({
     to: TimestampSchema,
 });
 export type StatsStorePerformanceTrafficSourceQuery = z.infer<typeof StatsStorePerformanceTrafficSourceQuerySchema>;
+
+export const StatsStorePerformanceTrafficSourceDetails: Record<
+    keyof StatsStorePerformanceTrafficSource,
+    WidgetDataAxes
+> = {
+    date: { name: "Date", aggregate: "min", format: "date" },
+    search_term: { name: "Search term", aggregate: "count", format: "string" },
+    traffic_source: { name: "Traffic source", aggregate: "count", format: "string" },
+    utm_campaign: { name: "Campaign", aggregate: "count", format: "string" },
+    utm_source: { name: "Source", aggregate: "count", format: "string" },
+    package_name: { name: "App id", aggregate: "none", format: "appId" },
+    store_listing_acquisitions: { name: "Acquisitions", aggregate: "sum", format: "number" },
+    store_listing_conversion_rate: { name: "Conversion rate", aggregate: "avg", format: "percent" },
+    store_listing_visitors: { name: "Visitors", aggregate: "sum", format: "number" },
+};

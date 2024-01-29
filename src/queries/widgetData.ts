@@ -1,14 +1,17 @@
 import { useQuery } from "react-query";
 import { type DashboardAPI } from "types/dashboard";
 import {
+    StatsStorePerformanceCountryDetails,
     StatsStorePerformanceCountrySchema,
     type StatsStorePerformanceCountryQuery,
 } from "types/fivetran/google-play/statsStorePerformanceCountry";
 import {
+    StatsStorePerformanceTrafficSourceDetails,
     StatsStorePerformanceTrafficSourceSchema,
     type StatsStorePerformanceTrafficSourceQuery,
 } from "types/fivetran/google-play/statsStorePerformanceTrafficSource";
 import { DataSourceSchema, type WidgetAPI } from "types/widget";
+import { type WidgetDataAxes } from "types/widgetData";
 import { z } from "zod";
 import { doFetch } from "~/lib/doFetch";
 import useFilterStore, { type FilterState } from "~/stores/filter";
@@ -24,21 +27,24 @@ export function useWidgetDataQuery(dashboardDef: DashboardAPI, widgetDef: Widget
 
     return useQuery({
         queryKey: [WIDGET_DATA_KEY, widgetDef.dataSource, ...Object.values(params.searchParams)],
-        queryFn: () =>
-            doFetch({
+        queryFn: async () => ({
+            data: await doFetch({
                 url: `${params.url}?${new URLSearchParams(params.searchParams as Record<string, string>).toString()}`,
                 method: "GET",
                 returnType: "json",
                 schema: z.array(params.schema),
             }),
+            details: params.details,
+        }),
         enabled: user.isLoggedIn,
     });
 }
 
-type BaseQueryDataParameters<T = z.AnyZodObject> = {
+type BaseQueryDataParameters<R extends z.ZodRawShape = z.ZodRawShape, T = z.ZodObject<R>> = {
     url: string;
     schema: T;
     searchParams: Record<string, unknown>;
+    details: Record<keyof R, WidgetDataAxes>;
 };
 
 function getQueryDataParameters(
@@ -57,6 +63,7 @@ function getQueryDataParameters(
                     from: filters.from,
                     to: filters.to,
                 } satisfies StatsStorePerformanceTrafficSourceQuery,
+                details: StatsStorePerformanceTrafficSourceDetails,
             };
         case DataSourceSchema.Values.GOOGLE_PERFORMANCE_COUNTRY:
             return {
@@ -68,6 +75,7 @@ function getQueryDataParameters(
                     from: filters.from,
                     to: filters.to,
                 } satisfies StatsStorePerformanceCountryQuery,
+                details: StatsStorePerformanceCountryDetails,
             };
         default:
             widgetDef.dataSource satisfies never;
