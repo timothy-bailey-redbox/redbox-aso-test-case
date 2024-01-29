@@ -20,14 +20,14 @@ export default function BarChartWidget({ data: { data, details }, axes }: Widget
             <BarChart data={groupedData}>
                 <defs>
                     <filter id="bar-inner-shadow">
-                        <feFlood flood-color="rgba(0,0,0,0.5)" result="fill" />
+                        <feFlood floodColor="rgba(0,0,0,0.5)" result="fill" />
                         <feOffset dx="6" dy="6" in="SourceGraphic" result="offset" />
                         <feComposite operator="out" in="fill" in2="offset" />
                         <feGaussianBlur stdDeviation="3" />
                         <feComposite operator="atop" in2="SourceGraphic" />
                     </filter>
                     <filter id="bar-emboss">
-                        <feFlood flood-color="rgba(255,255,255,0.3)" result="fill" />
+                        <feFlood floodColor="rgba(255,255,255,0.3)" result="fill" />
                         <feOffset dx="6" dy="6" in="SourceGraphic" result="offset" />
                         <feComposite operator="out" in="fill" in2="offset" />
                         <feGaussianBlur stdDeviation="3" />
