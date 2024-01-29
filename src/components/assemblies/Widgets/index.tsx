@@ -1,7 +1,13 @@
+import { createRoot } from "react-dom/client";
 import { type DashboardAPI } from "types/dashboard";
 import { WidgetTypeSchema, type WidgetAPI } from "types/widget";
+import { v4 as uuid } from "uuid";
 import Card from "~/components/basic/Card";
 import DataLoader from "~/components/basic/DataLoader";
+import Icons from "~/components/basic/Icons";
+import Button from "~/components/basic/inputs/Button";
+import { saveDOMNodeImage } from "~/lib/saveImage";
+import { delay } from "~/lib/time";
 import { useWidgetDataQuery } from "~/queries/widgetData";
 import BarChartWidget from "./BarChartWidget";
 import DialWidget from "./DialWidget";
@@ -19,15 +25,44 @@ export default function Widget({ widget, dashboard }: WidgetProps) {
     const query = useWidgetDataQuery(dashboard, widget);
 
     const WidgetEl = getWidgetElement(widget);
+    const id = `widget-` + uuid();
+
+    const takeScreenshot = async () => {
+        const iconWrap = document.createElement("div");
+        createRoot(iconWrap).render(<Icons.Redbox width={126} height={31} />);
+        await delay(100);
+        await saveDOMNodeImage(`${widget.title} - ${dashboard.name}`, [
+            {
+                element: iconWrap,
+                padding: "32px",
+                background: "rgb(235,235,235)",
+            },
+            {
+                selector: `#${id}`,
+                padding: "0 0 8px",
+                fixedSize: true,
+                background: "rgb(235,235,235)",
+            },
+        ]);
+    };
 
     return (
         <DataLoader query={query}>
             <Card title={widget.title}>
                 {query.data && (
-                    <WidgetEl
-                        data={query.data}
-                        axes={[widget.axis1, widget.axis2, widget.axis3].filter((a) => !!a) as string[]}
-                    />
+                    <>
+                        <div>
+                            <Button onClick={takeScreenshot}>
+                                <Icons.Download />
+                            </Button>
+                        </div>
+                        <div id={id}>
+                            <WidgetEl
+                                data={query.data}
+                                axes={[widget.axis1, widget.axis2, widget.axis3].filter((a) => !!a) as string[]}
+                            />
+                        </div>
+                    </>
                 )}
             </Card>
         </DataLoader>

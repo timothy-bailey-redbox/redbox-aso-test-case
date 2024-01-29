@@ -5,6 +5,10 @@
     --helper-text-color: hsl(0, 0%, 51%);
     --error-color: hsl(10, 100%, 35%);
 
+    --fontFamily-system: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+        Cantarell, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+
     /* text sizes */
     --title-text-size: 2.5rem;
     --big-text-size: 1.5rem;
