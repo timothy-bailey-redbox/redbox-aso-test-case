@@ -1,3 +1,4 @@
+import DateSelector from "~/components/assemblies/DateSelector";
 import Widget from "~/components/assemblies/Widgets";
 import SecurePage from "~/components/auth/SecurePage";
 import DataLoader from "~/components/basic/DataLoader";
@@ -5,13 +6,17 @@ import Grid, { type GridItemProps } from "~/components/basic/Grid";
 import PageWithNav from "~/components/wrappers/PageWithNav";
 import useRouteDashboardId from "~/lib/useRouteDashboardId";
 import { useDashboardQuery } from "~/queries/dashboards";
+import styles from "./dashboardId.module.css";
 
 export default function EnsureDashboardId() {
     const dashboardId = useRouteDashboardId();
     if (!dashboardId) {
-        return null; // TODO 404
+        return (
+            <SecurePage>
+                <PageWithNav>404</PageWithNav>
+            </SecurePage>
+        );
     }
-
     return <DashboardPage dashboardId={dashboardId} />;
 }
 
@@ -22,9 +27,12 @@ function DashboardPage({ dashboardId }: { dashboardId: string }) {
         <SecurePage>
             <PageWithNav>
                 <DataLoader query={dashboard}>
-                    <header style={{ marginBottom: 32 }}>
-                        <h1>{dashboard.data?.name}</h1>
-                        <small>{dashboard.data?.description}</small>
+                    <header className={styles.header}>
+                        <div>
+                            <h1>{dashboard.data?.name}</h1>
+                            <small>{dashboard.data?.description}</small>
+                        </div>
+                        <DateSelector />
                     </header>
                     <Grid>
                         {

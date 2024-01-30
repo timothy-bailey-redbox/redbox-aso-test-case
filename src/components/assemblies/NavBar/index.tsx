@@ -6,7 +6,7 @@ import DataLoader from "~/components/basic/DataLoader";
 import Icons from "~/components/basic/Icons";
 import useRouteDashboardId from "~/lib/useRouteDashboardId";
 import { useDashboardsQuery } from "~/queries/dashboards";
-import TextInput from "../../basic/inputs/TextInput";
+import Input from "../../basic/inputs/Input";
 import styles from "./navbar.module.css";
 
 export function dashboardSorter(list: DashboardAPI[] = [], searchString = "") {
@@ -35,11 +35,7 @@ export default function NavBar() {
                 <Link href="/dashboards">
                     <Icons.Redbox height={100} width={132} />
                 </Link>
-                <TextInput
-                    placeholder="Search..."
-                    value={searchString}
-                    onChange={(e) => setSearchString(e.target.value)}
-                />
+                <Input placeholder="Search..." value={searchString} onChange={(e) => setSearchString(e.target.value)} />
                 <DataLoader query={dashboards}>
                     <ul className={styles.list}>
                         {filteredDashboards?.map((dash) => (

@@ -47,15 +47,16 @@ export default function Widget({ widget, dashboard }: WidgetProps) {
     };
 
     return (
-        <DataLoader query={query}>
-            <Card
-                title={widget.title}
-                actionButton={
-                    <Button onClick={takeScreenshot}>
-                        <Icons.Screenshot width={18} height={18} />
-                    </Button>
-                }
-            >
+        <Card
+            title={widget.title}
+            actionButton={
+                <Button onClick={takeScreenshot}>
+                    <Icons.Screenshot width={18} height={18} />
+                </Button>
+            }
+        >
+            <DataLoader query={query}>
+                {!!widget.description && <p style={{ marginBottom: 8 }}>{widget.description}</p>}
                 {query.data && (
                     <div id={id}>
                         <WidgetEl
@@ -64,8 +65,8 @@ export default function Widget({ widget, dashboard }: WidgetProps) {
                         />
                     </div>
                 )}
-            </Card>
-        </DataLoader>
+            </DataLoader>
+        </Card>
     );
 }
 
