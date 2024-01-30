@@ -4,6 +4,11 @@
     justify-content: center;
     align-items: center;
     padding: max(16px, 5vh) max(16px, 5vw);
+    position: relative;
+}
+
+.fullBackground {
+    min-width: 1200px;
 }
 
 .ribbonContainer {
@@ -76,6 +81,6 @@
 }
 
 .fullSize {
-    min-height: 80svh;
+    min-height: 90svh;
     width: 100%;
 }

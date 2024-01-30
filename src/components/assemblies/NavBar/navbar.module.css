@@ -12,4 +12,21 @@
     top: 0;
     display: grid;
     justify-items: center;
+    gap: 16px;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style: none;
+    text-align: center;
+    display: grid;
+    grid-auto-rows: 1.8em;
+    align-items: center;
+    color: var(--purple-text-color);
+}
+
+.isActive {
+    font-weight: bold;
 }

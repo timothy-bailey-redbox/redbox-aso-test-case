@@ -1,25 +1,26 @@
 :root {
     /* text and system colors */
-    --purple-text-color: #4b3758;
-    --normal-text-color: rgba(80, 80, 80, 0.9);
-    --helper-text-color: #838383;
-    --error-color: #b41e00;
+    --purple-text-color: hsl(276, 23%, 28%);
+    --normal-text-color: hsla(0, 0%, 31%, 0.9);
+    --helper-text-color: hsl(0, 0%, 51%);
+    --error-color: hsl(10, 100%, 35%);
 
     /* text sizes */
-    --title-text-size: 2.488rem; /* 39.81px */
-    --big-text-size: 1.728rem; /* 27.65px */
-    --subtitle-text-size: 1.2rem; /* 19.2px */
-    --normal-text-size: 1rem; /* 16px */
-    --helper-text-size: 0.833rem; /* 13.33px */
+    --title-text-size: 2.5rem;
+    --big-text-size: 1.5rem;
+    --subtitle-text-size: 1.2rem;
+    --normal-text-size: 1rem;
+    --helper-text-size: 0.8rem;
 
     /* bg colors */
-    --bg-gradient: linear-gradient(160deg, rgba(255, 255, 255, 1) 0%, rgba(91, 89, 114, 1) 100%);
-    --bg-purple: #9747ff;
-    --bg-orange: #ff8d25;
+    --bg-color: rgba(91, 89, 114, 1);
+    --bg-gradient: linear-gradient(160deg, white 0%, var(--bg-color) 100%);
+    --bg-purple: hsl(266, 100%, 64%);
+    --bg-orange: hsl(29, 100%, 57%);
 
     /* graph colors */
     --graph-color: linear-gradient(0deg, rgba(121, 35, 210, 1) 0%, rgba(255, 121, 0, 1) 100%);
-    --dial-color: linear-gradient(160deg, rgba(255, 255, 255, 1) 0%, rgba(195, 195, 195, 1) 100%);
+    --dial-color: linear-gradient(160deg, white 0%, rgba(195, 195, 195, 1) 100%);
 
     /* shadows */
     --shadow-light-bright: rgba(255, 255, 255, 0.5);

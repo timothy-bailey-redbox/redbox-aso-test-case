@@ -21,17 +21,15 @@ body {
         "Segoe UI Emoji",
         "Segoe UI Symbol",
         "Noto Color Emoji";
-    background: var(--bg-gradient);
+    background-color: var(--bg-color);
+    background-image: var(--bg-gradient);
     background-attachment: fixed;
+    color: hsl(0deg, 0%, 10%);
 }
 
 a {
     color: inherit;
     text-decoration: none;
-}
-
-* {
-    box-sizing: border-box;
 }
 
 html {

@@ -1,11 +1,11 @@
-.graphWidgetTooltip {
+.tooltip {
     border-radius: 25px;
     box-shadow: var(--u-convex-light-shadow);
     padding: 12px;
-    opacity: 88%;
+    opacity: 85%;
 }
 
-.graphWidgetTooltipLabel {
+.label {
     color: var(--normal-text-color);
     font-weight: 700;
 }

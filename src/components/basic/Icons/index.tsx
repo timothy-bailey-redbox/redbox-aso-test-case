@@ -1,6 +1,6 @@
 import type React from "react";
-import DownloadIcon from "./Download";
 import ClickIcon from "./Click";
+import DownloadIcon from "./Download";
 import Redbox from "./Redbox";
 import Settings from "./Settings";
 
@@ -20,6 +20,12 @@ const Icons = {
     Click: iconWrap(ClickIcon),
     Redbox: iconWrap(Redbox),
     Settings: iconWrap(Settings),
-};
+} as const;
 
 export default Icons;
+
+export type IconName = keyof typeof Icons;
+
+export function isIcon(iconName?: string): iconName is IconName {
+    return !!iconName && iconName in Icons;
+}
