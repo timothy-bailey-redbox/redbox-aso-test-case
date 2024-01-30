@@ -11,4 +11,13 @@
     color: var(--purple-text-color);
     font-size: var(--subtitle-text-size);
     font-weight: 700;
+    flex: 1;
+}
+
+.button {
+}
+
+.header {
+    display: flex;
+    gap: 16px;
 }

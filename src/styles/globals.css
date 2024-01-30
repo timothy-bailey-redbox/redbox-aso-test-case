@@ -6,21 +6,7 @@ html,
 body {
     padding: 0;
     margin: 0;
-    font-family:
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Oxygen-Sans,
-        Ubuntu,
-        Cantarell,
-        "Helvetica Neue",
-        sans-serif,
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol",
-        "Noto Color Emoji";
+    font-family: var(--fontFamily-system);
     background-color: var(--bg-color);
     background-image: var(--bg-gradient);
     background-attachment: fixed;

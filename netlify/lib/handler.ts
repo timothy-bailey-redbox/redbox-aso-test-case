@@ -85,7 +85,7 @@ export default function functionHandler({
                 }
                 if (err instanceof HTTPResponseError) {
                     status = err.statusCode;
-                    // Remove the stack as this was very likely and handled error
+                    // Remove the stack as this was very likely a handled error
                     // @ts-expect-error As above
                     delete message.stack;
                 }

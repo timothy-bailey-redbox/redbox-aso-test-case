@@ -1,6 +1,7 @@
 import { type AppType } from "next/dist/shared/lib/utils";
 import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { minutes } from "~/lib/time";
 
 import "~/styles/globals.css";
 
@@ -9,7 +10,7 @@ const queryClient = new QueryClient({
         queries: {
             refetchOnWindowFocus: false,
             refetchOnMount: false,
-            staleTime: 10 * 60 * 1000, // 10 Mins
+            staleTime: minutes(10),
         },
     },
 });

@@ -51,7 +51,6 @@ export default function BarChartWidget({ data: { data, details }, axes }: Widget
                         tickFormatter={(value) => formatWidgetValue(value, details[dataKey]?.format ?? "number")}
                         orientation={index % 2 === 0 ? "left" : "right"}
                         interval={"equidistantPreserveStart"}
-                        hide
                     />
                 ))}
                 <Tooltip
