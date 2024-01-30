@@ -43,7 +43,7 @@ export async function saveDOMNodeImage(fileName: string, elements: SaveDOMNodeCo
         const elementWrapper = document.createElement("div");
         elementWrapper.style.background = config.background ?? cssVar("--bg-color");
         elementWrapper.style.padding = config.padding ?? "8px";
-        elementWrapper.style.width = "100%";
+        elementWrapper.style.minWidth = "100%";
         elementWrapper.style.boxSizing = "border-box";
 
         if (config.fixedSize) {

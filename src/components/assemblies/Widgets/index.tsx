@@ -39,7 +39,7 @@ export default function Widget({ widget, dashboard }: WidgetProps) {
             },
             {
                 selector: `#${id}`,
-                padding: "0 0 8px",
+                padding: "0 32px 16px",
                 fixedSize: true,
                 background: "rgb(235,235,235)",
             },
@@ -48,21 +48,21 @@ export default function Widget({ widget, dashboard }: WidgetProps) {
 
     return (
         <DataLoader query={query}>
-            <Card title={widget.title}>
+            <Card
+                title={widget.title}
+                actionButton={
+                    <Button onClick={takeScreenshot}>
+                        <Icons.Screenshot width={18} height={18} />
+                    </Button>
+                }
+            >
                 {query.data && (
-                    <>
-                        <div>
-                            <Button onClick={takeScreenshot}>
-                                <Icons.Download />
-                            </Button>
-                        </div>
-                        <div id={id}>
-                            <WidgetEl
-                                data={query.data}
-                                axes={[widget.axis1, widget.axis2, widget.axis3].filter((a) => !!a) as string[]}
-                            />
-                        </div>
-                    </>
+                    <div id={id}>
+                        <WidgetEl
+                            data={query.data}
+                            axes={[widget.axis1, widget.axis2, widget.axis3].filter((a) => !!a) as string[]}
+                        />
+                    </div>
                 )}
             </Card>
         </DataLoader>
