@@ -3,7 +3,8 @@ import ClickIcon from "./Click";
 import DownloadIcon from "./Download";
 import Redbox from "./Redbox";
 import Settings from "./Settings";
-import { Screenshot } from "./Screenshot";
+import Delete from "./Delete";
+import Screenshot from "./Screenshot";
 
 type SvgEl = React.FC<React.SVGProps<SVGSVGElement>>;
 
@@ -22,6 +23,7 @@ const Icons = {
     Redbox: iconWrap(Redbox),
     Settings: iconWrap(Settings),
     Screenshot: iconWrap(Screenshot),
+    Delete: iconWrap(Delete),
 } as const;
 
 export default Icons;

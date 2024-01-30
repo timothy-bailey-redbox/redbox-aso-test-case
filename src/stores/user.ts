@@ -26,7 +26,7 @@ const useUserStore = create<UserState>()((set, get) => {
             set({
                 currentUser: user,
                 isLoggedIn: true,
-                isAdmin: user?.role === USER_ADMIN_ROLE,
+                isAdmin: user?.app_metadata?.roles?.includes(USER_ADMIN_ROLE),
             });
         }
         return token!;
@@ -53,7 +53,7 @@ netlifyIdentity.on("init", (user) => {
         useUserStore.setState({
             currentUser: user,
             isLoggedIn: true,
-            isAdmin: user?.role === USER_ADMIN_ROLE,
+            isAdmin: user?.app_metadata?.roles?.includes(USER_ADMIN_ROLE),
         });
     }
 });
@@ -63,7 +63,7 @@ netlifyIdentity.on("login", (user) => {
     useUserStore.setState({
         currentUser: user,
         isLoggedIn: true,
-        isAdmin: user?.role === USER_ADMIN_ROLE,
+        isAdmin: user?.app_metadata?.roles?.includes(USER_ADMIN_ROLE),
     });
     netlifyIdentity.close();
 });

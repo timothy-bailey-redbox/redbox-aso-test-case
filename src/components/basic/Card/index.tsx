@@ -6,7 +6,7 @@ type CardProps = {
     children: React.ReactNode;
     className?: string;
     concave?: boolean;
-    title?: string;
+    title?: React.ReactNode;
     actionButton?: React.ReactNode;
 };
 

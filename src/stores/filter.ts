@@ -5,6 +5,9 @@ export type FilterState = {
     from: number;
     to: number;
     setDateRange: (from: number, to: number) => void;
+
+    search: string;
+    setSearch: (search: string) => void;
 };
 
 const STORE_DATE_KEY = "RB-ASO-filterDate";
@@ -21,7 +24,6 @@ const useFilterStore = create<FilterState>()((set) => {
     return {
         from: initRange[0],
         to: initRange[1],
-
         setDateRange: (from, to) => {
             sessionStorage.setItem(STORE_DATE_KEY, `${from},${to}`);
             set({
@@ -29,6 +31,12 @@ const useFilterStore = create<FilterState>()((set) => {
                 to,
             });
         },
+
+        search: "",
+        setSearch: (search) =>
+            set({
+                search,
+            }),
     };
 });
 export default useFilterStore;
