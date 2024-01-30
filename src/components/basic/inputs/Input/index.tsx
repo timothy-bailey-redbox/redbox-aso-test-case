@@ -6,27 +6,28 @@ import styles from "./textInput.module.css";
 type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     label?: string;
     error?: string;
+    inputClassName?: string;
 };
 
-export default function TextInput({ disabled, error, id, label, ...props }: TextInputProps) {
+export default function Input({ disabled, error, id, label, className, inputClassName, ...props }: TextInputProps) {
     if (label && !id) {
         id = uuid();
     }
     return (
-        <div>
+        <div className={className}>
             {label && (
                 <label htmlFor={id} className={styles.labelText}>
                     {label}
                 </label>
             )}
             <input
+                type="text"
                 {...props}
-                className={clsx(styles.textInputField, "u-concave", {
+                className={clsx(inputClassName, styles.textInputField, "u-concave", {
                     [styles.disabled!]: disabled,
                     [styles.error!]: error,
                 })}
                 id={id}
-                type="text"
                 disabled={disabled}
             />
             {error && <div className={styles.errorText}>{error}</div>}

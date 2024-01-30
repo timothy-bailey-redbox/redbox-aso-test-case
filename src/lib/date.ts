@@ -21,7 +21,7 @@ export function formatDate(inputDate: Dateish, options?: Intl.DateTimeFormatOpti
     return formatter.format(inputDate);
 }
 
-export function localToUTC(val: Date | number): Date {
+export function localToUTC(val: Dateish): Date {
     if (val === null) {
         // @ts-expect-error - This isn't type safe but better for debugging
         return null;
@@ -31,7 +31,7 @@ export function localToUTC(val: Date | number): Date {
     return date;
 }
 
-export function UTCToLocal(val: Date | number): Date {
+export function UTCToLocal(val: Dateish): Date {
     if (val === null) {
         // @ts-expect-error - This isn't type safe but better for debugging
         return null;
@@ -39,4 +39,12 @@ export function UTCToLocal(val: Date | number): Date {
     const date = new Date(val);
     date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
     return date;
+}
+
+export function formatDateForInput(val: Dateish): string {
+    const date = new Date(val);
+    const year = date.getUTCFullYear();
+    const month = `${date.getUTCMonth() + 1}`.padStart(2, "0");
+    const day = `${date.getUTCDate()}`.padStart(2, "0");
+    return `${year}-${month}-${day}`;
 }
