@@ -5,6 +5,7 @@ import DataLoader from "~/components/basic/DataLoader";
 import Grid, { type GridItemProps } from "~/components/basic/Grid";
 import Icons from "~/components/basic/Icons";
 import ButtonLink from "~/components/basic/inputs/Button/ButtonLink";
+import { isNotNil } from "~/lib/type";
 import { useDashboardDelete, useDashboardsQuery } from "~/queries/dashboards";
 import { useTeamsQuery } from "~/queries/teams";
 import useFilterStore from "~/stores/filter";
@@ -62,18 +63,23 @@ export default function DashboardList() {
                                                 ),
                                             };
                                         }) ?? []),
-                                        {
-                                            width: 4,
-                                            height: 1,
-                                            element: (
-                                                <Card>
-                                                    <ButtonLink href="/dashboards/create" className={styles.addBtn}>
-                                                        <Icons.Add width={20} height={20} />
-                                                    </ButtonLink>
-                                                </Card>
-                                            ),
-                                        },
-                                    ]}
+                                        user.isAdmin
+                                            ? {
+                                                  width: 4,
+                                                  height: 1,
+                                                  element: (
+                                                      <Card>
+                                                          <ButtonLink
+                                                              href="/dashboards/create"
+                                                              className={styles.addBtn}
+                                                          >
+                                                              <Icons.Add width={20} height={20} />
+                                                          </ButtonLink>
+                                                      </Card>
+                                                  ),
+                                              }
+                                            : null,
+                                    ].filter(isNotNil)}
                                 </Grid>
                             </React.Fragment>
                         );
