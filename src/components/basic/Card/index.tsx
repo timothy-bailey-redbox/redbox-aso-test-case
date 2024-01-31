@@ -1,14 +1,13 @@
+import clsx from "clsx";
 import React from "react";
 import styles from "./card.module.css";
-import clsx from "clsx";
 
-type CardProps = {
-    children: React.ReactNode;
+type CardProps = React.PropsWithChildren<{
     className?: string;
     concave?: boolean;
     title?: React.ReactNode;
     actionButton?: React.ReactNode;
-};
+}>;
 
 export default function Card({ children, className, concave, title, actionButton }: CardProps) {
     const hasHeader = !!title || !!actionButton;
