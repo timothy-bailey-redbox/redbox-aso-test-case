@@ -55,7 +55,9 @@ export default function DashboardList() {
                                                             )
                                                         }
                                                     >
-                                                        <Link href={href}>{dash.description}</Link>
+                                                        {dash.description && (
+                                                            <Link href={href}>{dash.description}</Link>
+                                                        )}
                                                     </Card>
                                                 ),
                                             };
