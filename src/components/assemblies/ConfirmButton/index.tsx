@@ -31,7 +31,6 @@ export default function ConfirmButton({ label, confirmLabel, onClick, query, chi
                     >
                         {confirmLabel ?? label}
                     </Button>
-                    {JSON.stringify(query, null, 2)}
                 </div>
             </Modal>
         </>
