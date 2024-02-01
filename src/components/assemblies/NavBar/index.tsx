@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import Link from "next/link";
-import { useState } from "react";
 import { type DashboardAPI } from "types/dashboard";
 import DataLoader from "~/components/basic/DataLoader";
 import Icons from "~/components/basic/Icons";
@@ -8,9 +7,13 @@ import useRouteDashboardId from "~/lib/useRouteDashboardId";
 import { useDashboardsQuery } from "~/queries/dashboards";
 import Input from "../../basic/inputs/Input";
 import styles from "./navbar.module.css";
+import { group } from "d3";
+import useFilterStore from "~/stores/filter";
+import { useTeamsQuery } from "~/queries/teams";
+import React from "react";
 
 export function dashboardSorter(list: DashboardAPI[] = [], searchString = "") {
-    return list
+    const boards = list
         .filter(
             (board) =>
                 board.name.toLocaleLowerCase().includes(searchString.toLocaleLowerCase()) ||
@@ -19,15 +22,16 @@ export function dashboardSorter(list: DashboardAPI[] = [], searchString = "") {
         .sort((dashA, dashB) => {
             return dashA.name.localeCompare(dashB.name);
         });
+    return group(boards, (b) => b.teamId);
 }
 
 export default function NavBar() {
+    const teams = useTeamsQuery();
     const dashboards = useDashboardsQuery();
     const activeId = useRouteDashboardId();
+    const { search, setSearch } = useFilterStore();
 
-    const [searchString, setSearchString] = useState("");
-
-    const filteredDashboards = dashboardSorter(dashboards?.data, searchString);
+    const sortedDashboards = dashboardSorter(dashboards?.data, search);
 
     return (
         <div className={styles.navbar}>
@@ -35,15 +39,29 @@ export default function NavBar() {
                 <Link href="/dashboards">
                     <Icons.Redbox height={100} width={132} />
                 </Link>
-                <Input placeholder="Search..." value={searchString} onChange={(e) => setSearchString(e.target.value)} />
-                <DataLoader query={dashboards}>
-                    <ul className={styles.list}>
-                        {filteredDashboards?.map((dash) => (
-                            <li key={dash.id} className={clsx({ [styles.isActive!]: activeId === dash.id })}>
-                                <Link href={`/dashboards/${dash.id}`}>{dash.name}</Link>
-                            </li>
-                        ))}
-                    </ul>
+                <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                <DataLoader query={teams}>
+                    <DataLoader query={dashboards}>
+                        <ul className={styles.list}>
+                            {teams.data
+                                ?.toSorted((a, b) => a.createdAt - b.createdAt)
+                                ?.map((team) => {
+                                    return (
+                                        <React.Fragment key={team.id}>
+                                            <li className={styles.team}>{team.name}</li>
+                                            {sortedDashboards.get(team.id)?.map((dash) => (
+                                                <li
+                                                    key={dash.id}
+                                                    className={clsx({ [styles.isActive!]: activeId === dash.id })}
+                                                >
+                                                    <Link href={`/dashboards/${dash.id}`}>{dash.name}</Link>
+                                                </li>
+                                            ))}
+                                        </React.Fragment>
+                                    );
+                                })}
+                        </ul>
+                    </DataLoader>
                 </DataLoader>
             </div>
         </div>

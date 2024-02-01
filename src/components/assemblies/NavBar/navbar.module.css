@@ -18,15 +18,26 @@
 .list {
     margin: 0;
     padding: 0;
+    padding-top: 32px;
     width: 100%;
     list-style: none;
     text-align: center;
     display: grid;
-    grid-auto-rows: 1.8em;
     align-items: center;
-    color: var(--purple-text-color);
+    color: var(--normal-text-color);
+    gap: 2px;
 }
 
 .isActive {
     font-weight: bold;
+}
+
+.team {
+    font-weight: bold;
+    font-size: var(--subtitle-text-size);
+    color: var(--purple-text-color);
+}
+
+.team:not(:first-child) {
+    padding-block: 32px 8px;
 }

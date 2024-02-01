@@ -1,0 +1,13 @@
+.title {
+    padding-block: 32px 16px;
+    color: var(--purple-text-color);
+    font-size: var(--big-text-size);
+
+    &:first-child {
+        padding-top: 0;
+    }
+}
+
+.addBtn {
+    place-self: center;
+}

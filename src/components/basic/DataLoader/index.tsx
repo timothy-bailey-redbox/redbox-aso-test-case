@@ -19,7 +19,7 @@ export default function DataLoader({ query, children, hideReloads }: DataLoaderP
     return children;
 }
 
-function formatError(error: unknown): string {
+export function formatError(error: unknown): string {
     if (error === null || error === undefined) {
         return "No error message provided";
     }
