@@ -1,6 +1,5 @@
 .textInputField {
     border: 0;
-    border-width: 0;
     border-radius: 45px;
     padding: 10px;
     font-weight: 700;
@@ -11,9 +10,10 @@
 }
 
 .error {
-    border-width: 2px;
-    border-style: solid;
-    border-color: var(--error-color);
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: var(--error-color);
+    outline-offset: -2px;
     color: var(--error-color);
 }
 

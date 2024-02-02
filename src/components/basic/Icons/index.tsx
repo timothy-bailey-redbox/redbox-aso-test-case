@@ -4,6 +4,7 @@ import ClickIcon from "./Click";
 import Close from "./Close";
 import Delete from "./Delete";
 import DownloadIcon from "./Download";
+import Edit from "./Edit";
 import Redbox from "./Redbox";
 import Screenshot from "./Screenshot";
 import Settings from "./Settings";
@@ -28,6 +29,7 @@ const Icons = {
     Delete: iconWrap(Delete),
     Add: iconWrap(Add),
     Close: iconWrap(Close),
+    Edit: iconWrap(Edit),
 } as const;
 
 export default Icons;

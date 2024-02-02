@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React from "react";
+import React, { forwardRef } from "react";
 import { v4 as uuid } from "uuid";
 import styles from "./textInput.module.css";
 
@@ -9,7 +9,10 @@ type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
     inputClassName?: string;
 };
 
-export default function Input({ disabled, error, id, label, className, inputClassName, ...props }: TextInputProps) {
+const Input = forwardRef<HTMLInputElement, TextInputProps>(function Input(
+    { disabled, error, id, label, className, inputClassName, ...props },
+    ref,
+) {
     if (label && !id) {
         id = uuid();
     }
@@ -29,8 +32,11 @@ export default function Input({ disabled, error, id, label, className, inputClas
                 })}
                 id={id}
                 disabled={disabled}
+                ref={ref}
             />
             {error && <div className={styles.errorText}>{error}</div>}
         </div>
     );
-}
+});
+
+export default Input;
