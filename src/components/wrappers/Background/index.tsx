@@ -4,7 +4,7 @@ import styles from "./background.module.css";
 
 type BackgroundProps = {
     children: React.ReactNode;
-    fullSize: boolean;
+    fullSize?: boolean;
     className?: string;
 };
 
