@@ -14,6 +14,7 @@
         "db:tables": "npx tsx scripts/dbTableCreate.ts"
     },
     "dependencies": {
+        "@hookform/resolvers": "^3.3.4",
         "@netlify/functions": "^2.4.1",
         "@netlify/next": "^1.4.9",
         "@t3-oss/env-nextjs": "^0.7.1",
@@ -29,6 +30,7 @@
         "prettier": "^3.1.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
+        "react-hook-form": "^7.49.3",
         "react-query": "^3.39.3",
         "recharts": "^2.10.4",
         "svg-smoother": "^2.1.0",

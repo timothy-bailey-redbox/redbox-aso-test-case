@@ -1,0 +1,37 @@
+.array {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-block: 12px;
+
+    & > li {
+        box-shadow: var(--u-concave-shadow);
+        border-radius: 9999px;
+        padding: 0 0 0 24px;
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 1fr max-content;
+        align-items: center;
+    }
+}
+
+.inputWrapper {
+    position: relative;
+    & > input {
+        padding-right: 36px;
+    }
+}
+
+.add {
+    border: 0;
+    margin: 0;
+    height: 100%;
+    position: absolute;
+    aspect-ratio: 1;
+    background: none;
+    right: 0;
+    top: 0;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+}

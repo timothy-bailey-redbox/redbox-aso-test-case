@@ -31,7 +31,14 @@ export default function DashboardList() {
                     ?.map((team) => {
                         return (
                             <React.Fragment key={team.id}>
-                                <h2 className={styles.title}>{team.name}</h2>
+                                <div className={styles.heading}>
+                                    <h2 className={styles.title}>{team.name}</h2>
+                                    {user.isAdmin && (
+                                        <ButtonLink href={`/teams/${team.id}`}>
+                                            <Icons.Edit />
+                                        </ButtonLink>
+                                    )}
+                                </div>
                                 <Grid>
                                     {[
                                         ...(sortedDashboards.get(team.id)?.map((dash): GridItemProps => {
