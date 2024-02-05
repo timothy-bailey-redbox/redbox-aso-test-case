@@ -3,7 +3,7 @@
     box-shadow: var(--u-convex-shadow);
     backdrop-filter: blur(10px);
     border-radius: 45px;
-    padding: 12px;
+    padding: 12px 18px;
     border: none;
     font-size: 16px;
     font-weight: 800;
@@ -11,6 +11,9 @@
     cursor: pointer;
     position: relative;
     overflow: clip;
+    display: inline-flex;
+    align-items: center;
+    gap: 1ch;
 
     &:active {
         box-shadow: var(--u-concave-shadow);
@@ -43,4 +46,9 @@
     to {
         transform: rotate(0.5turn);
     }
+}
+
+.danger {
+    background-color: hsla(0, 100%, 30%, 0.7);
+    color: white;
 }

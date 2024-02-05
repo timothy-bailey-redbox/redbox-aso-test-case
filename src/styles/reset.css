@@ -65,6 +65,7 @@ button,
 textarea,
 select {
     font: inherit;
+    color: inherit;
 }
 
 /* Anything that has been anchored to should have extra scroll margin */

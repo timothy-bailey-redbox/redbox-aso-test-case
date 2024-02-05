@@ -10,14 +10,17 @@ type ConfirmButtonProps = React.PropsWithChildren<{
     onClick: () => void | Promise<void>;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     query?: UseMutationResult<any, any, any, any>;
+    danger?: boolean;
 }>;
 
-export default function ConfirmButton({ label, confirmLabel, onClick, query, children }: ConfirmButtonProps) {
+export default function ConfirmButton({ label, confirmLabel, onClick, query, danger, children }: ConfirmButtonProps) {
     const [isOpen, setOpen] = useState(false);
 
     return (
         <>
-            <Button onClick={() => setOpen(true)}>{label}</Button>
+            <Button danger={danger} onClick={() => setOpen(true)}>
+                {label}
+            </Button>
             <Modal isOpen={isOpen} onClose={() => setOpen(false)}>
                 {children}
                 <div style={{ paddingTop: 32 }}>
@@ -28,6 +31,7 @@ export default function ConfirmButton({ label, confirmLabel, onClick, query, chi
                             setOpen(false);
                         }}
                         pending={query?.isLoading}
+                        danger={danger}
                     >
                         {confirmLabel ?? label}
                     </Button>

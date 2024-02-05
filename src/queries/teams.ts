@@ -10,6 +10,7 @@ const TEAMS_KEY = "teams";
 
 export function useTeamsQuery() {
     const user = useUserStore();
+    const client = useQueryClient();
 
     return useQuery({
         queryKey: TEAMS_KEY,
@@ -25,6 +26,11 @@ export function useTeamsQuery() {
             return req.teams;
         },
         enabled: user.isLoggedIn,
+        onSuccess: (data) => {
+            for (const team of data) {
+                client.setQueryData([TEAM_KEY, team.id], team);
+            }
+        },
     });
 }
 

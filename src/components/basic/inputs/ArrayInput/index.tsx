@@ -44,8 +44,6 @@ const ArrayInput = forwardRef<HTMLInputElement, ArrayInputProps>(function ArrayI
         value = defaultValue;
     }
 
-    console.log(error);
-
     const [inputValue, setInputValue] = useState("");
 
     const onPaste = useCallback(

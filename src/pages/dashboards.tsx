@@ -1,3 +1,4 @@
+import AddTeamButton from "~/components/assemblies/AddTeamButton";
 import DashboardList from "~/components/assemblies/DashboardList";
 import LogoutButton from "~/components/auth/LogoutButton";
 import SecurePage from "~/components/auth/SecurePage";
@@ -13,6 +14,7 @@ export default function Dashboards() {
                         <h1>Dashboards</h1>
                         <div>
                             <LogoutButton />
+                            <AddTeamButton />
                         </div>
                         <DashboardList />
                     </div>

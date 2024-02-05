@@ -15,6 +15,7 @@ const DASHBOARD_KEY = "dashboard";
 
 export function useDashboardsQuery() {
     const user = useUserStore();
+    const client = useQueryClient();
 
     return useQuery({
         queryKey: DASHBOARDS_KEY,
@@ -28,6 +29,11 @@ export function useDashboardsQuery() {
                 }),
             });
             return req.dashboards;
+        },
+        onSuccess: (data) => {
+            for (const dashboard of data) {
+                client.setQueryData([DASHBOARDS_KEY, dashboard.id], dashboard);
+            }
         },
         enabled: user.isLoggedIn,
     });
