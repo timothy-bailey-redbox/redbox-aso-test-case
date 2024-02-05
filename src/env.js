@@ -9,7 +9,7 @@ export const env = createEnv({
     server: {
         NODE_ENV: z.enum(["development", "test", "production"]),
 
-        NETLIFY_AUTH_TOKEN: z.string(),
+        NETLIFY_AUTH_TOKEN: z.string().optional(),
 
         UI_DB_HOST: z.string(),
         UI_DB_USERNAME: z.string(),
