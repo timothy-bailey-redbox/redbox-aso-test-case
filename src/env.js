@@ -15,19 +15,19 @@ export const env = createEnv({
         UI_DB_USERNAME: z.string(),
         UI_DB_PASSWORD: z.string(),
         UI_DB_NAME: z.string(),
-        UI_DB_PORT: z.number(),
+        UI_DB_PORT: z.string(),
 
         FIVETRAN_DB_HOST: z.string(),
         FIVETRAN_DB_USERNAME: z.string(),
         FIVETRAN_DB_PASSWORD: z.string(),
         FIVETRAN_DB_NAME: z.string(),
-        FIVETRAN_DB_PORT: z.number(),
+        FIVETRAN_DB_PORT: z.string(),
 
         APPTWEAK_DB_HOST: z.string(),
         APPTWEAK_DB_USERNAME: z.string(),
         APPTWEAK_DB_PASSWORD: z.string(),
         APPTWEAK_DB_NAME: z.string(),
-        APPTWEAK_DB_PORT: z.number(),
+        APPTWEAK_DB_PORT: z.string(),
     },
 
     /**
