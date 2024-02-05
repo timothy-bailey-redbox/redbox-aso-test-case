@@ -8,9 +8,9 @@
     background: rgba(235, 235, 235, 0.9);
     backdrop-filter: blur(10px);
     border-radius: 35px;
-    padding: 24px;
     box-shadow: var(--u-convex-outlined-shadow);
-    overflow: visible;
+    overflow: clip;
+    padding: 0;
 
     &::backdrop {
         background: rgba(0, 0, 0, 0.8);
@@ -25,4 +25,8 @@
     top: 16px;
     right: 16px;
     min-width: max-content;
+}
+
+.wrapper {
+    padding: 24px;
 }

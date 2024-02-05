@@ -26,3 +26,18 @@
 .u-concave {
     box-shadow: var(--u-concave-shadow);
 }
+
+.u-title {
+    font-size: var(--title-text-size);
+    color: var(--purple-text-color);
+}
+
+.u-smallTitle {
+    font-size: var(--subtitle-text-size);
+    color: var(--purple-text-color);
+}
+
+.u-subtitle {
+    font-size: var(--subtitle-text-size);
+    color: var(--normal-text-color);
+}

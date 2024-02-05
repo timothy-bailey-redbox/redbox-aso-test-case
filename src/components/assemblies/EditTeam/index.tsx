@@ -1,30 +1,32 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type FieldError, type SubmitHandler } from "react-hook-form";
-import { type Team, type TeamUpdate } from "types/team";
+import { type Team, type TeamCreation, type TeamUpdate } from "types/team";
 import { z } from "zod";
+import { formatError } from "~/components/basic/DataLoader";
 import ArrayInput from "~/components/basic/inputs/ArrayInput";
 import Button from "~/components/basic/inputs/Button";
 import Input from "~/components/basic/inputs/Input";
-import { useTeamUpdate } from "~/queries/teams";
+import { type useTeamCreate, type useTeamUpdate } from "~/queries/teams";
 import styles from "./editteam.module.css";
 
 type EditTeamProps = {
-    team: Team;
+    team?: Team;
+    query: ReturnType<typeof useTeamUpdate | typeof useTeamCreate>;
+    onSubmit: SubmitHandler<TeamUpdate & TeamCreation>;
+    buttonLabel?: string;
 };
 
-export default function EditTeam({ team }: EditTeamProps) {
-    const updateTeam = useTeamUpdate();
-
+export default function EditTeam({ team, query, onSubmit, buttonLabel = "Save" }: EditTeamProps) {
     const {
         register,
         handleSubmit,
         formState: { errors },
         setValue,
         watch,
-    } = useForm<TeamUpdate>({
+    } = useForm<TeamUpdate & TeamCreation>({
         defaultValues: {
-            name: team.name,
-            users: team.users,
+            name: team?.name ?? "",
+            users: team?.users ?? [],
         },
         resolver: zodResolver(
             z.object({
@@ -34,31 +36,15 @@ export default function EditTeam({ team }: EditTeamProps) {
         ),
     });
 
-    const onSubmit: SubmitHandler<TeamUpdate> = async (data) => {
-        await updateTeam.mutateAsync({
-            id: team.id,
-            update: {
-                name: data.name,
-                users: data.users,
-            },
-        });
-    };
-
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-            <Input
-                label="Team name"
-                error={errors.name?.message}
-                defaultValue={team.name}
-                {...register("name", { required: true })}
-            />
+            <Input label="Team name" error={errors.name?.message} {...register("name", { required: true })} />
 
             <ArrayInput
                 label="Users"
                 error={
                     Array.isArray(errors.users) ? errors.users.map((e: FieldError) => e.message) : errors.users?.message
                 }
-                defaultValue={team.users}
                 {...register("users")}
                 value={watch("users")}
                 onChange={(value) => {
@@ -67,8 +53,9 @@ export default function EditTeam({ team }: EditTeamProps) {
             />
 
             <div style={{ textAlign: "right" }}>
-                <Button type="submit" pending={updateTeam.isLoading}>
-                    Save
+                {query.isError && <p style={{ paddingBlockEnd: 8 }}>{formatError(query.error)}</p>}
+                <Button type="submit" pending={query.isLoading}>
+                    {buttonLabel}
                 </Button>
             </div>
         </form>

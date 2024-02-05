@@ -9,7 +9,7 @@
 }
 
 .heading {
-    padding-block: 32px 16px;
+    padding-block: 64px 16px;
     display: flex;
 
     &:first-child {

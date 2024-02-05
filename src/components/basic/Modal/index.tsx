@@ -21,14 +21,16 @@ export default function Modal({ children, className, isOpen, ...props }: ModalPr
     }, [isOpen]);
 
     const onClickOut = useCallback(({ target }: React.MouseEvent) => {
-        if (target === dialog.current) dialog.current?.close();
+        if (target === dialog.current) {
+            dialog.current?.close();
+        }
     }, []);
 
     return (
         <dialog ref={dialog} className={clsx(styles.modal, className)} onClick={onClickOut} {...props}>
-            {children}
+            <div className={styles.wrapper}>{children}</div>
             <form className={styles.close}>
-                <Button formMethod="dialog">
+                <Button formMethod="dialog" type="submit">
                     <Icons.Close width={18} height={18} />
                 </Button>
             </form>
