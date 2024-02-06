@@ -1,18 +1,20 @@
 import InsecurePage from "~/components/auth/InsecurePage";
 import LoginButton from "~/components/auth/LoginButton";
+import Background from "~/components/wrappers/Background";
 import styles from "./index.module.css";
 
 export default function Home() {
     return (
         <InsecurePage>
-            <main className={styles.main}>
-                <div className={styles.container}>
-                    <h1 className={styles.title}>ASO Dashboards</h1>
-                    <div className={styles.cardRow}>
-                        <LoginButton />
+            <Background>
+                <div className={styles.wrapper}>
+                    <div>
+                        <h1 className="u-title">ASO Dashboard</h1>
+                        <small className="u-subtitle">by Redbox Mobile</small>
                     </div>
+                    <LoginButton />
                 </div>
-            </main>
+            </Background>
         </InsecurePage>
     );
 }
