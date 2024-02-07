@@ -8,7 +8,7 @@ import { StatusSchema } from "types/generic";
 import { TeamCreationSchema, TeamSchema, type Team } from "types/team";
 
 export const config: Config = {
-    path: "/.netlify/functions/teams",
+    //path: "/.netlify/functions/teams",
 };
 
 export default functionHandler({
