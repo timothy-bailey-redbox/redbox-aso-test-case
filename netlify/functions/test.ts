@@ -1,4 +1,8 @@
-import { type Context } from "@netlify/functions";
+import { type Config, type Context } from "@netlify/functions";
+
+export const config: Config = {
+    path: "/api/test",
+};
 
 export default async function test(req: Request, context: Context): Promise<Response> {
     await new Promise((resolve) => {
