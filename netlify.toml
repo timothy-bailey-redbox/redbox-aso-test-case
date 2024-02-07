@@ -2,6 +2,10 @@
     command = "next dev -p 7007"
     targetPort = 7007
 
+[functions]
+    node_bundler = "esbuild"
+    directory = "./netlify/common-functions/"
+    external_node_modules = ["pg-native"]
 
 [[headers]]
     for = "/*"

@@ -29,7 +29,7 @@ async function recursiveFileSelect(path: string, predicate?: (file: string) => b
 }
 
 const inputDir = "./netlify/functions/";
-const outputDir = "./netlify/functions/";
+const outputDir = "./netlify/common-functions/";
 const nodeVersion = pkg.engines?.node?.replaceAll(/[^\d\.]/g, "") ?? "20";
 
 const functions = await recursiveFileSelect(inputDir, (fileName) => fileName.endsWith(".ts"));
@@ -40,8 +40,8 @@ await build({
     target: `node${nodeVersion}`,
     outdir: outputDir,
     bundle: true,
-    format: "esm",
+    format: "cjs",
     outExtension: {
-        ".js": ".mjs",
+        ".js": ".cjs",
     },
 });

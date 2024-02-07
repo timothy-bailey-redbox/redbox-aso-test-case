@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "next dev",
         "dev:backend": "netlify dev",
-        "build": "next build",
+        "build": "npm run build:next && npm run build:functions",
         "build:next": "next build",
         "build:functions": "npx tsx scripts/buildFunctions.ts",
         "start": "next start",
