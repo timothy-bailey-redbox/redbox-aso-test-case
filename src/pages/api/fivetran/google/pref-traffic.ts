@@ -10,8 +10,6 @@ export default functionHandler({
     secure: true,
     handlers: {
         get: async (req) => {
-            console.log(req.query);
-
             const params = parseWithSchema(
                 {
                     appId: req.query.appId,
