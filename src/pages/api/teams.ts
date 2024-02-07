@@ -1,20 +1,15 @@
-import { type Config } from "@netlify/functions";
-import { assertIsAdmin } from "netlify/lib/auth";
-import { writeInsertQuery } from "netlify/lib/db";
-import uiDb, { getTeams } from "netlify/lib/db/uiDb";
-import functionHandler from "netlify/lib/handler";
-import { parseWithSchema } from "netlify/lib/parser";
 import { StatusSchema } from "types/generic";
 import { TeamCreationSchema, TeamSchema, type Team } from "types/team";
-
-export const config: Config = {
-    //path: "/.netlify/functions/teams",
-};
+import { assertIsAdmin } from "~/api/auth";
+import { writeInsertQuery } from "~/api/db";
+import uiDb, { getTeams } from "~/api/db/uiDb";
+import functionHandler from "~/api/handler";
+import { parseWithSchema } from "~/api/parser";
 
 export default functionHandler({
     secure: true,
     handlers: {
-        get: async (req, context, user) => {
+        get: async (req, user) => {
             const teams = await getTeams(user);
 
             return {
@@ -24,10 +19,10 @@ export default functionHandler({
             };
         },
 
-        post: async (req, context, user) => {
+        post: async (req, user) => {
             assertIsAdmin(user);
 
-            const props = parseWithSchema(await req.json(), TeamCreationSchema);
+            const props = parseWithSchema(req.body, TeamCreationSchema);
 
             const [team] = await uiDb.mutate<Team>(
                 writeInsertQuery(TeamSchema, "teams", ["id", "createdAt", "updatedAt"]),

@@ -1,5 +1,5 @@
 import "dotenv/config";
-import uiDb from "netlify/lib/db/uiDb";
+import uiDb from "~/api/db/uiDb";
 
 console.log("DB table creation");
 

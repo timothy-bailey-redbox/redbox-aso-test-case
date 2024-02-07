@@ -16,7 +16,7 @@ export function useTeamsQuery() {
         queryKey: TEAMS_KEY,
         queryFn: async () => {
             const req = await doFetch({
-                url: "/.netlify/functions/teams",
+                url: "/api/teams",
                 method: "GET",
                 returnType: "json",
                 schema: z.object({
@@ -41,7 +41,7 @@ export function useTeamQuery(teamId: Id) {
         queryKey: [TEAM_KEY, teamId],
         queryFn: async () => {
             return await doFetch({
-                url: `/.netlify/functions/teams/${teamId}`,
+                url: `/api/teams/${teamId}`,
                 method: "GET",
                 returnType: "json",
                 schema: TeamSchema,
@@ -57,7 +57,7 @@ export function useTeamCreate() {
     return useMutation({
         mutationFn: async (payload: TeamCreation) => {
             return await doFetch({
-                url: "/.netlify/functions/teams",
+                url: "/api/teams",
                 method: "POST",
                 returnType: "json",
                 schema: TeamSchema,
@@ -82,7 +82,7 @@ export function useTeamUpdate() {
     return useMutation({
         mutationFn: async (payload: { id: Id; update: TeamUpdate }) => {
             return await doFetch({
-                url: `/.netlify/functions/teams/${payload.id}`,
+                url: `/api/teams/${payload.id}`,
                 method: "PATCH",
                 returnType: "json",
                 schema: TeamSchema,
@@ -108,7 +108,7 @@ export function useTeamDelete() {
     return useMutation({
         mutationFn: async (teamId: Id) => {
             return await doFetch({
-                url: `/.netlify/functions/teams/${teamId}`,
+                url: `/api/teams/${teamId}`,
                 method: "DELETE",
             });
         },

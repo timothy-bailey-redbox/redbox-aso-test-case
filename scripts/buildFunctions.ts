@@ -1,5 +1,6 @@
 import { build } from "esbuild";
 import fs from "fs/promises";
+import { rimraf } from "rimraf";
 import pkg from "../package.json";
 
 async function recursiveFileSelect(path: string, predicate?: (file: string) => boolean): Promise<string[]> {
@@ -31,6 +32,8 @@ async function recursiveFileSelect(path: string, predicate?: (file: string) => b
 const inputDir = "./netlify/functions/";
 const outputDir = "./netlify/common-functions/";
 const nodeVersion = pkg.engines?.node?.replaceAll(/[^\d\.]/g, "") ?? "20";
+
+await rimraf(outputDir);
 
 const functions = await recursiveFileSelect(inputDir, (fileName) => fileName.endsWith(".ts"));
 

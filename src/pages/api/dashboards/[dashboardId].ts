@@ -1,24 +1,19 @@
-import { type Config } from "@netlify/functions";
-import { assertIsAdmin } from "netlify/lib/auth";
-import { writeInsertQuery } from "netlify/lib/db";
-import uiDb, { getDashboard } from "netlify/lib/db/uiDb";
-import { dashboardDBToAPI } from "netlify/lib/dto/dashboard";
-import functionHandler from "netlify/lib/handler";
-import { parseWithSchema } from "netlify/lib/parser";
 import { DashboardAPIUpdateSchema } from "types/dashboard";
 import { StatusSchema } from "types/generic";
 import { WidgetDBSchema } from "types/widget";
 import { z } from "zod";
-
-export const config: Config = {
-    path: "/.netlify/functions/dashboards/:dashboardId",
-};
+import { assertIsAdmin } from "~/api/auth";
+import { writeInsertQuery } from "~/api/db";
+import uiDb, { getDashboard } from "~/api/db/uiDb";
+import { dashboardDBToAPI } from "~/api/dto/dashboard";
+import functionHandler from "~/api/handler";
+import { parseWithSchema } from "~/api/parser";
 
 export default functionHandler({
     secure: true,
     handlers: {
-        get: async (req, context, user) => {
-            const dashboardId = parseWithSchema(context.params.dashboardId, z.string().uuid());
+        get: async (req, user) => {
+            const dashboardId = parseWithSchema(req.query.dashboardId, z.string().uuid());
             const [dashboard, widgets] = await getDashboard(dashboardId, user);
 
             return {
@@ -26,13 +21,13 @@ export default functionHandler({
             };
         },
 
-        patch: async (req, context, user) => {
+        patch: async (req, user) => {
             assertIsAdmin(user);
 
-            const dashboardId = parseWithSchema(context.params.dashboardId, z.string().uuid());
+            const dashboardId = parseWithSchema(req.query.dashboardId, z.string().uuid());
             const [dashboard, widgets] = await getDashboard(dashboardId, user);
 
-            const changes = parseWithSchema(await req.json(), DashboardAPIUpdateSchema);
+            const changes = parseWithSchema(req.body, DashboardAPIUpdateSchema);
 
             await uiDb.transaction(async (queryFn) => {
                 await queryFn(
@@ -130,9 +125,9 @@ export default functionHandler({
             };
         },
 
-        delete: async (req, context, user) => {
+        delete: async (req, user) => {
             assertIsAdmin(user);
-            const dashboardId = parseWithSchema(context.params.dashboardId, z.string().uuid());
+            const dashboardId = parseWithSchema(req.query.dashboardId, z.string().uuid());
 
             await uiDb.mutate(
                 `UPDATE "dashboards"

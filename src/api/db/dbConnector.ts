@@ -14,25 +14,25 @@ pg.types.setTypeParser(pg.types.builtins.INT8, (int: string) => parseInt(int, 10
 type Parameters = Record<string, unknown>;
 
 export default class DBConnector {
-    private client: pg.Pool;
+    private pool: pg.Pool;
 
     constructor(props: pg.PoolConfig) {
-        this.client = new pg.Pool({
+        this.pool = new pg.Pool({
             ...props,
             log: console.log,
         });
         process.on("beforeExit", () => {
-            void this.client.end();
+            void this.pool.end();
         });
         process.on("SIGINT", () => {
-            void this.client.end();
+            void this.pool.end();
         });
     }
 
     async select<TRow extends pg.QueryResultRow>(query: string, parameters: Parameters): Promise<TRow[]> {
         const [q, params] = this.parametrizeQuery(query, parameters);
         try {
-            const request = await this.client.query<TRow>(q, params);
+            const request = await this.pool.query<TRow>(q, params);
             return request.rows;
         } catch (err) {
             if (err instanceof Error) {
@@ -50,13 +50,16 @@ export default class DBConnector {
 
     async transaction<TReturn>(operation: (queryFn: typeof this.select) => Promise<TReturn>): Promise<TReturn> {
         let result: TReturn;
+        const connection = await this.pool.connect();
         try {
-            await this.client.query("BEGIN");
+            await connection.query("BEGIN");
             result = await operation(this.select.bind(this));
-            await this.client.query("COMMIT");
+            await connection.query("COMMIT");
         } catch (e) {
-            await this.client.query("ROLLBACK");
+            await connection.query("ROLLBACK");
             throw e;
+        } finally {
+            connection.release();
         }
         return result;
     }

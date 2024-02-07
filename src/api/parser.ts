@@ -13,7 +13,25 @@ export function parseJSONWithSchema<T>(json: string | null | undefined, schema: 
     return parseWithSchema(JSON.parse(json ?? "{}"), schema, statusCode);
 }
 
-export function parseQueryString(request: Request) {
-    const url = new URL(request.url);
-    return Object.fromEntries(url.searchParams.entries());
+export function parseQueryStringArray(parameter: string[] | string | undefined) {
+    if (!parameter) {
+        return [];
+    }
+    if (Array.isArray(parameter)) {
+        return parameter;
+    }
+    if (parameter.includes(",")) {
+        return parameter.split(",");
+    }
+    return [parameter];
+}
+
+export function parseQueryStringInt(parameter: string[] | string | undefined) {
+    if (!parameter) {
+        return NaN;
+    }
+    if (Array.isArray(parameter)) {
+        return NaN;
+    }
+    return parseInt(parameter, 10);
 }

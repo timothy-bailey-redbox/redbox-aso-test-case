@@ -1,32 +1,27 @@
-import { type Config } from "@netlify/functions";
-import { assertIsAdmin } from "netlify/lib/auth";
-import uiDb, { getTeam } from "netlify/lib/db/uiDb";
-import functionHandler from "netlify/lib/handler";
-import { parseWithSchema } from "netlify/lib/parser";
 import { StatusSchema } from "types/generic";
 import { TeamUpdateSchema, type Team } from "types/team";
 import { z } from "zod";
-
-export const config: Config = {
-    path: "/.netlify/functions/teams/:teamId",
-};
+import { assertIsAdmin } from "~/api/auth";
+import uiDb, { getTeam } from "~/api/db/uiDb";
+import functionHandler from "~/api/handler";
+import { parseWithSchema } from "~/api/parser";
 
 export default functionHandler({
     secure: true,
     handlers: {
-        get: async (req, context, user) => {
-            const teamId = parseWithSchema(context.params.teamId, z.string().uuid());
+        get: async (req, user) => {
+            const teamId = parseWithSchema(req.query.teamId, z.string().uuid());
 
             return {
                 body: await getTeam(teamId, user),
             };
         },
 
-        patch: async (req, context, user) => {
+        patch: async (req, user) => {
             assertIsAdmin(user);
-            const teamId = parseWithSchema(context.params.teamId, z.string().uuid());
+            const teamId = parseWithSchema(req.query.teamId, z.string().uuid());
 
-            const props = parseWithSchema(await req.json(), TeamUpdateSchema);
+            const props = parseWithSchema(req.body, TeamUpdateSchema);
 
             const team = await getTeam(teamId, user);
 
@@ -53,9 +48,9 @@ export default functionHandler({
             };
         },
 
-        delete: async (req, context, user) => {
+        delete: async (req, user) => {
             assertIsAdmin(user);
-            const teamId = parseWithSchema(context.params.teamId, z.string().uuid());
+            const teamId = parseWithSchema(req.query.teamId, z.string().uuid());
 
             await uiDb.mutate(
                 `UPDATE "teams"

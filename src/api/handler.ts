@@ -1,8 +1,7 @@
-import { type Context, type HandlerResponse } from "@netlify/functions";
+import { type NextApiRequest, type NextApiResponse } from "next";
 import { getUser, isLoggedIn, type UserAuth } from "./auth";
-import { apiHeaders, corsHeaders } from "./consts";
 
-type ProxyHandlerResponse = Omit<HandlerResponse, "statusCode" | "body"> & {
+type ProxyHandlerResponse = {
     statusCode?: number;
     body?: string | object;
 };
@@ -16,14 +15,14 @@ export class HTTPResponseError extends Error {
 }
 
 type Handlers<TUser> = {
-    get?: (req: Request, context: Context, user: TUser) => Promise<ProxyHandlerResponse>;
-    put?: (req: Request, context: Context, user: TUser) => Promise<ProxyHandlerResponse>;
-    post?: (req: Request, context: Context, user: TUser) => Promise<ProxyHandlerResponse>;
-    patch?: (req: Request, context: Context, user: TUser) => Promise<ProxyHandlerResponse>;
-    delete?: (req: Request, context: Context, user: TUser) => Promise<ProxyHandlerResponse>;
+    get?: (req: NextApiRequest, user: TUser) => Promise<ProxyHandlerResponse>;
+    put?: (req: NextApiRequest, user: TUser) => Promise<ProxyHandlerResponse>;
+    post?: (req: NextApiRequest, user: TUser) => Promise<ProxyHandlerResponse>;
+    patch?: (req: NextApiRequest, user: TUser) => Promise<ProxyHandlerResponse>;
+    delete?: (req: NextApiRequest, user: TUser) => Promise<ProxyHandlerResponse>;
 };
 
-type Handler = (req: Request, context: Context) => Promise<Response>;
+type Handler = (req: NextApiRequest, res: NextApiResponse) => Promise<void>;
 
 export default function functionHandler(config: { secure: true; handlers: Handlers<UserAuth> }): Handler;
 export default function functionHandler(config: { secure: false; handlers: Handlers<UserAuth | null> }): Handler;
@@ -34,24 +33,19 @@ export default function functionHandler({
     secure: boolean;
     handlers: Handlers<UserAuth> | Handlers<UserAuth | null>;
 }): Handler {
-    return async (req: Request, context: Context): Promise<Response> => {
+    return async (req: NextApiRequest, res: NextApiResponse) => {
         if (req.method === "OPTIONS") {
             const handlerTypes = Object.keys(handlers).map((method) => method.toLocaleUpperCase());
-            return new Response(undefined, {
-                status: 204,
-                headers: {
-                    "Access-Control-Allow-Methods": ["OPTIONS", ...handlerTypes].join(", "),
-                },
-            });
+            res.status(204).setHeader("Access-Control-Allow-Methods", ["OPTIONS", ...handlerTypes].join(", "));
+            return;
         }
 
-        if (secure && !isLoggedIn(req, context)) {
-            return new Response(undefined, {
-                status: 401,
-                headers: corsHeaders,
-            });
+        if (secure && !isLoggedIn(req)) {
+            res.status(401);
+            return;
         }
-        const user = getUser(req, context);
+
+        const user = getUser(req);
 
         let response: ProxyHandlerResponse = {
             statusCode: 405,
@@ -59,15 +53,15 @@ export default function functionHandler({
 
         try {
             if (req.method === "GET" && !!handlers.get) {
-                response = await handlers.get(req, context, user!);
+                response = await handlers.get(req, user!);
             } else if (req.method === "PUT" && !!handlers.put) {
-                response = await handlers.put(req, context, user!);
+                response = await handlers.put(req, user!);
             } else if (req.method === "POST" && !!handlers.post) {
-                response = await handlers.post(req, context, user!);
+                response = await handlers.post(req, user!);
             } else if (req.method === "PATCH" && !!handlers.patch) {
-                response = await handlers.patch(req, context, user!);
+                response = await handlers.patch(req, user!);
             } else if (req.method === "DELETE" && !!handlers.delete) {
-                response = await handlers.delete(req, context, user!);
+                response = await handlers.delete(req, user!);
             }
         } catch (err) {
             let message = err;
@@ -90,29 +84,15 @@ export default function functionHandler({
                     delete message.stack;
                 }
             }
-            return new Response(JSON.stringify(message), {
-                status,
-                headers: apiHeaders,
-            });
+            res.status(status).json(message);
+            return;
         }
 
         if (typeof response.body === "object") {
-            return new Response(JSON.stringify(response.body), {
-                status: response.statusCode,
-                headers: {
-                    ...apiHeaders,
-                    "Content-Type": "application/json",
-                    ...response.headers,
-                },
-            });
+            res.status(response.statusCode ?? 200).json(response.body);
+            return;
         }
 
-        return new Response(response.body, {
-            status: response.statusCode,
-            headers: {
-                ...apiHeaders,
-                ...response.headers,
-            },
-        });
+        res.status(response.statusCode ?? 200).send(response.body);
     };
 }

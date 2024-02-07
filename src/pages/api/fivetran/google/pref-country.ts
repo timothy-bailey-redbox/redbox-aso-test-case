@@ -1,22 +1,23 @@
-import fivetranDb from "netlify/lib/db/fivetranDb";
-import functionHandler from "netlify/lib/handler";
-import { parseQueryString, parseWithSchema } from "netlify/lib/parser";
 import {
     StatsStorePerformanceCountryQuerySchema,
     type StatsStorePerformanceCountry,
 } from "types/fivetran/google-play/statsStorePerformanceCountry";
+import fivetranDb from "~/api/db/fivetranDb";
+import functionHandler from "~/api/handler";
+import { parseQueryStringArray, parseQueryStringInt, parseWithSchema } from "~/api/parser";
 
 export default functionHandler({
     secure: true,
     handlers: {
         get: async (req) => {
-            const query = parseQueryString(req);
+            console.log(req.query);
+
             const params = parseWithSchema(
                 {
-                    appId: query.appId,
-                    country: query.country?.split(",") ?? [],
-                    from: parseInt(query.from ?? "", 10),
-                    to: parseInt(query.to ?? "", 10),
+                    appId: req.query.appId,
+                    country: parseQueryStringArray(req.query.country),
+                    from: parseQueryStringInt(req.query.from),
+                    to: parseQueryStringInt(req.query.to),
                 },
                 StatsStorePerformanceCountryQuerySchema,
             );

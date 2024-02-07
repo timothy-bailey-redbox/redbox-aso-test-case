@@ -6,9 +6,9 @@ export const StatsStorePerformanceCountrySchema = z.object({
     date: TimestampSchema,
     package_name: z.string(),
     country_region: z.string(),
-    store_listing_acquisitions: z.number(),
-    store_listing_visitors: z.number(),
-    store_listing_conversion_rate: z.number(),
+    store_listing_acquisitions: z.number().nullable(),
+    store_listing_visitors: z.number().nullable(),
+    store_listing_conversion_rate: z.number().nullable(),
 });
 export type StatsStorePerformanceCountry = z.infer<typeof StatsStorePerformanceCountrySchema>;
 

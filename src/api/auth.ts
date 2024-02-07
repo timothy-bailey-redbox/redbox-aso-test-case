@@ -1,4 +1,4 @@
-import { type Context } from "@netlify/functions";
+import { type NextApiRequest } from "next";
 import { USER_ADMIN_ROLE } from "types/generic";
 import { HTTPResponseError } from "./handler";
 
@@ -13,16 +13,16 @@ export type UserAuth = {
     user_metadata: Record<string, unknown>;
 };
 
-export function getUser(request: Request, context: Context): UserAuth | null {
-    let token = context.cookies.get("nf_jwt");
-    if (!token && request.headers.has("Authorization")) {
-        token = request.headers.get("Authorization")?.replace("Bearer ", "") ?? "";
+export function getUser(request: NextApiRequest): UserAuth | null {
+    let token = request.cookies.nf_jwt;
+    if (!token && !!request.headers.authorization) {
+        token = request.headers.authorization.replace("Bearer ", "") ?? "";
     }
     return !!token ? parseJwt(token) : null;
 }
 
-export function isLoggedIn(request: Request, context: Context): boolean {
-    return !!getUser(request, context)?.sub;
+export function isLoggedIn(request: NextApiRequest): boolean {
+    return !!getUser(request)?.sub;
 }
 
 function parseJwt(token: string): UserAuth {

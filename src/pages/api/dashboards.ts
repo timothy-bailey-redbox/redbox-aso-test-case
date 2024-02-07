@@ -1,22 +1,17 @@
-import { type Config } from "@netlify/functions";
-import { assertIsAdmin } from "netlify/lib/auth";
-import { writeInsertQuery } from "netlify/lib/db";
-import uiDb, { getDashboards } from "netlify/lib/db/uiDb";
-import { dashboardDBToAPI } from "netlify/lib/dto/dashboard";
-import { parseWithSchema } from "netlify/lib/parser";
 import { DashboardAPICreationSchema, DashboardDBSchema, type DashboardDB } from "types/dashboard";
 import { StatusSchema } from "types/generic";
 import { WidgetDBSchema, type WidgetDB } from "types/widget";
-import functionHandler from "../lib/handler";
-
-export const config: Config = {
-    //path: "/.netlify/functions/dashboards",
-};
+import { assertIsAdmin } from "~/api/auth";
+import { writeInsertQuery } from "~/api/db";
+import uiDb, { getDashboards } from "~/api/db/uiDb";
+import { dashboardDBToAPI } from "~/api/dto/dashboard";
+import functionHandler from "~/api/handler";
+import { parseWithSchema } from "~/api/parser";
 
 export default functionHandler({
     secure: true,
     handlers: {
-        get: async (req, context, user) => {
+        get: async (req, user) => {
             const dashboards = await getDashboards(user);
 
             return {
@@ -24,10 +19,10 @@ export default functionHandler({
             };
         },
 
-        post: async (req, context, user) => {
+        post: async (req, user) => {
             assertIsAdmin(user);
 
-            const props = parseWithSchema(await req.json(), DashboardAPICreationSchema);
+            const props = parseWithSchema(req.body, DashboardAPICreationSchema);
 
             const dashboard = await uiDb.transaction(async (query) => {
                 const [dash] = await query<DashboardDB>(
