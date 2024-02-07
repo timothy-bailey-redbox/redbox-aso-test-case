@@ -43,3 +43,6 @@ yarn-error.log*
 
 # Local Netlify folder
 .netlify
+
+# Netlify build artifacts
+netlify/functions/**.js

@@ -6,7 +6,9 @@
     "scripts": {
         "dev": "next dev",
         "dev:backend": "netlify dev",
-        "build": "next build",
+        "build": "npm run build:next && npm run build:functions",
+        "build:next": "next build",
+        "build:functions": "npx tsx scripts/buildFunctions.ts",
         "start": "next start",
         "lint": "next lint",
         "format": "npx prettier --write .",
@@ -50,6 +52,7 @@
         "@typescript-eslint/eslint-plugin": "^6.11.0",
         "@typescript-eslint/parser": "^6.11.0",
         "dotenv": "^16.3.1",
+        "esbuild": "^0.20.0",
         "eslint": "^8.54.0",
         "eslint-config-next": "^14.0.4",
         "netlify-cli": "^17.13.0",
