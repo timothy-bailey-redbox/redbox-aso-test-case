@@ -21,7 +21,7 @@ export function useDashboardsQuery() {
         queryKey: DASHBOARDS_KEY,
         queryFn: async () => {
             const req = await doFetch({
-                url: "/api/dashboards",
+                url: "/.netlify/functions/dashboards",
                 method: "GET",
                 returnType: "json",
                 schema: z.object({
@@ -46,7 +46,7 @@ export function useDashboardQuery(dashboardId: Id) {
         queryKey: [DASHBOARD_KEY, dashboardId],
         queryFn: async () => {
             return await doFetch({
-                url: `/api/dashboards/${dashboardId}`,
+                url: `/.netlify/functions/dashboards/${dashboardId}`,
                 method: "GET",
                 returnType: "json",
                 schema: DashboardAPISchema,
@@ -62,7 +62,7 @@ export function useDashboardCreate() {
     return useMutation({
         mutationFn: async (payload: DashboardAPICreation) => {
             return await doFetch({
-                url: "/api/dashboards",
+                url: "/.netlify/functions/dashboards",
                 method: "POST",
                 returnType: "json",
                 schema: DashboardAPISchema,
@@ -87,7 +87,7 @@ export function useDashboardUpdate() {
     return useMutation({
         mutationFn: async (payload: { id: Id; update: DashboardAPIUpdate }) => {
             return await doFetch({
-                url: `/api/dashboards/${payload.id}`,
+                url: `/.netlify/functions/dashboards/${payload.id}`,
                 method: "PATCH",
                 returnType: "json",
                 schema: DashboardAPISchema,
@@ -113,7 +113,7 @@ export function useDashboardDelete() {
     return useMutation({
         mutationFn: async (dashboardId: Id) => {
             return await doFetch({
-                url: `/api/dashboards/${dashboardId}`,
+                url: `/.netlify/functions/dashboards/${dashboardId}`,
                 method: "DELETE",
             });
         },

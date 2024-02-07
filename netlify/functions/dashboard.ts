@@ -11,7 +11,7 @@ import { WidgetDBSchema } from "types/widget";
 import { z } from "zod";
 
 export const config: Config = {
-    path: "/api/dashboards/:dashboardId",
+    path: "/.netlify/functions/dashboards/:dashboardId",
 };
 
 export default functionHandler({

@@ -8,7 +8,7 @@ import { TeamUpdateSchema, type Team } from "types/team";
 import { z } from "zod";
 
 export const config: Config = {
-    path: "/api/teams/:teamId",
+    path: "/.netlify/functions/teams/:teamId",
 };
 
 export default functionHandler({

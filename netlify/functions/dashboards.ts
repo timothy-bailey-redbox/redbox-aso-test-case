@@ -10,7 +10,7 @@ import { WidgetDBSchema, type WidgetDB } from "types/widget";
 import functionHandler from "../lib/handler";
 
 export const config: Config = {
-    path: "/api/dashboards",
+    path: "/.netlify/functions/dashboards",
 };
 
 export default functionHandler({
