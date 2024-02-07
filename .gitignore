@@ -46,3 +46,4 @@ yarn-error.log*
 
 # Netlify build artifacts
 netlify/functions/**.js
+netlify/functions/**.[mc]js

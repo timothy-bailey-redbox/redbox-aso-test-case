@@ -40,5 +40,8 @@ await build({
     target: `node${nodeVersion}`,
     outdir: outputDir,
     bundle: true,
-    format: "esm",
+    format: "cjs",
+    outExtension: {
+        ".js": ".cjs",
+    },
 });
