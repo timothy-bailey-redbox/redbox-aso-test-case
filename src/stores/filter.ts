@@ -13,17 +13,16 @@ export type FilterState = {
 const STORE_DATE_KEY = "RB-ASO-filterDate";
 
 const useFilterStore = create<FilterState>()((set) => {
-    const from = new Date();
-    from.setDate(from.getDate() - 30);
+    const initFrom = new Date();
+    initFrom.setDate(initFrom.getDate() - 30);
+    const initTo = new Date();
 
-    const storedRangeData = isClientSide() && "sessionStorage" in window && sessionStorage.getItem(STORE_DATE_KEY);
-    const initRange: [number, number] = storedRangeData
-        ? (storedRangeData.split(",").map(parseInt) as [number, number])
-        : [from.getTime(), new Date().getTime()];
+    const storedRange = getStoredDateRange();
+    const { from, to } = storedRange ? storedRange : { from: initFrom.getTime(), to: initTo.getTime() };
 
     return {
-        from: initRange[0],
-        to: initRange[1],
+        from,
+        to,
         setDateRange: (from, to) => {
             sessionStorage.setItem(STORE_DATE_KEY, `${from},${to}`);
             set({
@@ -40,3 +39,26 @@ const useFilterStore = create<FilterState>()((set) => {
     };
 });
 export default useFilterStore;
+
+function getStoredDateRange() {
+    if (!isClientSide() || !("sessionStorage" in window)) {
+        return null;
+    }
+
+    const storedData = sessionStorage.getItem(STORE_DATE_KEY);
+
+    if (!storedData) {
+        return null;
+    }
+
+    const [from, to] = storedData.split(",").map((n) => parseInt(n, 10)) as [number, number];
+
+    if (isNaN(from) || isNaN(to)) {
+        return null;
+    }
+
+    return {
+        from,
+        to,
+    };
+}
