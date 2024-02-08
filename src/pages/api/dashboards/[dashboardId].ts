@@ -1,13 +1,13 @@
-import { DashboardAPIUpdateSchema } from "types/dashboard";
-import { StatusSchema } from "types/generic";
-import { WidgetDBSchema } from "types/widget";
 import { z } from "zod";
-import { assertIsAdmin } from "~/api/auth";
-import { writeInsertQuery } from "~/api/db";
-import uiDb, { getDashboard } from "~/api/db/uiDb";
-import { dashboardDBToAPI } from "~/api/dto/dashboard";
-import functionHandler from "~/api/handler";
-import { parseWithSchema } from "~/api/parser";
+import { assertIsAdmin } from "~/lib/api/auth";
+import { writeInsertQuery } from "~/lib/api/db";
+import uiDb, { getDashboard } from "~/lib/api/db/uiDb";
+import { dashboardDBToAPI } from "~/lib/api/dto/dashboard";
+import functionHandler from "~/lib/api/handler";
+import { parseWithSchema } from "~/lib/api/parser";
+import { DashboardAPIUpdateSchema } from "~/types/dashboard";
+import { StatusSchema } from "~/types/generic";
+import { WidgetDBSchema } from "~/types/widget";
 
 export default functionHandler({
     secure: true,

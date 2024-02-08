@@ -1,6 +1,4 @@
 import { createRoot } from "react-dom/client";
-import { type DashboardAPI } from "types/dashboard";
-import { WidgetTypeSchema, type WidgetAPI } from "types/widget";
 import { v4 as uuid } from "uuid";
 import Card from "~/components/basic/Card";
 import DataLoader from "~/components/basic/DataLoader";
@@ -9,6 +7,8 @@ import Button from "~/components/basic/inputs/Button";
 import { saveDOMNodeImage } from "~/lib/saveImage";
 import { delay } from "~/lib/time";
 import { useWidgetDataQuery } from "~/queries/widgetData";
+import { type DashboardAPI } from "~/types/dashboard";
+import { WidgetTypeSchema, type WidgetAPI } from "~/types/widget";
 import BarChartWidget from "./BarChartWidget";
 import DialWidget from "./DialWidget";
 import GraphWidget from "./GraphWidget";

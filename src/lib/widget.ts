@@ -1,4 +1,4 @@
-import { type WidgetDataAxes } from "types/widgetData";
+import { type WidgetDataAxes } from "~/types/widgetData";
 import { formatDate } from "./date";
 import { formatNumber, formatPercent } from "./number";
 

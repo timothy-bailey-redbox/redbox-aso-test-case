@@ -1,4 +1,4 @@
-import { type WidgetDataAxes } from "types/widgetData";
+import { type WidgetDataAxes } from "~/types/widgetData";
 
 export type WidgetElementProps<R = Record<string, unknown>> = {
     data: {

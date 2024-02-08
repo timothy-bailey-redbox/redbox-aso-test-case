@@ -1,5 +1,5 @@
 import { type NextApiRequest } from "next";
-import { USER_ADMIN_ROLE } from "types/generic";
+import { USER_ADMIN_ROLE } from "~/types/generic";
 import { HTTPResponseError } from "./handler";
 
 export type UserAuth = {

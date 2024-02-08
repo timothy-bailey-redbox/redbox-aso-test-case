@@ -1,21 +1,21 @@
 import { useQuery } from "react-query";
-import { type DashboardAPI } from "types/dashboard";
-import {
-    StatsStorePerformanceCountryDetails,
-    StatsStorePerformanceCountrySchema,
-    type StatsStorePerformanceCountryQuery,
-} from "types/fivetran/google-play/statsStorePerformanceCountry";
-import {
-    StatsStorePerformanceTrafficSourceDetails,
-    StatsStorePerformanceTrafficSourceSchema,
-    type StatsStorePerformanceTrafficSourceQuery,
-} from "types/fivetran/google-play/statsStorePerformanceTrafficSource";
-import { DataSourceSchema, type WidgetAPI } from "types/widget";
-import { type WidgetDataAxes } from "types/widgetData";
 import { z } from "zod";
 import { doFetch } from "~/lib/doFetch";
 import useFilterStore, { type FilterState } from "~/stores/filter";
 import useUserStore from "~/stores/user";
+import { type DashboardAPI } from "~/types/dashboard";
+import {
+    StatsStorePerformanceCountryDetails,
+    StatsStorePerformanceCountrySchema,
+    type StatsStorePerformanceCountryQuery,
+} from "~/types/fivetran/google-play/statsStorePerformanceCountry";
+import {
+    StatsStorePerformanceTrafficSourceDetails,
+    StatsStorePerformanceTrafficSourceSchema,
+    type StatsStorePerformanceTrafficSourceQuery,
+} from "~/types/fivetran/google-play/statsStorePerformanceTrafficSource";
+import { DataSourceSchema, type WidgetAPI } from "~/types/widget";
+import { type WidgetDataAxes } from "~/types/widgetData";
 
 const WIDGET_DATA_KEY = "widgetData";
 

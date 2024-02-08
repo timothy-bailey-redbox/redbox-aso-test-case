@@ -1,10 +1,10 @@
-import { StatusSchema } from "types/generic";
-import { TeamUpdateSchema, type Team } from "types/team";
 import { z } from "zod";
-import { assertIsAdmin } from "~/api/auth";
-import uiDb, { getTeam } from "~/api/db/uiDb";
-import functionHandler from "~/api/handler";
-import { parseWithSchema } from "~/api/parser";
+import { assertIsAdmin } from "~/lib/api/auth";
+import uiDb, { getTeam } from "~/lib/api/db/uiDb";
+import functionHandler from "~/lib/api/handler";
+import { parseWithSchema } from "~/lib/api/parser";
+import { StatusSchema } from "~/types/generic";
+import { TeamUpdateSchema, type Team } from "~/types/team";
 
 export default functionHandler({
     secure: true,

@@ -1,5 +1,5 @@
-import { type DashboardAPI, type DashboardDB } from "types/dashboard";
-import { type WidgetAPI, type WidgetDB } from "types/widget";
+import { type DashboardAPI, type DashboardDB } from "~/types/dashboard";
+import { type WidgetAPI, type WidgetDB } from "~/types/widget";
 import { HTTPResponseError } from "../handler";
 
 export function dashboardDBToAPI(dashboard?: DashboardDB, widgets: WidgetDB[] = []): DashboardAPI {

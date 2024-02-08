@@ -1,8 +1,8 @@
 import { type Config } from "@netlify/functions";
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { StatusSchema } from "types/generic";
-import uiDb from "~/api/db/uiDb";
+import uiDb from "~/lib/api/db/uiDb";
 import { doFetch } from "~/lib/doFetch";
+import { StatusSchema } from "~/types/generic";
 
 export const config: Config = {
     // TODO: Uncomment this when the service is tested and ready to run on schedule

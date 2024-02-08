@@ -1,7 +1,7 @@
 import netlifyIdentity, { type User } from "netlify-identity-widget";
-import { USER_ADMIN_ROLE } from "types/generic";
 import { create } from "zustand";
 import { isClientSide } from "~/lib/context";
+import { USER_ADMIN_ROLE } from "~/types/generic";
 
 type UserState = {
     currentUser: User | null;

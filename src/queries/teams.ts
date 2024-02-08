@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { type Id } from "types/generic";
-import { TeamSchema, type Team, type TeamCreation, type TeamUpdate } from "types/team";
 import { z } from "zod";
 import { doFetch } from "~/lib/doFetch";
 import useUserStore from "~/stores/user";
+import { type Id } from "~/types/generic";
+import { TeamSchema, type Team, type TeamCreation, type TeamUpdate } from "~/types/team";
 
 const TEAM_KEY = "team";
 const TEAMS_KEY = "teams";

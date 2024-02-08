@@ -1,10 +1,10 @@
+import fivetranDb from "~/lib/api/db/fivetranDb";
+import functionHandler from "~/lib/api/handler";
+import { parseQueryStringArray, parseQueryStringInt, parseWithSchema } from "~/lib/api/parser";
 import {
     StatsStorePerformanceTrafficSourceQuerySchema,
     type StatsStorePerformanceTrafficSource,
-} from "types/fivetran/google-play/statsStorePerformanceTrafficSource";
-import fivetranDb from "~/api/db/fivetranDb";
-import functionHandler from "~/api/handler";
-import { parseQueryStringArray, parseQueryStringInt, parseWithSchema } from "~/api/parser";
+} from "~/types/fivetran/google-play/statsStorePerformanceTrafficSource";
 
 export default functionHandler({
     secure: true,

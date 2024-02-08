@@ -1,12 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type FieldError, type SubmitHandler } from "react-hook-form";
-import { type Team, type TeamCreation, type TeamUpdate } from "types/team";
 import { z } from "zod";
 import { formatError } from "~/components/basic/DataLoader";
 import ArrayInput from "~/components/basic/inputs/ArrayInput";
 import Button from "~/components/basic/inputs/Button";
 import Input from "~/components/basic/inputs/Input";
 import { type useTeamCreate, type useTeamUpdate } from "~/queries/teams";
+import { type Team, type TeamCreation, type TeamUpdate } from "~/types/team";
 import styles from "./editteam.module.css";
 
 type EditTeamProps = {

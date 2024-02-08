@@ -1,10 +1,10 @@
-import { StatusSchema } from "types/generic";
-import { TeamCreationSchema, TeamSchema, type Team } from "types/team";
-import { assertIsAdmin } from "~/api/auth";
-import { writeInsertQuery } from "~/api/db";
-import uiDb, { getTeams } from "~/api/db/uiDb";
-import functionHandler from "~/api/handler";
-import { parseWithSchema } from "~/api/parser";
+import { assertIsAdmin } from "~/lib/api/auth";
+import { writeInsertQuery } from "~/lib/api/db";
+import uiDb, { getTeams } from "~/lib/api/db/uiDb";
+import functionHandler from "~/lib/api/handler";
+import { parseWithSchema } from "~/lib/api/parser";
+import { StatusSchema } from "~/types/generic";
+import { TeamCreationSchema, TeamSchema, type Team } from "~/types/team";
 
 export default functionHandler({
     secure: true,

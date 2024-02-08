@@ -1,7 +1,7 @@
-import { type DashboardDB } from "types/dashboard";
-import { StatusSchema } from "types/generic";
-import { type Team } from "types/team";
-import { type WidgetDB } from "types/widget";
+import { type DashboardDB } from "~/types/dashboard";
+import { StatusSchema } from "~/types/generic";
+import { type Team } from "~/types/team";
+import { type WidgetDB } from "~/types/widget";
 import { isAdmin, type UserAuth } from "../auth";
 import { HTTPResponseError } from "../handler";
 import DBConnector from "./dbConnector";

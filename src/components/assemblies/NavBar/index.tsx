@@ -1,16 +1,16 @@
 import clsx from "clsx";
+import { group } from "d3";
 import Link from "next/link";
-import { type DashboardAPI } from "types/dashboard";
+import React from "react";
 import DataLoader from "~/components/basic/DataLoader";
 import Icons from "~/components/basic/Icons";
 import useRouteDashboardId from "~/lib/useRouteDashboardId";
 import { useDashboardsQuery } from "~/queries/dashboards";
+import { useTeamsQuery } from "~/queries/teams";
+import useFilterStore from "~/stores/filter";
+import { type DashboardAPI } from "~/types/dashboard";
 import Input from "../../basic/inputs/Input";
 import styles from "./navbar.module.css";
-import { group } from "d3";
-import useFilterStore from "~/stores/filter";
-import { useTeamsQuery } from "~/queries/teams";
-import React from "react";
 
 export function dashboardSorter(list: DashboardAPI[] = [], searchString = "") {
     const boards = list

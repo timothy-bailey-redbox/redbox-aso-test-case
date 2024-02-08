@@ -1,6 +1,6 @@
-import { TimestampSchema } from "types/generic";
-import { type WidgetDataAxes } from "types/widgetData";
 import { z } from "zod";
+import { TimestampSchema } from "~/types/generic";
+import { type WidgetDataAxes } from "~/types/widgetData";
 
 export const StatsStorePerformanceCountrySchema = z.object({
     date: TimestampSchema,

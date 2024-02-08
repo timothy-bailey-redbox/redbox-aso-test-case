@@ -1,14 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { z } from "zod";
+import { doFetch } from "~/lib/doFetch";
+import useUserStore from "~/stores/user";
 import {
     DashboardAPISchema,
     type DashboardAPI,
     type DashboardAPICreation,
     type DashboardAPIUpdate,
-} from "types/dashboard";
-import { type Id } from "types/generic";
-import { z } from "zod";
-import { doFetch } from "~/lib/doFetch";
-import useUserStore from "~/stores/user";
+} from "~/types/dashboard";
+import { type Id } from "~/types/generic";
 
 const DASHBOARDS_KEY = "dashboards";
 const DASHBOARD_KEY = "dashboard";

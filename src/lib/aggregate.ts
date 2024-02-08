@@ -1,5 +1,5 @@
 import { group } from "d3";
-import { type WidgetDataAxes } from "types/widgetData";
+import { type WidgetDataAxes } from "~/types/widgetData";
 
 type AggregateResult = {
     min: number;
