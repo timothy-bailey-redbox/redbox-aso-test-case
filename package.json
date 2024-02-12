@@ -5,15 +5,10 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "dev:backend": "netlify dev",
         "build": "next build",
-        "build:next": "next build",
-        "build:functions": "npx tsx scripts/buildFunctions.ts",
         "start": "next start",
         "lint": "next lint",
-        "format": "npx prettier --write .",
-        "db:create": "npx tsx scripts/dbSetup.ts",
-        "db:tables": "npx tsx scripts/dbTableCreate.ts"
+        "format": "npx prettier --write ."
     },
     "dependencies": {
         "@hookform/resolvers": "^3.3.4",

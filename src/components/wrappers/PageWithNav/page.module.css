@@ -1,9 +1,0 @@
-.wrapper {
-    display: grid;
-    grid-template-columns: min-content 1fr;
-    gap: 0;
-}
-
-.page {
-    padding: 32px;
-}

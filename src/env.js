@@ -16,18 +16,6 @@ export const env = createEnv({
         UI_DB_PASSWORD: z.string(),
         UI_DB_NAME: z.string(),
         UI_DB_PORT: z.string(),
-
-        FIVETRAN_DB_HOST: z.string(),
-        FIVETRAN_DB_USERNAME: z.string(),
-        FIVETRAN_DB_PASSWORD: z.string(),
-        FIVETRAN_DB_NAME: z.string(),
-        FIVETRAN_DB_PORT: z.string(),
-
-        APPTWEAK_DB_HOST: z.string(),
-        APPTWEAK_DB_USERNAME: z.string(),
-        APPTWEAK_DB_PASSWORD: z.string(),
-        APPTWEAK_DB_NAME: z.string(),
-        APPTWEAK_DB_PORT: z.string(),
     },
 
     /**
@@ -53,18 +41,6 @@ export const env = createEnv({
         UI_DB_PASSWORD: process.env.UI_DB_PASSWORD,
         UI_DB_NAME: process.env.UI_DB_NAME,
         UI_DB_PORT: process.env.UI_DB_PORT,
-
-        FIVETRAN_DB_HOST: process.env.FIVETRAN_DB_HOST,
-        FIVETRAN_DB_USERNAME: process.env.FIVETRAN_DB_USERNAME,
-        FIVETRAN_DB_PASSWORD: process.env.FIVETRAN_DB_PASSWORD,
-        FIVETRAN_DB_NAME: process.env.FIVETRAN_DB_NAME,
-        FIVETRAN_DB_PORT: process.env.FIVETRAN_DB_PORT,
-
-        APPTWEAK_DB_HOST: process.env.APPTWEAK_DB_HOST,
-        APPTWEAK_DB_USERNAME: process.env.APPTWEAK_DB_USERNAME,
-        APPTWEAK_DB_PASSWORD: process.env.APPTWEAK_DB_PASSWORD,
-        APPTWEAK_DB_NAME: process.env.APPTWEAK_DB_NAME,
-        APPTWEAK_DB_PORT: process.env.APPTWEAK_DB_PORT,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
