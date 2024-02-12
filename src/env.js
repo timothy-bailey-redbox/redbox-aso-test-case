@@ -10,12 +10,6 @@ export const env = createEnv({
         NODE_ENV: z.enum(["development", "test", "production"]),
 
         NETLIFY_AUTH_TOKEN: z.string().optional(),
-
-        UI_DB_HOST: z.string(),
-        UI_DB_USERNAME: z.string(),
-        UI_DB_PASSWORD: z.string(),
-        UI_DB_NAME: z.string(),
-        UI_DB_PORT: z.string(),
     },
 
     /**
@@ -35,12 +29,6 @@ export const env = createEnv({
         NODE_ENV: process.env.NODE_ENV,
 
         NETLIFY_AUTH_TOKEN: process.env.NETLIFY_AUTH_TOKEN,
-
-        UI_DB_HOST: process.env.UI_DB_HOST,
-        UI_DB_USERNAME: process.env.UI_DB_USERNAME,
-        UI_DB_PASSWORD: process.env.UI_DB_PASSWORD,
-        UI_DB_NAME: process.env.UI_DB_NAME,
-        UI_DB_PORT: process.env.UI_DB_PORT,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
