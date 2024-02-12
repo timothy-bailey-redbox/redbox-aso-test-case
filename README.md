@@ -1,3 +1,3 @@
 # Redbox ASO Dashboards
 
-Reduced test case for api route
+Reduced test case for api route.
