@@ -1,34 +1,9 @@
 :root {
-    /* text and system colors */
-    --purple-text-color: hsl(276, 23%, 28%);
-    --normal-text-color: hsla(0, 0%, 31%, 0.9);
-    --helper-text-color: hsl(0, 0%, 51%);
-    --error-color: hsl(10, 100%, 35%);
-
     --fontFamily-system: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
         Cantarell, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
 
-    /* text sizes */
-    --title-text-size: 2.5rem;
-    --big-text-size: 1.5rem;
-    --subtitle-text-size: 1.2rem;
-    --normal-text-size: 1rem;
-    --helper-text-size: 0.8rem;
-
     /* bg colors */
     --bg-color: rgba(91, 89, 114, 1);
     --bg-gradient: linear-gradient(160deg, white 0%, var(--bg-color) 100%);
-    --bg-purple: hsl(266, 100%, 64%);
-    --bg-orange: hsl(29, 100%, 57%);
-
-    /* graph colors */
-    --graph-color: linear-gradient(0deg, rgba(121, 35, 210, 1) 0%, rgba(255, 121, 0, 1) 100%);
-    --dial-color: linear-gradient(160deg, white 0%, rgba(195, 195, 195, 1) 100%);
-
-    /* shadows */
-    --shadow-light-bright: rgba(255, 255, 255, 0.5);
-    --shadow-dark-bright: rgba(0, 0, 0, 0.5);
-    --shadow-light-dim: rgba(255, 255, 255, 0.3);
-    --shadow-dark-dim: rgba(0, 0, 0, 0.3);
 }
